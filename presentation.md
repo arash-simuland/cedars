@@ -177,8 +177,31 @@ The simulation now allows us to test **any scenario** by varying three key param
 - ⚡ **Rapid succession demands** vs. **spaced-out demands**
 - 📈 **Real-world variability** that traditional formulas miss
 
-### **Visual System Architecture - Three Loops**
+### **Visual System Architecture - Complex PAR-Perpetual Network**
 
+#### **3D Building Visualization - Why Custom Simulation is Essential**
+```
+┌─────────────────────────────────────────────────────────┐
+│  Floor 5: ICU PARs     [SKU A] ←→ [SKU B] ←→ [SKU C]    │
+├─────────────────────────────────────────────────────────┤
+│  Floor 4: Surgery PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
+├─────────────────────────────────────────────────────────┤
+│  Floor 3: Emergency PARs[SKU A] ←→ [SKU B] ←→ [SKU C]   │
+├─────────────────────────────────────────────────────────┤
+│  Floor 2: General PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
+├─────────────────────────────────────────────────────────┤
+│  Floor 1: General PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
+└─────────────────────────────────────────────────────────┘
+                              ↕
+┌─────────────────────────────────────────────────────────┐
+│  Ground Floor: PERPETUAL INVENTORY                      │
+│  [SKU A] ● [SKU B] ● [SKU C] ● [SKU D] ● [SKU E]       │
+│     ↕       ↕       ↕       ↕       ↕                  │
+│  Complex routing network to multiple PARs               │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### **Three Core Dynamics Modeled**
 ```
 ┌─────────────────────────────────────┐
 │        PAR REPLENISHMENT CYCLE      │
@@ -200,6 +223,13 @@ The simulation now allows us to test **any scenario** by varying three key param
 1. **🔄 Top Loop**: PAR replenishment cycle with lead time delays
 2. **🔄 Bottom Loop**: Perpetual replenishment cycle with lead time delays  
 3. **🔄 Vertical Loop**: Emergency replenishment connecting PAR to perpetual
+
+### **Why This Complexity Matters**
+> **"This complex network of PAR-perpetual connections with emergency routing cannot be modeled by generic inventory software"**
+
+- ❌ **Generic tools**: Assume single inventory system
+- ❌ **Our reality**: Two independent systems with emergency connections
+- ✅ **Our solution**: Custom simulation modeling this exact architecture
 
 ### **Scenario Testing Outputs**
 For each scenario tested, we receive:
@@ -353,18 +383,67 @@ Instead of forecasting SKU demand directly, **model patient characteristics**:
 - **Create consumption blueprints** for each patient type
 - **Automatically generate demand patterns** from patient scenarios
 
-### **Patient-to-Demand Translation**
+### **Patient-to-Demand Translation Process**
+
+#### **Step-by-Step Flowchart**
 ```
 Patient Admission → Disease Profile → Consumption Blueprint → SKU Demand Pattern
+     ↓                    ↓                    ↓                    ↓
+[Patient arrives]  [COVID-19, ICU]  [Timeline template]  [Daily SKU usage]
+     ↓                    ↓                    ↓                    ↓
+[Admission data]   [Comorbidities]   [Department routing]  [Inventory depletion]
+```
+
+#### **Detailed Translation Process**
+1. **Patient Characteristics Input**
+   - Disease type and severity
+   - Comorbidities and complications
+   - Expected length of stay
+   - Department routing (ER → ICU → General)
+
+2. **Consumption Blueprint Creation**
+   - **Lookup function**: Disease-specific consumption templates
+   - **Timeline mapping**: What SKUs used when and where
+   - **Department-specific usage**: Different consumption per floor
+   - **Comorbidity stacking**: Multiple conditions = additive consumption
+
+3. **Timeline Visualization**
+```
+Day 1: ER Department    [SKU A: 5 units] [SKU B: 2 units] [SKU C: 0 units]
+Day 2: ICU Department   [SKU A: 3 units] [SKU B: 8 units] [SKU C: 4 units]  
+Day 3: ICU Department   [SKU A: 2 units] [SKU B: 6 units] [SKU C: 3 units]
+Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
+       ↓ Sum all departments = Total daily demand pattern
 ```
 
 ### **Concrete Example**
 > **"We can create scenarios for mass shootings, natural disasters, pandemics - and know exactly what SKUs we need"**
 
-### **Machine Learning Opportunity**
-- **Pattern recognition** from patient characteristics to SKU usage
-- **Template creation** for different disease archetypes
-- **Comorbidity stacking** for complex patient profiles
+### **Machine Learning Project Opportunities**
+
+#### **Primary ML Challenge**
+> **"Translate patient characteristics into precise SKU consumption patterns"**
+
+#### **Specific ML Projects**
+
+| **Project** | **Input** | **Output** | **Value** |
+|-------------|-----------|------------|-----------|
+| **Pattern Recognition** | Patient demographics, disease type, comorbidities | SKU usage timeline | Automated demand generation |
+| **Template Creation** | Historical patient data | Disease-specific consumption blueprints | Standardized patient profiles |
+| **Comorbidity Stacking** | Multiple conditions per patient | Additive consumption patterns | Complex patient modeling |
+| **Timeline Prediction** | Patient admission data | Department-specific usage schedule | Precise demand forecasting |
+
+#### **Technical Implementation**
+- **Data Requirements**: Historical patient admission records with SKU consumption
+- **Model Type**: Time series prediction with multi-output regression
+- **Training Data**: Patient characteristics → SKU usage patterns
+- **Validation**: Cross-validation with different disease types
+
+#### **Business Impact**
+- **Automated scenario generation** for any patient type
+- **Reduced manual template creation** effort
+- **More accurate demand forecasting** based on real patient patterns
+- **Scalable approach** for new disease types or patient profiles
 
 ---
 
