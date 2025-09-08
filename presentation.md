@@ -5,7 +5,7 @@
 
 ## 🏥 **SLIDE 1: Introduction & Background**
 
-### **Title: Introducing Confidential Core & the Simulation Challenge**
+### **Title: Project Introduction - Confidential Core & Cedars-Sinai Partnership**
 
 ---
 
@@ -28,7 +28,7 @@ We have partnered with **Cedars-Sinai Health System** for a strategic pilot proj
 
 ## 🎯 **SLIDE 2: Problem Statement**
 
-### **Title: The Challenge - Optimizing Hospital Inventory**
+### **Title: The Challenge - Determining Optimal Inventory Targets**
 
 ---
 
@@ -54,7 +54,7 @@ Cedars-Sinai needs to determine optimal inventory levels for their new Marina de
 
 ## 🔬 **SLIDE 3: Simulation Overview**
 
-### **Title: Simulation as a Testing Environment**
+### **Title: Our Simulation Solution - Daily Testing Environment**
 
 ---
 
@@ -101,11 +101,11 @@ graph TD
 
 ## 🧪 **SLIDE 4: Pilot Phase - Inventory Testing**
 
-### **Title: Pilot - Testing Estimation Methods**
+### **Title: Pilot Phase - Verifying Model Internal Consistency**
 
 ---
 
-### **Pilot Approach**
+### **Verification Approach**
 We tested our simulation using **two conventional analytical methods** for inventory target calculation:
 
 | **Method** | **Application** | **Purpose** |
@@ -113,18 +113,18 @@ We tested our simulation using **two conventional analytical methods** for inven
 | **Safety Stock Formula** | Cycle inventory (PAR levels) | Standard industry approach |
 | **Safety Stock Formula** | Safety inventory (perpetual) | Central backup optimization |
 
-### **Testing Framework**
-- 📊 **Realistic historical demand data** used for validation
+### **Verification Framework**
+- 📊 **Realistic historical demand data** used for verification
 - 🏥 **Hospital-level stockout analysis** performed
 - ⚡ **Emergency replenishment tracking** implemented
 
-### **Pilot Results Analyzed**
+### **Verification Results Analyzed**
 - 📈 **Number of stockouts** across hospital departments
 - 🔄 **Emergency replenishment counts** and severity levels
 - ⏱️ **Response time effectiveness** of current systems
 
-### **Validation Outcome**
-> ✅ **Simulation engine successfully validated** for real-world healthcare inventory scenarios
+### **Verification Outcome**
+> ✅ **Simulation model internal consistency successfully verified** for healthcare inventory scenarios
 
 ### **Next Steps**
 > 📋 **Detailed pilot scenario results available in separate technical deck**
@@ -133,7 +133,7 @@ We tested our simulation using **two conventional analytical methods** for inven
 
 ## 🚀 **SLIDE 5: Expansion Phase - Optimization Engine**
 
-### **Title: Expansion - Using the Simulation as an Optimization Engine**
+### **Title: Expansion Phase - Simulation as an Optimization Engine**
 
 ---
 
@@ -215,11 +215,14 @@ For each scenario tested, we receive:
 - 💰 **Cost optimization** through precise targeting
 - 🏥 **Patient safety** through reliable supply chains
 
+### **Next: Understanding the Technical Framework**
+Now that we've established the simulation's capabilities, let's examine the technical parameters and how to use this powerful tool for optimization.
+
 ---
 
 ## 📊 **SLIDE 6: Simulation Inputs and Outputs**
 
-### **Title: Understanding Simulation Parameters**
+### **Title: Simulation Inputs & Outputs - Technical Framework**
 
 ---
 
@@ -242,7 +245,7 @@ For each scenario tested, we receive:
 
 ## 🧮 **SLIDE 7: Running Experiments with the Simulation Calculator**
 
-### **Title: Using the Simulation as a Calculator for Running Experiments**
+### **Title: Running Experiments - The Simulation Calculator**
 
 ---
 
@@ -267,7 +270,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 
 ## 🔄 **SLIDE 8: Generalized Optimization Algorithm**
 
-### **Title: Black Box Simulation-Based Optimization**
+### **Title: Optimization Algorithm - Finding Optimal Inventory Targets**
 
 ---
 
@@ -294,7 +297,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 
 ## 🎲 **SLIDE 9: Simulation-Based Optimization with Monte Carlo**
 
-### **Title: Handling Uncertainty with Monte Carlo Replication**
+### **Title: Monte Carlo Optimization - Handling Real-World Uncertainty**
 
 ---
 
@@ -328,7 +331,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 
 ## 🏥 **SLIDE 10: Defining Scenarios with Nausheen's Team**
 
-### **Title: Collaborative Scenario Creation for Realistic Testing**
+### **Title: Scenario Creation - Working with Nausheen's Team**
 
 ---
 
@@ -367,7 +370,7 @@ Patient Admission → Disease Profile → Consumption Blueprint → SKU Demand P
 
 ## ⏱️ **SLIDE 11: Working with Lead Times**
 
-### **Title: Lead Time Optimization - The Key to Smart Inventory**
+### **Title: Lead Time Optimization - The Critical Success Factor**
 
 ---
 
@@ -405,7 +408,7 @@ Patient Admission → Disease Profile → Consumption Blueprint → SKU Demand P
 
 ## 🎯 **SLIDE 12: Smart Inventory Benefits**
 
-### **Title: Creating Smart Inventory Through Advanced Simulation**
+### **Title: Smart Inventory - Final Outcomes & Value Proposition**
 
 ---
 
