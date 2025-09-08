@@ -99,7 +99,38 @@ graph TD
 
 ---
 
-## 🧪 **SLIDE 4: Pilot Phase - Inventory Testing**
+## 📋 **SLIDE 4: Inventory Replenishment Policy**
+
+### **Title: Order-Up-To-Level Policy - Our Simulation Foundation**
+
+---
+
+### **Policy Type**
+We use an **Order-Up-To-Level** inventory replenishment policy, which is a special case of the min-max policy.
+
+### **Policy Mechanism**
+> **"If inventory goes below target, reorder up to target"**
+
+### **How It Works**
+1. **Set Target Level** - Define optimal inventory level for each PAR location
+2. **Monitor Inventory** - Track current stock levels continuously  
+3. **Trigger Replenishment** - When inventory drops below target
+4. **Order Up to Target** - Replenish exactly to the target level
+
+### **Key Characteristics**
+- **Deterministic Replenishment** - Always order to the same target level
+- **No Order Quantity Optimization** - Focus on target level setting instead
+- **Simplified Decision Making** - Clear, consistent replenishment logic
+
+### **Why This Policy Works**
+- ✅ **Predictable behavior** for simulation modeling
+- ✅ **Clear optimization targets** to adjust
+- ✅ **Realistic hospital operations** - matches actual PAR management
+- ✅ **Simplified constraints** - target levels are the key decision variables
+
+---
+
+## 🧪 **SLIDE 5: Pilot Phase - Inventory Testing**
 
 ### **Title: Pilot Phase - Verifying Model Internal Consistency**
 
@@ -131,7 +162,7 @@ We tested our simulation using **two conventional analytical methods** for inven
 
 ---
 
-## 🚀 **SLIDE 5: Expansion Phase - Optimization Engine**
+## 🚀 **SLIDE 6: Expansion Phase - Optimization Engine**
 
 ### **Title: Expansion Phase - Simulation as an Optimization Engine**
 
@@ -205,7 +236,7 @@ Now that we've established the simulation's capabilities, let's examine the tech
 
 ---
 
-## 📊 **SLIDE 6: Simulation Inputs and Outputs**
+## 📊 **SLIDE 7: Simulation Inputs and Outputs**
 
 ### **Title: Simulation Inputs & Outputs - Technical Framework**
 
@@ -228,7 +259,7 @@ Now that we've established the simulation's capabilities, let's examine the tech
 
 ---
 
-## 🧮 **SLIDE 7: Running Experiments with the Simulation Calculator**
+## 🧮 **SLIDE 8: Running Experiments with the Simulation Calculator**
 
 ### **Title: Running Experiments - The Simulation Calculator**
 
@@ -253,7 +284,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 
 ---
 
-## 🔄 **SLIDE 8: Generalized Optimization Algorithm**
+## 🔄 **SLIDE 9: Generalized Optimization Algorithm**
 
 ### **Title: Optimization Algorithm - Finding Optimal Inventory Targets**
 
@@ -269,18 +300,42 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 4. **Adjust targets** based on results (minimize stockouts)
 5. **Repeat** until optimal solution found
 
-### **Key Characteristics**
+### **Optimization Objective Function**
+- **Primary Goal**: Eliminate hospital-level stockouts
+- **Secondary Goals**: 
+  - Minimize emergency replenishment from perpetual
+  - Minimize holding inventory to reduce costs
+
+### **Key Constraints**
+- **PAR Capacity Limitation**: Cycle stock targets cannot exceed maximum capacity
+- **Space Optimization**: Perpetual inventory must fit within available space
+- **Hospital-level Stockout Elimination**: Never allow complete stockouts
+
+### **Optimization Characteristics**
 - **Black box optimization** - treats simulation as complete system
 - **Requires full simulation runs** to evaluate objective function
-- **Objective**: Minimize stockouts and emergency replenishments
-- **Constraint**: Hospital-level stockout elimination
+- **Hard constraints** on capacity and space limitations
+
+### **Virtual Negative Inventory Technique**
+**Advanced optimization method** that accelerates target finding:
+
+#### **Process**
+1. **Release Stockout Constraint** - Allow inventory to go negative during iterations
+2. **Track Negative Values** - Monitor how much inventory would be needed
+3. **Estimate Gap** - Calculate how much perpetual inventory to increase
+4. **Adjust Targets** - Use negative values to guide next iteration
+
+#### **Benefits**
+- **Faster Convergence** - More efficient optimization process
+- **Gap Identification** - Shows exactly how much PARs would draw from perpetual
+- **Realistic Scenarios** - Tests what would happen with unlimited perpetual access
 
 ### **Why Simulation is Essential**
 > **"Optimization requires strategic input from your team - simulation provides the testing environment"**
 
 ---
 
-## 🎲 **SLIDE 9: Simulation-Based Optimization with Monte Carlo**
+## 🎲 **SLIDE 10: Simulation-Based Optimization with Monte Carlo**
 
 ### **Title: Monte Carlo Optimization - Handling Real-World Uncertainty**
 
@@ -314,7 +369,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 
 ---
 
-## 🏥 **SLIDE 10: Defining Scenarios with Nausheen's Team**
+## 🏥 **SLIDE 11: Defining Scenarios with Nausheen's Team**
 
 ### **Title: Scenario Creation - Working with Nausheen's Team**
 
@@ -402,7 +457,7 @@ Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
 
 ---
 
-## ⏱️ **SLIDE 11: Working with Lead Times**
+## ⏱️ **SLIDE 12: Working with Lead Times**
 
 ### **Title: Lead Time Optimization - The Critical Success Factor**
 
@@ -440,7 +495,7 @@ Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
 
 ---
 
-## 🎯 **SLIDE 12: Smart Inventory Benefits**
+## 🎯 **SLIDE 13: Smart Inventory Benefits**
 
 ### **Title: Smart Inventory - Final Outcomes & Value Proposition**
 
@@ -466,6 +521,12 @@ Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
 |----------------------|------------|-------------|
 | **Forecasting Improvement** | Better demand + external lead time forecasts | Reduced inventory levels |
 | **Operations Enhancement** | Internal process modeling + efficiency gains | Improved replenishment cycles |
+
+#### **3. Space Optimization Capability**
+- **Precise Space Planning** - Know exactly what goes in perpetual inventory
+- **Capacity Optimization** - Prioritize items based on space efficiency
+- **Dynamic Reallocation** - Adjust inventory mix to maximize space utilization
+- **Constraint Integration** - Space limitations become optimization constraints
 
 ### **Smart Monitoring System**
 
