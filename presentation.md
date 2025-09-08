@@ -177,52 +177,7 @@ The simulation now allows us to test **any scenario** by varying three key param
 - ⚡ **Rapid succession demands** vs. **spaced-out demands**
 - 📈 **Real-world variability** that traditional formulas miss
 
-### **Visual System Architecture - Complex PAR-Perpetual Network**
-
-#### **3D Building Visualization - Why Custom Simulation is Essential**
-```
-┌─────────────────────────────────────────────────────────┐
-│  Floor 5: ICU PARs     [SKU A] ←→ [SKU B] ←→ [SKU C]    │
-├─────────────────────────────────────────────────────────┤
-│  Floor 4: Surgery PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
-├─────────────────────────────────────────────────────────┤
-│  Floor 3: Emergency PARs[SKU A] ←→ [SKU B] ←→ [SKU C]   │
-├─────────────────────────────────────────────────────────┤
-│  Floor 2: General PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
-├─────────────────────────────────────────────────────────┤
-│  Floor 1: General PARs [SKU A] ←→ [SKU B] ←→ [SKU C]    │
-└─────────────────────────────────────────────────────────┘
-                              ↕
-┌─────────────────────────────────────────────────────────┐
-│  Ground Floor: PERPETUAL INVENTORY                      │
-│  [SKU A] ● [SKU B] ● [SKU C] ● [SKU D] ● [SKU E]       │
-│     ↕       ↕       ↕       ↕       ↕                  │
-│  Complex routing network to multiple PARs               │
-└─────────────────────────────────────────────────────────┘
-```
-
-#### **Three Core Dynamics Modeled**
-```
-┌─────────────────────────────────────┐
-│        PAR REPLENISHMENT CYCLE      │
-│         [Lead Time Inside]          │
-│  ←─── Demand Signals Input ────     │
-└─────────────────┬───────────────────┘
-                  │
-                  │ Emergency
-                  │ Replenishment
-                  │ (Vertical Loop)
-                  ▼
-┌─────────────────────────────────────┐
-│      PERPETUAL REPLENISHMENT CYCLE  │
-│         [Lead Time Inside]          │
-└─────────────────────────────────────┘
-```
-
-### **Three Cycle Explanation**
-1. **🔄 Top Loop**: PAR replenishment cycle with lead time delays
-2. **🔄 Bottom Loop**: Perpetual replenishment cycle with lead time delays  
-3. **🔄 Vertical Loop**: Emergency replenishment connecting PAR to perpetual
+### **System Architecture - Complex PAR-Perpetual Network**
 
 ### **Why This Complexity Matters**
 > **"This complex network of PAR-perpetual connections with emergency routing cannot be modeled by generic inventory software"**
@@ -289,7 +244,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 4. **📈 Analyze Outputs** - Review inventory time series and performance metrics
 
 ### **Key Insight**
-> **"The simulation cannot guess optimal targets - it can only test what you input"**
+> **"Our approach requires human expertise to set targets - the simulation tests your strategic decisions"**
 
 ### **Calculator Capabilities**
 - **Input**: Target levels + daily demand + lead times
@@ -321,7 +276,7 @@ The simulation functions as a **dynamic calculator** for inventory experimentati
 - **Constraint**: Hospital-level stockout elimination
 
 ### **Why Simulation is Essential**
-> **"Stockout and emergency replenishment metrics only come from dynamic simulation"**
+> **"Optimization requires strategic input from your team - simulation provides the testing environment"**
 
 ---
 
@@ -454,7 +409,7 @@ Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
 ---
 
 ### **Lead Time: The Critical Factor**
-> **"Lead time is the single most important value aside from demand"**
+> **"Optimizing replenishment cycles directly impacts your inventory efficiency and cost structure"**
 
 ### **System Drivers**
 - **Demand**: External factor (forecasting responsibility)
@@ -528,7 +483,7 @@ Day 4: General Floor    [SKU A: 1 unit]  [SKU B: 2 units] [SKU C: 1 unit]
 > **"Tool that carries the least amount of inventory with the least amount of risk - immune against targeted realistic scenarios"**
 
 ### **Unique Value Proposition**
-> **"This complex PAR-perpetual dynamic with emergency connections cannot be modeled by off-the-shelf software - it requires custom simulation development"**
+> **"This level of operational complexity requires custom simulation development - delivering results that off-the-shelf solutions simply cannot match"**
 
 ---
 
