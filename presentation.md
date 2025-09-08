@@ -240,52 +240,213 @@ For each scenario tested, we receive:
 
 ---
 
-## 🔮 **SLIDE 7: Forecasting and Targeted Scenarios**
+## 🧮 **SLIDE 7: Running Experiments with the Simulation Calculator**
 
-### **Title: Collaborative Forecasting Approach**
+### **Title: Using the Simulation as a Calculator for Running Experiments**
 
 ---
 
-### **Nausheen's Team Responsibilities**
-**Forecasting demand** using simulation-enhanced methodology:
+### **How the Calculator Works**
+The simulation functions as a **dynamic calculator** for inventory experimentation:
 
-### **New Forecasting Approach**
-Instead of random scenario generation, use **targeted scenario planning**:
+### **Step-by-Step Process**
+1. **🎯 Set Target Levels** - Define cycle inventory and safety inventory targets
+2. **📊 Define Scenario** - Input daily demand patterns and lead times  
+3. **▶️ Run Simulation** - Execute the model to see inventory dynamics
+4. **📈 Analyze Outputs** - Review inventory time series and performance metrics
 
-1. **📊 Baseline Demand Forecast** - Regular operational patterns
-2. **🚨 Specific Emergency Scenarios** - Realistic, targeted situations
-3. **🎯 Disease-Specific Planning** - Pandemic and emergency preparedness
+### **Key Insight**
+> **"The simulation cannot guess optimal targets - it can only test what you input"**
+
+### **Calculator Capabilities**
+- **Input**: Target levels + daily demand + lead times
+- **Output**: Inventory levels over time + stockout/emergency counts
+- **Purpose**: Test any scenario to understand inventory behavior
+
+---
+
+## 🔄 **SLIDE 8: Generalized Optimization Algorithm**
+
+### **Title: Black Box Simulation-Based Optimization**
+
+---
+
+### **Optimization Approach**
+**Iterative algorithm** that searches for optimal inventory targets:
+
+### **Process Flow**
+1. **Start with initial values** based on analytical methods
+2. **Set fixed scenario** (specific daily demand + lead times)
+3. **Run simulation** to test current targets
+4. **Adjust targets** based on results (minimize stockouts)
+5. **Repeat** until optimal solution found
+
+### **Key Characteristics**
+- **Black box optimization** - treats simulation as complete system
+- **Requires full simulation runs** to evaluate objective function
+- **Objective**: Minimize stockouts and emergency replenishments
+- **Constraint**: Hospital-level stockout elimination
+
+### **Why Simulation is Essential**
+> **"Stockout and emergency replenishment metrics only come from dynamic simulation"**
+
+---
+
+## 🎲 **SLIDE 9: Simulation-Based Optimization with Monte Carlo**
+
+### **Title: Handling Uncertainty with Monte Carlo Replication**
+
+---
+
+### **The Challenge**
+**Single scenario optimization is incomplete** because:
+- Demand patterns are not stable in reality
+- Lead times vary significantly
+- Results are not deterministic
+
+### **Monte Carlo Solution**
+**For each target scenario**, run multiple replications:
+
+### **Process**
+1. **Define target levels** (cycle + safety inventory)
+2. **Run Monte Carlo experiment** varying:
+   - Daily demand patterns (distribution)
+   - Lead times (distribution)
+3. **Calculate expected value** of outcomes
+4. **Use expected value** in optimization loop
+
+### **Key Benefits**
+- **Probabilistic results** instead of single data points
+- **Robust optimization** against uncertainty
+- **Realistic scenario coverage** for decision-making
+
+### **Two Monte Carlo Engines**
+- **🎲 Demand Pattern Engine** - Different demand scenarios
+- **⏱️ Lead Time Engine** - Various replenishment cycles
+
+---
+
+## 🏥 **SLIDE 10: Defining Scenarios with Nausheen's Team**
+
+### **Title: Collaborative Scenario Creation for Realistic Testing**
+
+---
+
+### **Three Types of Scenarios**
+
+| **Scenario Type** | **Description** | **Purpose** |
+|-------------------|-----------------|-------------|
+| **📊 Regular Operations** | Seasonal, routine demand patterns | Baseline testing |
+| **🔄 Pattern Variations** | Same demand, different signal shapes | Stress testing |
+| **🚨 Disease-Specific** | Patient admission-based scenarios | Emergency preparedness |
+
+### **Revolutionary Approach: Patient-Focused Modeling**
+
+#### **Shift from Demand to Patients**
+Instead of forecasting SKU demand directly, **model patient characteristics**:
+
+### **Agent-Based Modeling**
+- **Simulate patient admissions** with specific disease profiles
+- **Create consumption blueprints** for each patient type
+- **Automatically generate demand patterns** from patient scenarios
+
+### **Patient-to-Demand Translation**
+```
+Patient Admission → Disease Profile → Consumption Blueprint → SKU Demand Pattern
+```
 
 ### **Concrete Example**
-> **"You can safely say we have enough inventory against a pandemic of this type of disease for up to 200 patients for 60 days"**
+> **"We can create scenarios for mass shootings, natural disasters, pandemics - and know exactly what SKUs we need"**
 
-### **Strategic Benefits**
-- ✅ **Targeted preparation** for realistic scenarios
-- ✅ **Avoid random scenarios** that may never occur
-- ✅ **Specific SKU identification** for emergency cases
-- ✅ **Stress testing** hospital capacity against realistic situations
-
-### **Implementation Framework**
-- 🔬 **Data Analytics Team**: Identifies meaningful demand patterns
-- 🎯 **Simulation Team**: Tests scenarios and optimizes inventory
-- 📊 **Collaborative Approach**: Analytics informs simulation inputs
+### **Machine Learning Opportunity**
+- **Pattern recognition** from patient characteristics to SKU usage
+- **Template creation** for different disease archetypes
+- **Comorbidity stacking** for complex patient profiles
 
 ---
 
-## 📋 **Presentation Summary**
+## ⏱️ **SLIDE 11: Working with Lead Times**
 
-### **Key Takeaways**
-1. **Problem**: Cedars-Sinai needs optimal inventory targets for new hospital
-2. **Solution**: Advanced simulation testing environment
-3. **Approach**: Test any scenario with real-world complexity
-4. **Value**: Data-driven decisions for inventory optimization
-5. **Outcome**: Reduced stockouts, minimized waste, improved patient care
+### **Title: Lead Time Optimization - The Key to Smart Inventory**
 
-### **Next Steps**
-- 🚀 **Expand simulation** to full hospital operations
-- 📊 **Implement recommended** inventory targets
-- 🔄 **Continuous monitoring** and optimization
-- 📈 **Scale approach** to other Cedars-Sinai facilities
+---
+
+### **Lead Time: The Critical Factor**
+> **"Lead time is the single most important value aside from demand"**
+
+### **System Drivers**
+- **Demand**: External factor (forecasting responsibility)
+- **Lead Time**: Internal + External factors (optimization opportunity)
+
+### **Lead Time Components**
+
+| **Component** | **Control** | **Responsibility** |
+|---------------|-------------|-------------------|
+| **External Lead Time** | No control | Nausheen's Team (forecasting) |
+| **Internal Lead Time** | Full control | Operations Team (optimization) |
+
+### **Optimization Opportunities**
+
+#### **External Factors (Forecasting)**
+- **Vendor selection** with different lead times
+- **Demand forecasting** accuracy improvements
+- **External supply chain** coordination
+
+#### **Internal Factors (Operations)**
+- **Internal transportation** efficiency
+- **Resource allocation** optimization
+- **Process flow** improvements
+- **Bottleneck identification** and resolution
+
+### **Key Insight**
+> **"The delay in replenishment cycles creates uncertainty and drives safety stock requirements"**
+
+---
+
+## 🎯 **SLIDE 12: Smart Inventory Benefits**
+
+### **Title: Creating Smart Inventory Through Advanced Simulation**
+
+---
+
+### **What Makes This Different**
+**Unique complexity**: Two independent inventory systems with emergency connections
+- **PAR locations**: Independent replenishment cycles
+- **Perpetual location**: Centralized safety stock
+- **Emergency connections**: Complex routing network between PARs and perpetual
+
+### **Smart Inventory Capabilities**
+
+#### **1. Precise Scenario Testing**
+- **Daily demand patterns** with realistic variability
+- **Patient admission-based** demand generation
+- **Disease-specific** emergency scenarios
+- **Targeted preparedness** for known incidents
+
+#### **2. Dual Optimization Approach**
+
+| **Optimization Path** | **Method** | **Outcome** |
+|----------------------|------------|-------------|
+| **Forecasting Improvement** | Better demand + external lead time forecasts | Reduced inventory levels |
+| **Operations Enhancement** | Internal process modeling + efficiency gains | Improved replenishment cycles |
+
+### **Smart Monitoring System**
+
+#### **Design Phase Timeline**
+- **Quarterly reviews** with scenario testing
+- **Policy lock-in** based on simulation results
+- **Production deployment** of optimized inventory levels
+
+#### **Monitoring Phase Timeline**
+- **Real-time scenario testing** for new information
+- **Emergency response** validation
+- **Continuous optimization** based on actual performance
+
+### **Final Outcome**
+> **"Tool that carries the least amount of inventory with the least amount of risk - immune against targeted realistic scenarios"**
+
+### **Unique Value Proposition**
+> **"This complex PAR-perpetual dynamic with emergency connections cannot be modeled by off-the-shelf software - it requires custom simulation development"**
 
 ---
 
