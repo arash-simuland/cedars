@@ -54,9 +54,34 @@ PAR_Level1_ED {
 ## 📊 Current Status
 
 - **Object Graph Design**: ✅ COMPLETE - Structure defined in model.md
+- **3D Visualization**: ✅ COMPLETE - Interactive 3D network visualizations
 - **Core Classes**: 🚧 IN PROGRESS - Implementing Location and SKU classes
 - **Data Integration**: ⏳ PENDING - Excel data loading
 - **Simulation Engine**: ⏳ PENDING - Daily time-step processing
+
+## 🎨 3D Visualization System
+
+The simulation directory now includes a complete 3D visualization system:
+
+### **Generated Visualizations**
+- **`cedarsim_combined_visualization.html`** - Combined 3D network visualization
+- **`cedarsim_network.html`** - Network graph visualization
+- **`cedarsim_visualization_report.md`** - Summary report
+
+### **Quick Start**
+```bash
+# Install dependencies
+pip install -r requirements_3d_viz.txt
+
+# Run visualization pipeline
+python cedarsim_3d_viz.py
+
+# View results in browser
+open cedarsim_combined_visualization.html
+open cedarsim_network.html
+```
+
+See `README_3D_VISUALIZATION.md` for detailed documentation.
 
 ## 📝 Notes
 

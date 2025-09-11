@@ -1,6 +1,6 @@
 
 # CedarSim 3D Visualization Report
-Generated: 2025-09-11 05:45:48
+Generated: 2025-09-11 06:31:07
 
 ## Visualization Summary
 - **Total Locations**: 18
@@ -9,11 +9,16 @@ Generated: 2025-09-11 05:45:48
 - **Visualization Type**: Interactive 3D with Plotly
 
 ## Location Hierarchy
-- **Level1**: 5 locations
+- **Level0**: 1 locations
+- **Level1**: 4 locations
 - **Level2**: 2 locations
 - **Level3**: 4 locations
-- **Level5-9**: 6 locations
-- **Respiratory**: 1 locations
+- **Level4**: 1 locations
+- **Level5**: 1 locations
+- **Level6**: 1 locations
+- **Level7**: 2 locations
+- **Level8**: 1 locations
+- **Level9**: 1 locations
 
 ## Top Locations by SKU Count
 - **Level 7 PCU**: 5941 SKUs
@@ -33,6 +38,6 @@ Generated: 2025-09-11 05:45:48
 - **Total Unique SKU Connections**: 448
 
 ## Files Generated
-- `cedarsim_3d_visualization.html` - Interactive 3D visualization
+- `cedarsim_combined_visualization.html` - Combined 3D network visualization
 - `cedarsim_network.html` - Network graph visualization
 - `cedarsim_visualization_report.md` - This report

@@ -15,6 +15,7 @@ The CedarSim data processing pipeline is complete and we're now building the dis
 - ✅ **Validation**: 75 validation SKUs preserved from original 229
 - ✅ **File Validation**: All input files validated, no corruption detected
 - ✅ **Object Graph Design**: Defined Location and SKU object structure for simulation
+- ✅ **3D Visualization**: Interactive 3D network visualizations of hospital inventory system
 - 🚧 **Simulation Engine**: Currently implementing object-oriented simulation framework
 
 ## 🚀 Quick Start
@@ -28,6 +29,11 @@ The CedarSim data processing pipeline is complete and we're now building the dis
 1. **Analysis Reports**: `docs/reports/`
 2. **Jupyter Notebooks**: `notebooks/`
 3. **Processing Scripts**: `scripts/`
+
+### For 3D Visualization:
+1. **Visualization Script**: `scripts/simulation/cedarsim_3d_viz.py`
+2. **Generated HTML Files**: `scripts/simulation/cedarsim_combined_visualization.html`
+3. **Documentation**: `scripts/simulation/README_3D_VISUALIZATION.md`
 
 ## 📁 Repository Structure
 

@@ -44,35 +44,65 @@ class CedarSim3DVisualizer:
         self.demand_data = None
         self.validation_data = None
         
-        # Location hierarchy and positioning
+        # Location hierarchy and positioning (Z-axis represents hospital floor levels)
+        # Updated to match actual Cedar Hospital 9-level stacking diagram with Level 0 for Perpetual
         self.location_hierarchy = {
-            'Level1': {'level': 1, 'x': 0, 'y': 0, 'z': 8, 'color': 'red', 'size': 1000},  # Perpetual is Level 1
-            'Level2': {'level': 2, 'x': 0, 'y': 0, 'z': 6, 'color': 'orange', 'size': 800},
-            'Level3': {'level': 3, 'x': 0, 'y': 0, 'z': 4, 'color': 'yellow', 'size': 600},
-            'Level5-9': {'level': 5, 'x': 0, 'y': 0, 'z': 2, 'color': 'blue', 'size': 400},
-            'Respiratory': {'level': 4, 'x': 0, 'y': 0, 'z': 3, 'color': 'purple', 'size': 300}
+            'Level0': {'level': 0, 'x': 0, 'y': 0, 'z': 0, 'color': 'darkgreen', 'size': 1200},   # Level 0 - Perpetual Inventory (Underground Distribution Hub)
+            'Level1': {'level': 1, 'x': 0, 'y': 0, 'z': 1, 'color': 'orange', 'size': 1000},      # Level 1 - Emergency, Imaging, Mat Management, Security, Lobby Admin
+            'Level2': {'level': 2, 'x': 0, 'y': 0, 'z': 2, 'color': 'red', 'size': 800},          # Level 2 - Pharmacy, Surgery/Procedures/PACU/Pre-Op, Energy Center
+            'Level3': {'level': 3, 'x': 0, 'y': 0, 'z': 3, 'color': 'green', 'size': 600},        # Level 3 - Sterile Processing, Central Lab, Admin, Food Service
+            'Level4': {'level': 4, 'x': 0, 'y': 0, 'z': 4, 'color': 'gray', 'size': 500},         # Level 4 - Support (MECH/ELEC/MTR)
+            'Level5': {'level': 5, 'x': 0, 'y': 0, 'z': 5, 'color': 'lightblue', 'size': 400},    # Level 5 - Marina 5 (32 beds) - Observation, Medical Tele & Non-Tele
+            'Level6': {'level': 6, 'x': 0, 'y': 0, 'z': 6, 'color': 'blue', 'size': 400},         # Level 6 - Marina 6 (32 beds) - Telemetry, Cardiac & Stroke Focus
+            'Level7': {'level': 7, 'x': 0, 'y': 0, 'z': 7, 'color': 'darkblue', 'size': 400},     # Level 7 - Marina 7-PCU (16 beds) + Marina 7-ICU (16 beds)
+            'Level8': {'level': 8, 'x': 0, 'y': 0, 'z': 8, 'color': 'navy', 'size': 400},         # Level 8 - Marina 8 (32 beds) - M/S Overflow, VIP Med, Int'l Med
+            'Level9': {'level': 9, 'x': 0, 'y': 0, 'z': 9, 'color': 'indigo', 'size': 400}        # Level 9 - Marina 9 (32 beds) - Surgical, Non-Infectious + Mechanical
         }
         
-        # Location mapping from data columns
+        # Location mapping from data columns to actual Cedar Hospital layout
         self.location_mapping = {
-            'Level 1 Perpetual_1400': 'Level1',  # Perpetual is Level 1
-            'Level 1 Facilities/Biomed_1232': 'Level1', 
-            'Level 1 EVS_1321': 'Level1',
-            'Level 1 ED_1229': 'Level1',
-            'Level 1 Imaging_1329': 'Level1',
-            'Level 2 Pharm_2500': 'Level2',
-            'Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A': 'Level2',
-            'Level 3 Sterile Processing_3307_3309': 'Level3',
-            'Level 3 Food Service': 'Level3',
-            'Level 3 Admin': 'Level3',
-            'Level 3 Central Lab_3411': 'Level3',
-            'Level 5 Observation, Medical Tele & Non-Tele_5206': 'Level5-9',
-            'Level 6 Telemetry, Cardiac & Stroke': 'Level5-9',
-            'Level 7 ICU': 'Level5-9',
-            'Level 7 PCU': 'Level5-9',
-            'Level 8 M/S Overflow, VIP & Int\'l Med': 'Level5-9',
-            'Level 9 Surgical, Non-Infectious': 'Level5-9',
-            'Respiratory Therapy': 'Respiratory'
+            # Level 0 - Perpetual Inventory (Underground Distribution Hub)
+            'Level 1 Perpetual_1400': 'Level0',  # Perpetual inventory (underground distribution hub)
+            
+            # Level 1 - Emergency Department, Imaging, Mat Management, Security, Lobby Admin
+            'Level 1 Facilities/Biomed_1232': 'Level1',  # Material Management
+            'Level 1 EVS_1321': 'Level1',  # Security/Support
+            'Level 1 ED_1229': 'Level1',  # Emergency Department
+            'Level 1 Imaging_1329': 'Level1',  # Imaging
+            'Level 1 Lobby Admin': 'Level1',  # Lobby Admin
+            
+            # Level 2 - Pharmacy, Surgery/Procedures/PACU/Pre-Op Recovery, Energy Center
+            'Level 2 Pharm_2500': 'Level2',  # Pharmacy
+            'Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A': 'Level2',  # Surgery/Procedures/PACU/Pre-Op
+            'Level 2 Energy Center': 'Level2',  # Energy Center
+            
+            # Level 3 - Sterile Processing, Central Lab, Admin, Food Service
+            'Level 3 Sterile Processing_3307_3309': 'Level3',  # Sterile Processing
+            'Level 3 Central Lab_3411': 'Level3',  # Central Lab
+            'Level 3 Admin': 'Level3',  # Admin
+            'Level 3 Food Service': 'Level3',  # Food Service
+            
+            # Level 4 - Support (MECH/ELEC/MTR) - Mechanical, Electrical, Materials
+            'Level 4 Support': 'Level4',  # Support - MECH/ELEC/MTR
+            
+            # Level 5 - Marina 5 (32 beds) - Observation, Medical Tele & Non-Tele
+            'Level 5 Observation, Medical Tele & Non-Tele_5206': 'Level5',  # Marina 5
+            
+            # Level 6 - Marina 6 (32 beds) - Telemetry, Cardiac & Stroke Focus
+            'Level 6 Telemetry, Cardiac & Stroke': 'Level6',  # Marina 6
+            
+            # Level 7 - Marina 7-PCU (16 beds) + Marina 7-ICU (16 beds)
+            'Level 7 ICU': 'Level7',  # Marina 7-ICU
+            'Level 7 PCU': 'Level7',  # Marina 7-PCU
+            
+            # Level 8 - Marina 8 (32 beds) - M/S Overflow, VIP Med, Int'l Med
+            'Level 8 M/S Overflow, VIP & Int\'l Med': 'Level8',  # Marina 8
+            
+            # Level 9 - Marina 9 (32 beds) - Surgical, Non-Infectious + Mechanical
+            'Level 9 Surgical, Non-Infectious': 'Level9',  # Marina 9
+            
+            # Additional locations that may exist in data
+            'Respiratory Therapy': 'Level4'  # Respiratory therapy (mapped to Level 4 support)
         }
         
         # SKU visualization properties
@@ -119,7 +149,7 @@ class CedarSim3DVisualizer:
         # Group locations by hierarchy level
         level_groups = {}
         for col in location_columns:
-            hierarchy_key = self.location_mapping.get(col, 'Level5-9')
+            hierarchy_key = self.location_mapping.get(col, 'Level9')  # Default to highest level
             if hierarchy_key not in level_groups:
                 level_groups[hierarchy_key] = []
             level_groups[hierarchy_key].append(col)
@@ -129,24 +159,67 @@ class CedarSim3DVisualizer:
             base_config = self.location_hierarchy[hierarchy_key]
             n_locations = len(location_list)
             
-            # Arrange locations in a circle at each level
-            for i, location in enumerate(location_list):
-                angle = 2 * np.pi * i / n_locations
-                radius = 3 + hierarchy_key.count('Level') * 2  # Increase radius for higher levels
+            # Special handling for Level 1 - place Perpetual at center
+            if hierarchy_key == 'Level1':
+                # Find Perpetual location and place it at center
+                perpetual_location = None
+                other_locations = []
                 
-                x = radius * np.cos(angle)
-                y = radius * np.sin(angle)
-                z = base_config['z']
+                for location in location_list:
+                    if 'Perpetual' in location:
+                        perpetual_location = location
+                    else:
+                        other_locations.append(location)
                 
-                locations[location] = {
-                    'x': x,
-                    'y': y, 
-                    'z': z,
-                    'level': base_config['level'],
-                    'color': base_config['color'],
-                    'size': base_config['size'],
-                    'hierarchy': hierarchy_key
-                }
+                # Place Perpetual at center (0, 0, z)
+                if perpetual_location:
+                    locations[perpetual_location] = {
+                        'x': 0,
+                        'y': 0,
+                        'z': base_config['z'],
+                        'level': base_config['level'],
+                        'color': base_config['color'],
+                        'size': base_config['size'],
+                        'hierarchy': hierarchy_key
+                    }
+                
+                # Arrange other Level 1 locations in a circle around Perpetual
+                for i, location in enumerate(other_locations):
+                    angle = 2 * np.pi * i / len(other_locations)
+                    radius = 3  # Fixed radius around center
+                    
+                    x = radius * np.cos(angle)
+                    y = radius * np.sin(angle)
+                    z = base_config['z']
+                    
+                    locations[location] = {
+                        'x': x,
+                        'y': y, 
+                        'z': z,
+                        'level': base_config['level'],
+                        'color': base_config['color'],
+                        'size': base_config['size'],
+                        'hierarchy': hierarchy_key
+                    }
+            else:
+                # Arrange other levels in a circle as before
+                for i, location in enumerate(location_list):
+                    angle = 2 * np.pi * i / n_locations
+                    radius = 3 + hierarchy_key.count('Level') * 2  # Increase radius for higher levels
+                    
+                    x = radius * np.cos(angle)
+                    y = radius * np.sin(angle)
+                    z = base_config['z']
+                    
+                    locations[location] = {
+                        'x': x,
+                        'y': y, 
+                        'z': z,
+                        'level': base_config['level'],
+                        'color': base_config['color'],
+                        'size': base_config['size'],
+                        'hierarchy': hierarchy_key
+                    }
         
         return locations
     
@@ -183,7 +256,7 @@ class CedarSim3DVisualizer:
         return sku_positions
     
     def calculate_connections(self) -> List[Dict]:
-        """Calculate emergency replenishment connections - only from PARs to Perpetual"""
+        """Calculate emergency replenishment connections - FROM Perpetual TO PARs"""
         connections = []
         location_columns = self.get_location_columns()
         
@@ -210,11 +283,11 @@ class CedarSim3DVisualizer:
                     if col != perpetual_location and pd.notna(sku_row[col]):
                         par_locations.append(col)
                 
-                # Create connections from each PAR to Perpetual
+                # Create connections FROM Perpetual TO each PAR (logical flow direction)
                 for par_location in par_locations:
                     connections.append({
-                        'from': par_location,
-                        'to': perpetual_location,
+                        'from': perpetual_location,
+                        'to': par_location,
                         'sku_id': sku_id,
                         'weight': 1,
                         'type': 'emergency_replenishment'
@@ -222,10 +295,10 @@ class CedarSim3DVisualizer:
         
         return connections
     
-    def create_3d_visualization(self, output_file: str = "cedarsim_3d_visualization.html") -> bool:
-        """Create interactive 3D visualization using Plotly"""
+    def create_combined_visualization(self, output_file: str = "cedarsim_combined_visualization.html") -> bool:
+        """Create simple combined 3D network visualization (like the originals)"""
         try:
-            logger.info("Creating 3D visualization...")
+            logger.info("Creating simple combined 3D network visualization...")
             
             # Calculate positions
             location_positions = self.calculate_location_positions()
@@ -234,53 +307,15 @@ class CedarSim3DVisualizer:
             # Create figure
             fig = go.Figure()
             
-            # Add location nodes
-            for location, pos in location_positions.items():
-                # Count SKUs in this location
-                sku_count = self.sku_data[location].notna().sum()
-                
-                fig.add_trace(go.Scatter3d(
-                    x=[pos['x']],
-                    y=[pos['y']],
-                    z=[pos['z']],
-                    mode='markers',
-                    marker=dict(
-                        size=15,  # Fixed size for all location nodes
-                        color=pos['color'],
-                        opacity=0.8,
-                        line=dict(width=2, color='black')
-                    ),
-                    name=location,
-                    text=f"{location}<br>SKUs: {sku_count}",
-                    hovertemplate="<b>%{text}</b><br>" +
-                                "X: %{x:.2f}<br>" +
-                                "Y: %{y:.2f}<br>" +
-                                "Z: %{z:.2f}<extra></extra>"
-                ))
-                
-                # Add SKU particles around location
-                if sku_count > 0:
-                    sku_positions = self.calculate_sku_positions(location, min(sku_count, 50))  # Limit for performance
-                    
-                    fig.add_trace(go.Scatter3d(
-                        x=[pos['x'] for pos in sku_positions],
-                        y=[pos['y'] for pos in sku_positions],
-                        z=[pos['z'] for pos in sku_positions],
-                        mode='markers',
-                        marker=dict(
-                            size=3,
-                            color=pos['color'],
-                            opacity=0.6
-                        ),
-                        name=f"{location} SKUs",
-                        showlegend=False,
-                        hovertemplate=f"SKU in {location}<extra></extra>"
-                    ))
+            # Add network connections first (as base layer)
+            connection_counts = {}
+            for conn in connections:
+                edge_key = tuple(sorted([conn['from'], conn['to']]))
+                connection_counts[edge_key] = connection_counts.get(edge_key, 0) + 1
             
-            # Add connections
-            for conn in connections[:100]:  # Limit connections for performance
-                from_pos = location_positions.get(conn['from'])
-                to_pos = location_positions.get(conn['to'])
+            for (loc1, loc2), count in connection_counts.items():
+                from_pos = location_positions.get(loc1)
+                to_pos = location_positions.get(loc2)
                 
                 if from_pos and to_pos:
                     fig.add_trace(go.Scatter3d(
@@ -293,18 +328,42 @@ class CedarSim3DVisualizer:
                             width=2,
                             dash='dash'
                         ),
-                        name=f"Connection {conn['from']} → {conn['to']}",
+                        name=f"Connection {loc1} → {loc2}",
                         showlegend=False,
-                        hovertemplate=f"Emergency Replenishment<br>SKU: {conn['sku_id']}<extra></extra>"
+                        hovertemplate=f"Emergency Replenishment<br>From: {loc1}<br>To: {loc2}<br>SKU Connections: {count}<extra></extra>"
                     ))
             
-            # Update layout
+            # Add location nodes (simple, like the originals)
+            for location, pos in location_positions.items():
+                # Count SKUs in this location
+                sku_count = self.sku_data[location].notna().sum()
+                
+                fig.add_trace(go.Scatter3d(
+                    x=[pos['x']],
+                    y=[pos['y']],
+                    z=[pos['z']],
+                    mode='markers',
+                    marker=dict(
+                        size=15,  # Fixed size like originals
+                        color=pos['color'],
+                        opacity=0.8,
+                        line=dict(width=2, color='black')
+                    ),
+                    name=location,
+                    text=f"{location}<br>SKUs: {sku_count}",
+                    hovertemplate="<b>%{text}</b><br>" +
+                                "X: %{x:.2f}<br>" +
+                                "Y: %{y:.2f}<br>" +
+                                "Z: %{z:.2f}<extra></extra>"
+                ))
+            
+            # Update layout (simple like originals)
             fig.update_layout(
-                title="CedarSim Inventory Management System - 3D Visualization",
+                title="CedarSim Hospital Inventory Network - 3D Visualization<br><sub>Z-axis represents Cedar Hospital floor levels (Level 0=Underground, Level 1=Ground, Level 9=Top Floor)<br>Level 0: Perpetual Inventory (Underground Distribution Hub) | Level 1: Emergency, Imaging, Materials Mgmt<br>Level 2: Pharmacy, Surgery, PACU | Level 3: Lab, SPD, Food Service | Level 4: Support (MECH/ELEC/MTR)<br>Levels 5-9: Marina Nursing Units (32 beds each)</sub>",
                 scene=dict(
                     xaxis_title="X Position",
                     yaxis_title="Y Position", 
-                    zaxis_title="Hierarchy Level",
+                    zaxis_title="Hospital Floor Level",
                     camera=dict(
                         eye=dict(x=1.5, y=1.5, z=1.5)
                     )
@@ -317,12 +376,12 @@ class CedarSim3DVisualizer:
             # Save visualization
             output_path = Path(output_file)
             fig.write_html(str(output_path))
-            logger.info(f"3D visualization saved to {output_path}")
+            logger.info(f"Simple combined 3D network visualization saved to {output_path}")
             
             return True
             
         except Exception as e:
-            logger.error(f"Error creating 3D visualization: {str(e)}")
+            logger.error(f"Error creating combined visualization: {str(e)}")
             return False
     
     def create_network_visualization(self, output_file: str = "cedarsim_network.html") -> bool:
@@ -408,11 +467,11 @@ class CedarSim3DVisualizer:
             
             # Update layout
             fig.update_layout(
-                title="CedarSim Location Network - Emergency Replenishment Connections",
+                title="CedarSim Location Network - Emergency Replenishment Connections<br><sub>Z-axis represents hospital floor levels (Level 0=Underground, Level 1=Ground, Level 9=Top Floor)<br>Perpetual Inventory (Underground Distribution Hub) serves all levels above</sub>",
                 scene=dict(
                     xaxis_title="X Position",
                     yaxis_title="Y Position",
-                    zaxis_title="Hierarchy Level",
+                    zaxis_title="Hospital Floor Level",
                     camera=dict(eye=dict(x=1.5, y=1.5, z=1.5))
                 ),
                 width=1200,
@@ -431,7 +490,7 @@ class CedarSim3DVisualizer:
             return False
     
     def generate_visualization_report(self) -> str:
-        """Generate a summary report of the visualization"""
+        """Generate a concise summary report of the visualization"""
         location_positions = self.calculate_location_positions()
         connections = self.calculate_connections()
         
@@ -440,48 +499,32 @@ class CedarSim3DVisualizer:
         for location in location_positions.keys():
             sku_counts[location] = self.sku_data[location].notna().sum()
         
-        # Count connections per location
-        connection_counts = {}
-        for conn in connections:
-            for loc in [conn['from'], conn['to']]:
-                connection_counts[loc] = connection_counts.get(loc, 0) + 1
+        # Get top 5 locations by SKU count
+        top_locations = sorted(sku_counts.items(), key=lambda x: x[1], reverse=True)[:5]
         
-        report = f"""
-# CedarSim 3D Visualization Report
+        report = f"""# CedarSim 3D Visualization Report
 Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-## Visualization Summary
-- **Total Locations**: {len(location_positions)}
-- **Total SKUs**: {len(self.sku_data)}
-- **Total Connections**: {len(connections)}
-- **Visualization Type**: Interactive 3D with Plotly
+## Summary
+- **Locations**: {len(location_positions)} hospital locations across 9 levels
+- **SKUs**: {len(self.sku_data):,} total inventory items
+- **Connections**: {len(connections):,} emergency replenishment paths
+- **Type**: Interactive 3D visualizations with Plotly
 
-## Location Hierarchy
-"""
-        
-        for hierarchy, locations in self.location_hierarchy.items():
-            matching_locs = [loc for loc in location_positions.keys() 
-                           if location_positions[loc]['hierarchy'] == hierarchy]
-            report += f"- **{hierarchy}**: {len(matching_locs)} locations\n"
-        
-        report += f"""
 ## Top Locations by SKU Count
 """
         
-        sorted_locations = sorted(sku_counts.items(), key=lambda x: x[1], reverse=True)
-        for location, count in sorted_locations[:10]:
-            report += f"- **{location}**: {count} SKUs\n"
+        for location, count in top_locations:
+            report += f"- **{location}**: {count:,} SKUs\n"
         
         report += f"""
-## Connection Analysis
-- **Average Connections per Location**: {np.mean(list(connection_counts.values())):.1f}
-- **Most Connected Location**: {max(connection_counts.items(), key=lambda x: x[1])[0]} ({max(connection_counts.values())} connections)
-- **Total Unique SKU Connections**: {len(set(conn['sku_id'] for conn in connections))}
-
 ## Files Generated
-- `cedarsim_3d_visualization.html` - Interactive 3D visualization
+- `cedarsim_combined_visualization.html` - Combined 3D network visualization
 - `cedarsim_network.html` - Network graph visualization
 - `cedarsim_visualization_report.md` - This report
+
+---
+*Open the HTML files in your browser to explore the interactive 3D visualizations.*
 """
         
         return report
@@ -503,19 +546,19 @@ Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}
                 return False
             print("✅ Data loaded successfully")
             
-            # Step 2: Create 3D visualization
-            print("Step 2: Creating 3D visualization...")
-            if not self.create_3d_visualization():
-                print("ERROR: 3D visualization creation failed")
+            # Step 2: Create combined 3D network visualization
+            print("Step 2: Creating combined 3D network visualization...")
+            if not self.create_combined_visualization():
+                print("ERROR: Combined visualization creation failed")
                 return False
-            print("✅ 3D visualization created")
+            print("✅ Combined 3D network visualization created")
             
-            # Step 3: Create network visualization
-            print("Step 3: Creating network visualization...")
+            # Step 3: Create network graph visualization
+            print("Step 3: Creating network graph visualization...")
             if not self.create_network_visualization():
                 print("ERROR: Network visualization creation failed")
                 return False
-            print("✅ Network visualization created")
+            print("✅ Network graph visualization created")
             
             # Step 4: Generate report
             report = self.generate_visualization_report()
@@ -528,8 +571,8 @@ Generated: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M:%S')}
             logger.info("3D VISUALIZATION PIPELINE COMPLETED SUCCESSFULLY!")
             logger.info("=" * 70)
             logger.info("Generated files:")
-            logger.info("  - cedarsim_3d_visualization.html (Interactive 3D)")
-            logger.info("  - cedarsim_network.html (Network Graph)")
+            logger.info("  - cedarsim_combined_visualization.html (Combined 3D Network with Location Clusters)")
+            logger.info("  - cedarsim_network.html (Network Graph Visualization)")
             logger.info("  - cedarsim_visualization_report.md (Summary Report)")
             
             return True

@@ -42,12 +42,12 @@ Z-Axis (Hierarchy Levels):
 ## 📁 Files
 
 ### **Core Scripts**
-- `3d_visualization_pipeline.py` - Main visualization engine
+- `cedarsim_3d_viz.py` - Main visualization engine
 - `test_3d_viz.py` - Test script with sample data
 - `requirements_3d_viz.txt` - Python dependencies
 
 ### **Generated Outputs**
-- `cedarsim_3d_visualization.html` - Interactive 3D visualization
+- `cedarsim_combined_visualization.html` - Combined 3D network visualization
 - `cedarsim_network.html` - Network graph visualization  
 - `cedarsim_visualization_report.md` - Summary report
 
@@ -65,13 +65,13 @@ python test_3d_viz.py
 
 ### **3. Run Full Pipeline**
 ```bash
-python 3d_visualization_pipeline.py
+python cedarsim_3d_viz.py
 ```
 
 ### **4. View Results**
 Open the generated HTML files in your web browser:
-- `cedarsim_3d_visualization.html` - Main 3D visualization
-- `cedarsim_network.html` - Network graph view
+- `cedarsim_combined_visualization.html` - Combined 3D network visualization
+- `cedarsim_network.html` - Network graph visualization
 
 ## 🎮 Interactive Features
 
