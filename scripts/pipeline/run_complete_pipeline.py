@@ -85,9 +85,9 @@ def run_complete_pipeline():
         
         # Copy data outputs to data/ subdirectory
         data_files = [
-            ("data/final/CedarSim_Simulation_Ready_Data_Final.xlsx", "data/"),
-            ("data/audit_trails/phase1_missing_lead_times_removal.csv", "data/"),
-            ("data/audit_trails/phase2_unmapped_skus_removal.csv", "data/")
+            ("../../data/final/CedarSim_Simulation_Ready_Data_Final.xlsx", "data/"),
+            ("../../data/audit_trails/phase1_missing_lead_times_removal.csv", "data/"),
+            ("../../data/audit_trails/phase2_unmapped_skus_removal.csv", "data/")
         ]
         
         for file_path, subdir in data_files:
@@ -97,9 +97,9 @@ def run_complete_pipeline():
         
         # Copy visualization outputs to visualizations/ subdirectory
         viz_files = [
-            ("scripts/simulation/cedarsim_combined_visualization.html", "visualizations/"),
-            ("scripts/simulation/cedarsim_network.html", "visualizations/"),
-            ("scripts/simulation/cedarsim_visualization_report.md", "reports/")
+            ("../simulation/cedarsim_combined_visualization.html", "visualizations/"),
+            ("../simulation/cedarsim_network.html", "visualizations/"),
+            ("../simulation/cedarsim_visualization_report.md", "reports/")
         ]
         
         for file_path, subdir in viz_files:

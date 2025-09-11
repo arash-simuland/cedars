@@ -44,10 +44,10 @@ logger = logging.getLogger(__name__)
 class CedarSimPipeline:
     """Complete CedarSim data processing pipeline with automatic audit trail generation"""
     
-    def __init__(self, input_dir="data/archive/original", output_dir="data/final"):
+    def __init__(self, input_dir="../../data/archive/original", output_dir="../../data/final"):
         self.input_dir = Path(input_dir)
         self.output_dir = Path(output_dir)
-        self.audit_dir = Path("data/audit_trails")
+        self.audit_dir = Path("../../data/audit_trails")
         
         # Create output directories
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -220,11 +220,11 @@ class CedarSimPipeline:
         try:
             output_file = self.output_dir / "CedarSim_Simulation_Ready_Data_Final.xlsx"
             
-            # Significantly reduce demand data for Excel compatibility
+            # Significantly reduce demand data for Excel compatibility with smaller batches
             demand_data_for_excel = self.clean_demand_data.copy()
-            if len(demand_data_for_excel) > 10000:
-                logger.info(f"Sampling demand data from {len(demand_data_for_excel)} to 10,000 rows for Excel stability...")
-                demand_data_for_excel = demand_data_for_excel.sample(n=10000, random_state=42)
+            if len(demand_data_for_excel) > 5000:
+                logger.info(f"Sampling demand data from {len(demand_data_for_excel)} to 5,000 rows for Excel stability...")
+                demand_data_for_excel = demand_data_for_excel.sample(n=5000, random_state=42)
             
             # Clean data to prevent Excel corruption
             def clean_dataframe(df):

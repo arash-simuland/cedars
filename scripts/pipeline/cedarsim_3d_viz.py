@@ -128,7 +128,7 @@ class CedarSim3DVisualizer:
             logger.info(f"Loaded {len(self.demand_data)} demand records (sampled)")
             
             # Load validation data
-            self.validation_data = pd.read_excel(self.data_file, sheet_name='05_Validation_Sample')
+            self.validation_data = pd.read_excel(self.data_file, sheet_name='05_Phase2_Removal_Record')
             logger.info(f"Loaded {len(self.validation_data)} validation SKUs")
             
             return True

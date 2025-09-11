@@ -42,7 +42,6 @@ class CedarSim3DVisualizer:
         self.data_file = Path(data_file)
         self.sku_data = None
         self.demand_data = None
-        self.validation_data = None
         
         # Location hierarchy and positioning (Z-axis represents hospital floor levels)
         # Updated to match actual Cedar Hospital 9-level stacking diagram with Level 0 for Perpetual
@@ -121,15 +120,13 @@ class CedarSim3DVisualizer:
             self.sku_data = pd.read_excel(self.data_file, sheet_name='01_SKU_Inventory_Final')
             logger.info(f"Loaded {len(self.sku_data)} SKUs")
             
-            # Load demand data (sampled for performance)
+            # Load demand data (sampled for performance with smaller batches)
             self.demand_data = pd.read_excel(self.data_file, sheet_name='02_Demand_Data_Clean')
-            if len(self.demand_data) > 1000:
-                self.demand_data = self.demand_data.sample(n=1000, random_state=42)
+            if len(self.demand_data) > 500:
+                self.demand_data = self.demand_data.sample(n=500, random_state=42)
             logger.info(f"Loaded {len(self.demand_data)} demand records (sampled)")
             
-            # Load validation data
-            self.validation_data = pd.read_excel(self.data_file, sheet_name='05_Validation_Sample')
-            logger.info(f"Loaded {len(self.validation_data)} validation SKUs")
+            # Note: Validation data not needed for visualization - only for simulation optimization
             
             return True
             
