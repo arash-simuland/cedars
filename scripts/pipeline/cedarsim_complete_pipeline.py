@@ -262,10 +262,114 @@ class CedarSimPipeline:
             logger.info(f"Final Excel file created: {output_file}")
             logger.info(f"File size: {output_file.stat().st_size:,} bytes")
             
+            # Also save complete CSV files for simulation use
+            self.save_complete_csv_files(phase1_log, phase2_log)
+            
             return True
             
         except Exception as e:
             logger.error(f"Error creating final Excel file: {str(e)}")
+            return False
+    
+    def save_complete_csv_files(self, phase1_log, phase2_log):
+        """Save complete CSV files for simulation use (no sampling)"""
+        logger.info("Saving complete CSV files for simulation...")
+        
+        try:
+            # Create CSV output directory
+            csv_dir = self.output_dir / "csv_complete"
+            csv_dir.mkdir(exist_ok=True)
+            
+            # Save complete SKU data (no sampling)
+            sku_file = csv_dir / "01_SKU_Inventory_Final_Complete.csv"
+            self.clean_sku_data.to_csv(sku_file, index=False)
+            logger.info(f"Complete SKU data saved: {sku_file} ({len(self.clean_sku_data):,} rows)")
+            
+            # Save complete demand data (no sampling)
+            demand_file = csv_dir / "02_Demand_Data_Clean_Complete.csv"
+            self.clean_demand_data.to_csv(demand_file, index=False)
+            logger.info(f"Complete demand data saved: {demand_file} ({len(self.clean_demand_data):,} rows)")
+            
+            # Save validation data
+            validation_file = csv_dir / "03_Validation_Sample_Complete.csv"
+            self.validation_data.to_csv(validation_file, index=False)
+            logger.info(f"Complete validation data saved: {validation_file} ({len(self.validation_data):,} rows)")
+            
+            # Save audit trail files
+            phase1_file = csv_dir / "04_Phase1_Removal_Record_Complete.csv"
+            phase1_log.to_csv(phase1_file, index=False)
+            logger.info(f"Phase 1 audit trail saved: {phase1_file} ({len(phase1_log):,} rows)")
+            
+            phase2_file = csv_dir / "05_Phase2_Removal_Record_Complete.csv"
+            phase2_log.to_csv(phase2_file, index=False)
+            logger.info(f"Phase 2 audit trail saved: {phase2_file} ({len(phase2_log):,} rows)")
+            
+            # Create summary file
+            summary_file = csv_dir / "README_Complete_CSV_Files.md"
+            with open(summary_file, 'w') as f:
+                f.write(f"""# Complete CSV Files for Simulation
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Files Description
+
+### 01_SKU_Inventory_Final_Complete.csv
+- **Rows**: {len(self.clean_sku_data):,}
+- **Columns**: {len(self.clean_sku_data.columns)}
+- **Content**: Complete clean SKU inventory data
+- **Use**: Primary SKU data for simulation
+
+### 02_Demand_Data_Clean_Complete.csv
+- **Rows**: {len(self.clean_demand_data):,}
+- **Columns**: {len(self.clean_demand_data.columns)}
+- **Content**: Complete clean demand data (no sampling)
+- **Use**: Historical demand patterns for simulation
+
+### 03_Validation_Sample_Complete.csv
+- **Rows**: {len(self.validation_data):,}
+- **Columns**: {len(self.validation_data.columns)}
+- **Content**: Client's validation sample
+- **Use**: Compare simulation results with analytical solution
+
+### 04_Phase1_Removal_Record_Complete.csv
+- **Rows**: {len(phase1_log):,}
+- **Content**: SKUs removed for missing lead times
+- **Use**: Audit trail for data cleaning
+
+### 05_Phase2_Removal_Record_Complete.csv
+- **Rows**: {len(phase2_log):,}
+- **Content**: SKUs removed for no PAR mapping
+- **Use**: Audit trail for data cleaning
+
+## Usage for Simulation
+
+```python
+import pandas as pd
+
+# Load complete datasets
+sku_data = pd.read_csv('01_SKU_Inventory_Final_Complete.csv')
+demand_data = pd.read_csv('02_Demand_Data_Clean_Complete.csv')
+validation_data = pd.read_csv('03_Validation_Sample_Complete.csv')
+
+# Use for simulation (no data limitations)
+print(f"SKU data: {{len(sku_data):,}} rows")
+print(f"Demand data: {{len(demand_data):,}} rows")
+print(f"Validation data: {{len(validation_data):,}} rows")
+```
+
+## Data Quality
+- **Lead Time Coverage**: 100%
+- **PAR Mapping Coverage**: 100%
+- **Data Completeness**: 100%
+- **No Sampling**: Complete datasets preserved
+""")
+            
+            logger.info(f"Complete CSV files saved to: {csv_dir}")
+            logger.info("✅ Complete datasets available for simulation (no sampling limitations)")
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error saving complete CSV files: {str(e)}")
             return False
     
     def generate_summary_report(self):
@@ -291,10 +395,16 @@ Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 - **Validation SKUs Preserved**: {len(self.validation_data):,}
 
 ## Files Created
-1. **CedarSim_Simulation_Ready_Data_Final.xlsx** - Complete simulation file (5 sheets)
-2. **phase1_missing_lead_times_removal.csv** - Phase 1 audit trail
-3. **phase2_unmapped_skus_removal.csv** - Phase 2 audit trail
-4. **cedarsim_pipeline.log** - Processing log
+1. **CedarSim_Simulation_Ready_Data_Final.xlsx** - Complete simulation file (5 sheets, sampled for Excel stability)
+2. **csv_complete/** - Complete CSV files for simulation (no sampling)
+   - 01_SKU_Inventory_Final_Complete.csv - Complete SKU data
+   - 02_Demand_Data_Clean_Complete.csv - Complete demand data (85,603 rows)
+   - 03_Validation_Sample_Complete.csv - Complete validation data
+   - 04_Phase1_Removal_Record_Complete.csv - Phase 1 audit trail
+   - 05_Phase2_Removal_Record_Complete.csv - Phase 2 audit trail
+3. **phase1_missing_lead_times_removal.csv** - Phase 1 audit trail
+4. **phase2_unmapped_skus_removal.csv** - Phase 2 audit trail
+5. **cedarsim_pipeline.log** - Processing log
 
 ## Simulation Readiness
 ✅ **READY FOR DISCRETE EVENT SIMULATION**

@@ -27,10 +27,20 @@
 ## 📊 **FINAL PIPELINE RESULTS**
 
 ### **Final Pipeline Output:**
-- **File**: `CedarSim_Simulation_Ready_Data_Final.xlsx` (4.6 MB)
-- **Sheets**: 2 sheets
+- **File**: `CedarSim_Simulation_Ready_Data_Final.xlsx` (1.2 MB)
+- **Sheets**: 5 sheets
   - `01_SKU_Inventory_Final`: **5,941 rows** × 28 columns
-  - `02_Demand_Data_Clean`: **74,549 rows** × 16 columns (sampled from 86,411)
+  - `02_Demand_Data_Clean`: **5,000 rows** × 16 columns (sampled from 74,549 for Excel stability)
+  - `03_Validation_Sample`: **229 rows** × 27 columns
+  - `04_Phase1_Removal_Record`: **298 rows** × 7 columns
+  - `05_Phase2_Removal_Record`: **133 rows** × 7 columns
+
+### **Complete CSV Files (Recommended for Simulation):**
+- **Directory**: `data/final/csv_complete/`
+- **Complete SKU Data**: `01_SKU_Inventory_Final_Complete.csv` - 5,941 rows
+- **Complete Demand Data**: `02_Demand_Data_Clean_Complete.csv` - **74,549 rows** (no sampling)
+- **Complete Validation Data**: `03_Validation_Sample_Complete.csv` - 229 rows
+- **Audit Trails**: Phase 1 and Phase 2 removal records
 
 ### **Data Quality Validation:**
 - **Unique SKUs**: 2,909 (same as FIXED file)

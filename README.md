@@ -21,9 +21,13 @@ The CedarSim data processing pipeline is complete and we're now building the dis
 ## 🚀 Quick Start
 
 ### For Simulation Implementation:
-1. **Main Data File**: `data/final/CedarSim_Simulation_Ready_Data_Final.xlsx`
-2. **Technical Specs**: `docs/technical_specs/model.md`
-3. **Project Status**: `docs/reports/completion_summary.md`
+1. **Complete CSV Files**: `data/final/csv_complete/` (recommended for simulation)
+   - `01_SKU_Inventory_Final_Complete.csv` - 5,941 SKUs (complete dataset)
+   - `02_Demand_Data_Clean_Complete.csv` - 74,549 demand records (complete dataset)
+   - `03_Validation_Sample_Complete.csv` - 229 validation SKUs
+2. **Excel Summary**: `data/final/CedarSim_Simulation_Ready_Data_Final.xlsx` (5 sheets, sampled for stability)
+3. **Technical Specs**: `docs/technical_specs/model.md`
+4. **Project Status**: `docs/reports/completion_summary.md`
 
 ### For Data Analysis:
 1. **Analysis Reports**: `docs/reports/`
@@ -79,9 +83,10 @@ The simulation uses an **object-oriented approach** with:
 - **Phase 1 Removed**: 298 (missing lead times)
 - **Phase 2 Removed**: 133 (no PAR mapping)  
 - **Final Clean SKUs**: 5,941
-- **Demand Records**: 86,411 → 10,000 (sampled for Excel stability)
+- **Demand Records**: 86,411 → 74,549 (complete clean dataset)
+- **Excel Sampling**: 5,000 rows (for file stability only)
 - **Data Quality**: 100% Complete
-- **Simulation Ready**: ✅ YES
+- **Simulation Ready**: ✅ YES (use CSV files for complete dataset)
 
 ## 📞 Contact
 

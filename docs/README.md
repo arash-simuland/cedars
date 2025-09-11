@@ -29,7 +29,9 @@ Final deliverable structure:
 
 ## 🚀 Quick Navigation
 
-- **For Simulation Implementation**: Start with `technical_specs/model.md`
+- **For Simulation Implementation**: 
+  - Use `data/final/csv_complete/` files (complete datasets)
+  - Start with `technical_specs/model.md`
 - **For Project Status**: Check `reports/completion_summary.md`
 - **For Data Analysis**: Review `reports/data_analysis_report.md`
 - **For Next Steps**: See `technical_specs/CONTINUATION_INSTRUCTIONS.md`
