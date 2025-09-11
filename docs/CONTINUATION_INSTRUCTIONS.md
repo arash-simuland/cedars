@@ -3,69 +3,110 @@
 ## Project Overview
 We're building a CedarSim inventory management simulation system for hospital inventory management. The project involves analyzing Excel data and implementing a simulation model based on specifications in a Word document.
 
-## Current Status
+## Current Status - UPDATED (September 11, 2025)
 - ✅ **Model Understanding**: Complete understanding captured in `model.md`
-- ✅ **Data Analysis Setup**: Jupyter notebook `excel_data_review.ipynb` created with comprehensive analysis
+- ✅ **Data Analysis Setup**: Comprehensive analysis completed
 - ✅ **Data Structure**: Identified 6,372 SKUs (full inventory) vs 229 SKUs (analytical sample)
-- 🔄 **SKU-to-Location Mapping Analysis**: In progress - need to complete
+- ✅ **Phase 1 Data Cleaning**: COMPLETED - 298 SKUs with missing lead times removed
+- ✅ **Clean Data Files**: Created simulation-ready datasets (6,074 clean SKUs)
+- ✅ **Documentation Updated**: All documents now reflect correct numbers (133 unmapped SKUs)
+- 🔄 **Phase 2 Data Cleaning**: IN PROGRESS - Unmapped SKUs analysis (133 SKUs found, not 197)
+- ⚠️ **Technical Issue**: Python execution problems in current session
 
-## Files Created
-1. **`model.md`** - Main understanding document with all specifications
-2. **`excel_data_review.ipynb`** - Comprehensive data analysis notebook
-3. **`mapping_analysis_final.py`** - Script to analyze SKU-to-location mapping
-4. **`CedarSim_pipeline.docx`** - Original Word document with specifications
+## 🗂️ FOLDER CLEANUP REQUIRED
 
-## Data Files
-1. **`2025-07-14_MDRH_Inventory_Storage_Burn_Rates_V3.xlsx`** - Main data file
-   - 6,372 SKUs across 17 PAR locations + 1 Perpetual inventory
-   - Lead times, demand data, SKU-inventory mapping
-2. **`2025-08-04_MDRH_Inventory_Safety_Stock_Sample_Items.xlsx`** - Validation data
-   - 229 SKUs with pre-calculated target inventories
-   - Client's analytical solution for validation
+**BEFORE STARTING NEW CHAT SESSION:**
+1. **Clean the folder structure** - Archive everything except essential files
+2. **Keep only current working files** in root directory
+3. **Move all analysis files** to nested archive structure
 
-## Immediate Next Steps
+### **Files to KEEP in Root Directory:**
+- `CedarSim_Simulation_Ready_Data.xlsx` - Main simulation file
+- `PROGRESS_REPORT.md` - Current progress tracking
+- `data_analysis_report.md` - Updated analysis report
+- `data_cleansing_roadmap.md` - Updated roadmap
+- `docs/` folder - All documentation
 
-### 1. Complete SKU-to-Location Mapping Analysis
-**Goal**: Determine if Excel data clearly maps each SKU to hospital locations
+### **Files to ARCHIVE:**
+- All `.csv` files (move to `archive/data_cleaning/`)
+- All `.ipynb` files (move to `archive/analysis/`)
+- All `.py` files (move to `archive/scripts/`)
+- Original Excel files (move to `archive/original_data/`)
 
-**Method**: Run the mapping analysis script
-```bash
-python mapping_analysis_final.py
-```
+## 📁 Current Essential Files
 
+### **Simulation-Ready Data**
+1. **`CedarSim_Simulation_Ready_Data.xlsx`** - Main simulation file (4 sheets)
+   - 6,074 clean SKUs with complete lead times
+   - 85,603 clean demand records
+   - 229 validation SKUs
+   - Complete audit trail
+
+### **Documentation**
+2. **`PROGRESS_REPORT.md`** - Current progress and next steps
+3. **`data_analysis_report.md`** - Updated analysis with cleaning results
+4. **`data_cleansing_roadmap.md`** - Updated roadmap with completed phases
+
+## 🚀 IMMEDIATE NEXT STEPS
+
+### **Step 1: Folder Cleanup (BEFORE NEW CHAT)**
+**Goal**: Clean folder structure and archive completed work
+
+**Actions**:
+1. **Create archive structure**:
+   ```
+   archive/
+   ├── data_cleaning/
+   │   ├── sku_data_cleaned.csv
+   │   ├── demand_data_cleaned.csv
+   │   └── missing_lead_time_skus_record.csv
+   ├── analysis/
+   │   ├── excel_data_review.ipynb
+   │   └── pre_removal_analysis.ipynb
+   ├── scripts/
+   │   ├── mapping_analysis_final.py
+   │   └── all other .py files
+   └── original_data/
+       ├── 2025-07-14_MDRH_Inventory_Storage_Burn_Rates_V3.xlsx
+       └── 2025-08-04_MDRH_Inventory_Safety_Stock_Sample_Items.xlsx
+   ```
+
+2. **Keep in root directory**:
+   - `CedarSim_Simulation_Ready_Data.xlsx`
+   - `PROGRESS_REPORT.md`
+   - `data_analysis_report.md`
+   - `data_cleansing_roadmap.md`
+   - `docs/` folder
+
+### **Step 2: Phase 2 Data Cleaning - Unmapped SKUs (PARTIALLY COMPLETED)**
+**Goal**: Remove SKUs with no PAR location mapping
+
+**Current Findings**:
+- ✅ **Found 133 unmapped SKUs** (not 197 as expected - this is better!)
+- ✅ **Top affected departments**: Spine Center (44), Employee Health (39), Bariatric Clinic (37)
+- ✅ **Most affected supplier**: Medline Industries Inc (120 out of 133)
+- ⚠️ **1 validation SKU is unmapped** - needs special attention (SKU 30847 - Wipe Sani Cloth)
+
+**Method**: Use Jupyter notebook or Python script to complete analysis
 **Expected Output**: 
-- Mapping completeness for each of 17 PAR locations
-- Whether values are quantities or presence/absence indicators
-- Examples of SKU mappings
-- Overall mapping statistics
+- Remove 133 unmapped SKUs from clean dataset
+- Handle validation SKU issue (either find mapping or remove from validation set)
+- Create final simulation-ready dataset
 
 **Key Questions to Answer**:
-- Do most SKUs have clear location mappings?
-- Are the values quantities (how much) or categorical (whether stored)?
-- How many SKUs are unmapped?
-- How many SKUs are in multiple locations?
+- ✅ Which SKUs have no PAR location mapping? (133 SKUs identified)
+- ✅ What departments/suppliers are affected? (Spine Center, Employee Health, Medline)
+- ⚠️ Can we preserve all validation SKUs? (1 SKU needs attention)
 
-### 2. Run Jupyter Notebook Analysis
-**Goal**: Execute the comprehensive data analysis
-
-**Method**: Open `excel_data_review.ipynb` and run all cells
-
-**Key Analysis Points**:
-- Data structure and quality assessment
-- SKU overlap between datasets
-- Demand pattern analysis
-- Lead time analysis
-- Data completeness for simulation
-
-### 3. Validate Data Against Model Requirements
-**Goal**: Ensure data meets simulation requirements from `model.md`
+### **Step 3: Final Data Validation**
+**Goal**: Ensure 100% data completeness for simulation
 
 **Checklist**:
-- [ ] Lead times available for all SKUs
-- [ ] SKU-inventory mapping complete
-- [ ] Historical demand data sufficient
-- [ ] Target inventory levels available
-- [ ] Service level targets confirmed (98%, Z-score 2.05)
+- [x] Lead times available for all SKUs (COMPLETED)
+- [ ] SKU-inventory mapping complete (PENDING)
+- [x] Historical demand data sufficient (COMPLETED)
+- [ ] Target inventory levels available (PENDING)
+- [ ] Service level targets confirmed (98%, Z-score 2.05) (PENDING)
 
 ## Model Implementation Plan
 
@@ -109,17 +150,38 @@ python mapping_analysis_final.py
 - [ ] Simulation model implemented and validated
 - [ ] Results match client's analytical solution within acceptable tolerance
 
-## Next Chat Session Instructions
-1. **Start with**: "I'm continuing the CedarSim project. Please run the mapping analysis to understand SKU-to-location mapping."
-2. **Run**: `python mapping_analysis_final.py`
-3. **Analyze**: Results to determine mapping clarity
-4. **Continue**: With data preparation and model implementation based on findings
+## 💬 Next Chat Session Instructions
 
-## Files to Reference
-- **`model.md`** - Complete project understanding
-- **`excel_data_review.ipynb`** - Data analysis notebook
-- **`mapping_analysis_final.py`** - Mapping analysis script
-- **Excel files** - Source data
+### **Start New Chat With:**
+"I'm continuing the CedarSim project. Phase 1 data cleaning is complete - we removed 298 SKUs with missing lead times. Phase 2 unmapped SKUs analysis is partially complete - we found 133 unmapped SKUs (not 197 as expected). There's 1 validation SKU that needs attention. I need to complete the unmapped SKUs removal and handle the validation SKU issue."
+
+### **Current Status to Share:**
+- ✅ **Phase 1 Complete**: 298 SKUs with missing lead times removed
+- ✅ **Clean Data Available**: 6,074 SKUs with complete lead times
+- ✅ **Files Ready**: CedarSim_Simulation_Ready_Data.xlsx with 4 sheets
+- 🔄 **Phase 2 Partial**: Found 133 unmapped SKUs (better than expected 197)
+- ⚠️ **Issue**: 1 validation SKU (30847 - Wipe Sani Cloth) is unmapped
+- 🔄 **Next**: Complete unmapped SKUs removal and handle validation SKU
+
+### **Files to Reference:**
+- **`CedarSim_Simulation_Ready_Data.xlsx`** - Main simulation file (4 sheets)
+- **`PROGRESS_REPORT.md`** - Current progress and status
+- **`data_analysis_report.md`** - Updated analysis with cleaning results
+- **`docs/model.md`** - Complete project understanding
+
+### **Expected Next Actions:**
+1. ✅ **Analyze unmapped SKUs** - Found 133 SKUs with no PAR location mapping
+2. ✅ **Assess business impact** - Spine Center, Employee Health, Medline Industries affected
+3. **Handle validation SKU** - Investigate SKU 30847 (Wipe Sani Cloth) mapping issue
+4. **Remove unmapped SKUs** - Clean dataset further (remove 133 SKUs)
+5. **Final validation** - Ensure 100% data completeness
+6. **Prepare for simulation** - Set up discrete event simulation framework
+
+### **Technical Notes for Next Session:**
+- **Python execution issues** in current session - use Jupyter notebook instead
+- **PAR mapping logic**: Look for 'X' values OR non-null values in PAR columns
+- **Validation SKU 30847**: Check if it has 'X' in any PAR column (might be false positive)
+- **Expected final dataset**: ~5,941 SKUs (6,074 - 133 unmapped)
 
 ---
 *Last Updated: [Current Date]*
