@@ -1,0 +1,90 @@
+=== SKU-TO-LOCATION MAPPING ANALYSIS ===
+Available PAR locations: 17
+PAR location names: ['Level 1 Perpetual_1400', 'Level 1 Facilities/Biomed_1232', 'Level 1 EVS_1321', 'Level 1 ED_1229', 'Level 1 Imaging_1329', 'Level 2 Pharm_2500', 'Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A', 'Level 3 Sterile Processing_3307_3309', 'Level 3 Food Service', 'Level 3 Admin', 'Level 3 Central Lab_3411', 'Level 5 Observation, Medical Tele & Non-Tele_5206', 'Level 6 Telemetry, Cardiac & Stroke', 'Level 7 PCU', 'Level 7 ICU', "Level 8 M/S Overflow, VIP & Int'l Med", 'Level 9 Surgical, Non-Infectious']
+
+=== MAPPING COMPLETENESS ===
+Level 1 Perpetual_1400: 501/6372 SKUs (7.9%)
+Level 1 Facilities/Biomed_1232: 1/6372 SKUs (0.0%)
+Level 1 EVS_1321: 74/6372 SKUs (1.2%)
+Level 1 ED_1229: 567/6372 SKUs (8.9%)
+Level 1 Imaging_1329: 382/6372 SKUs (6.0%)
+Level 2 Pharm_2500: 101/6372 SKUs (1.6%)
+Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A: 2938/6372 SKUs (46.1%)
+Level 3 Sterile Processing_3307_3309: 79/6372 SKUs (1.2%)
+Level 3 Food Service: 66/6372 SKUs (1.0%)
+Level 3 Admin: 12/6372 SKUs (0.2%)
+Level 3 Central Lab_3411: 211/6372 SKUs (3.3%)
+Level 5 Observation, Medical Tele & Non-Tele_5206: 554/6372 SKUs (8.7%)
+Level 6 Telemetry, Cardiac & Stroke: 313/6372 SKUs (4.9%)
+Level 7 PCU: 0/6372 SKUs (0.0%)
+Level 7 ICU: 443/6372 SKUs (7.0%)
+Level 8 M/S Overflow, VIP & Int'l Med: 0/6372 SKUs (0.0%)
+Level 9 Surgical, Non-Infectious: 0/6372 SKUs (0.0%)
+
+=== MAPPING VALUE INTERPRETATION ===
+Sample column: Level 1 Perpetual_1400
+Value range: X to X
+Value types: object
+Sample values: ['X', 'X', 'X', 'X', 'X']
+Values appear to be CATEGORICAL
+This suggests the mapping shows WHETHER each SKU is stored at each location
+
+=== MAPPING EXAMPLES ===
+First 5 SKUs and their location mappings:
+
+SKU: 802740 - Circuit Anes Breathing With 3L Bag 90In
+Department: Anesthesiology
+Mapped to: ['Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A: X']
+
+SKU: 00005 - Pitcher Graduated Triangular Disposable 32oz
+Department: Balance Sheet CC
+Mapped to: ['Level 1 Perpetual_1400: X']
+
+SKU: 00009 - Restraint Lmb Hld
+Department: Balance Sheet CC
+Mapped to: ['Level 1 Perpetual_1400: X']
+
+SKU: 00021 - Kit Cath Suction 14fr Regu-Vac LF
+Department: Balance Sheet CC
+Mapped to: ['Level 1 Perpetual_1400: X']
+
+SKU: 00023 - Kit Cath Suction 10fr Regu-Vac LF
+Department: Balance Sheet CC
+Mapped to: ['Level 1 Perpetual_1400: X']
+
+=== MAPPING SUMMARY ===
+                                             Location  ...  Percentage
+6   Level 2 Surgery/Procedures/PACU_2209_2321_2323...  ...   46.107972
+3                                     Level 1 ED_1229  ...    8.898305
+11  Level 5 Observation, Medical Tele & Non-Tele_5206  ...    8.694288
+0                              Level 1 Perpetual_1400  ...    7.862524
+14                                        Level 7 ICU  ...    6.952291
+4                                Level 1 Imaging_1329  ...    5.994978
+12                Level 6 Telemetry, Cardiac & Stroke  ...    4.912116
+10                           Level 3 Central Lab_3411  ...    3.311362
+5                                  Level 2 Pharm_2500  ...    1.585060
+7                Level 3 Sterile Processing_3307_3309  ...    1.239799
+2                                    Level 1 EVS_1321  ...    1.161331
+8                                Level 3 Food Service  ...    1.035782
+9                                       Level 3 Admin  ...    0.188324
+1                      Level 1 Facilities/Biomed_1232  ...    0.015694
+13                                        Level 7 PCU  ...    0.000000
+15              Level 8 M/S Overflow, VIP & Int'l Med  ...    0.000000
+16                   Level 9 Surgical, Non-Infectious  ...    0.000000
+
+[17 rows x 4 columns]
+
+Mapping Statistics:
+SKUs with at least one location: 6175
+SKUs with no locations: 197
+SKUs with multiple locations: 67
+Average locations per SKU: 0.98
+
+=== CONCLUSION ===
+Traceback (most recent call last):
+  File "C:\Users\arama\Downloads\presentation\mapping_analysis_final.py", line 75, in <module>
+    print('\u2705 YES - The Excel sheet shows a CLEAR map of where each item is in the hospital')
+  File "C:\Users\arama\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2705' in position 0: character maps to <undefined>
