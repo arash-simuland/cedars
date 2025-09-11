@@ -461,8 +461,8 @@ class CedarSimPipeline:
             if (audit_path / 'phase2_unmapped_skus_removal.csv').exists():
                 data_dict['04_Phase2_Removal_Record'] = pd.read_csv(audit_path / 'phase2_unmapped_skus_removal.csv')
             
-            # TODO: Add validation sample as Sheet 5 later
-            # data_dict['05_Validation_Sample'] = filtered_validation_data
+            # Add validation sample as Sheet 5
+            data_dict['05_Validation_Sample'] = filtered_validation_data
             
             # Write Excel file with improved error handling
             logger.info("Writing Excel file with openpyxl engine...")

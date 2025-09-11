@@ -16,15 +16,16 @@ This directory contains all data files organized by purpose and status.
 ### `archive/`
 **Historical and backup data:**
 - **`original/`** - Source data files from client
-- **`interim/`** - Intermediate processing files
-- **`backups/`** - Various backup files from processing
+- **`wip_artifacts/`** - Work-in-progress files and temporary artifacts
+- **`pipeline_backups/`** - Pipeline execution backup files
 
 ## 📊 Data Summary
 
 - **Final Dataset**: 5,941 clean SKUs with complete lead times and PAR mapping
 - **Data Quality**: 100% complete (no missing values)
-- **Validation Sample**: 229 SKUs preserved for validation
+- **Validation Sample**: 75 SKUs preserved from original 229 validation set
 - **Audit Trail**: Complete removal records for both cleaning phases
+- **Pipeline Status**: ✅ COMPLETE - Ready for simulation
 
 ## 🚀 Usage
 

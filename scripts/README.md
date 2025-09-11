@@ -5,32 +5,24 @@ This directory contains all executable code organized by purpose.
 ## 📁 Directory Structure
 
 ### `data_processing/`
-**Data cleaning and preparation scripts:**
-- **`cedarsim_complete_pipeline.py`** - Complete data processing pipeline
-- **`robust_data_cleaning.py`** - Robust data cleaning implementation
-- **`improved_excel_creation.py`** - Excel file creation utilities
+**Production data processing scripts:**
+- **`cedarsim_complete_pipeline.py`** - ✅ MAIN PIPELINE - Complete data processing pipeline
 - **`validate_excel.py`** - Excel validation utilities
-- **`fix_excel.py`** - Excel file repair utilities
-- **`check_*.py`** - Various data checking utilities
+- **`cleanup_workspace.py`** - Workspace cleanup utilities
 
 ### `analysis/`
 **Analysis and exploration scripts:**
 - **`mapping_analysis_final.py`** - SKU-location mapping analysis
-- **`complete_analysis.py`** - Complete data analysis
-- **`detailed_sku_analysis.py`** - Detailed SKU analysis
-- **`run_analysis.py`** - Analysis execution script
-- **`run_pre_removal_analysis.py`** - Pre-removal analysis
+- **`cedarsim_complete_pipeline.py`** - Complete analysis pipeline
 
-### `utilities/`
-**Utility and helper scripts:**
-- **`cleanup_workspace.py`** - Workspace cleanup utilities
-- **`compare_results.py`** - Results comparison utilities
-- **`examine_columns.py`** - Column examination utilities
-- **`find_missing_sku.py`** - Missing SKU detection
+### `archive/`
+**Archived development scripts:**
+- All temporary analysis, testing, and development scripts have been moved here
+- Includes: robust_data_cleaning.py, improved_excel_creation.py, fix_excel.py, and others
 
 ## 🚀 Usage
 
-### For Data Processing:
+### For Data Processing (MAIN PIPELINE):
 ```bash
 cd scripts/data_processing
 python cedarsim_complete_pipeline.py
@@ -42,11 +34,10 @@ cd scripts/analysis
 python mapping_analysis_final.py
 ```
 
-### For Utilities:
-```bash
-cd scripts/utilities
-python cleanup_workspace.py
-```
+## ✅ Pipeline Status
+- **Data Processing**: ✅ COMPLETE - 5,941 clean SKUs ready for simulation
+- **File Validation**: ✅ COMPLETE - All files validated, no corruption
+- **Testing**: ✅ COMPLETE - Comprehensive testing passed
 
 ## 📝 Notes
 
