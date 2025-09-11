@@ -22,18 +22,49 @@ This document captures our understanding of the CedarSim inventory management si
 
 ## System Architecture
 
-### Inventory Structure
-- **1 Safety Stock** (Perpetual Inventory): Central reserve inventory
-- **17 Cycle Stocks** (PARs - Periodic Automatic Replenishment): Department-level inventories
-- **Independent Replenishment**: Each inventory replenishes independently
-- **Stockout Coverage**: If PAR level stockout occurs, safety stock covers the shortage
+### Object Graph Structure
+The simulation is built on a graph of objects representing the inventory system:
+
+#### **Location Objects (18 total)**
+- **1 Perpetual Inventory** (Safety Stock): Central reserve inventory
+- **17 PAR Locations** (Cycle Stocks): Department-level inventories including:
+  - Level 1: Perpetual, Facilities/Biomed, EVS, ED, Imaging
+  - Level 2: Pharm, Surgery/Procedures/PACU
+  - Level 3: Sterile Processing, Food Service, Admin, Central Lab
+  - Level 5-9: Observation, Telemetry, PCU, ICU, M/S Overflow
+  - Respiratory Therapy
+
+#### **SKU Objects**
+- Each SKU is an object **inside** its location
+- Each SKU carries a **current_inventory_level** variable
+- Same SKU exists as multiple objects (one in perpetual + one in each PAR where stored)
+
+#### **Graph Connections for Emergency Replenishment**
+- **Perpetual SKU objects** are connected to **PAR SKU objects** of the same SKU
+- These connections represent emergency replenishment paths
+- When a PAR runs out of a SKU, it can draw from the perpetual SKU of the same type
+
+#### **Object Hierarchy**
+```
+Perpetual_Location {
+    SKU_001 { current_inventory_level: 50, lead_time: 1.0, target_level: 100 }
+    SKU_002 { current_inventory_level: 30, lead_time: 0.5, target_level: 75 }
+    ...
+}
+
+PAR_Level1_ED {
+    SKU_001 { current_inventory_level: 25, lead_time: 1.0, target_level: 50 }
+    SKU_004 { current_inventory_level: 10, lead_time: 0.5, target_level: 30 }
+    ...
+}
+```
 
 ### Inventory Flow Logic
 1. **Daily Demand**: PAR inventories face daily demand
 2. **Sufficient Stock**: If PAR has enough → supplies demand → triggers replenishment order
 3. **Lead Time**: Orders delivered after SKU-specific lead time
 4. **PAR Stockout**: If PAR insufficient → stockout occurs
-5. **Safety Stock Coverage**: Perpetual inventory covers PAR stockouts
+5. **Emergency Replenishment**: Follow graph edges from PAR SKU to Perpetual SKU
 6. **Hospital Stockout**: Remaining unsupplied demand becomes hospital-level stockout
 
 ## Core Mathematical Model
@@ -134,13 +165,45 @@ Supplying from Perpetual = ALLOCATE(
 - **Stockout Frequency**: Minimize within one-year simulation
 - **Inventory Efficiency**: Balance between stockout prevention and inventory costs
 
+## Simulation Implementation Approach
+
+### Object-Oriented Design
+The simulation will be implemented using an object-oriented approach:
+
+#### **Core Classes**
+1. **Location Class**: Represents each inventory location (perpetual + 17 PARs)
+   - Properties: location_id, location_name, location_type
+   - Methods: add_sku(), remove_sku(), get_sku(), update_inventory()
+
+2. **SKU Class**: Represents each SKU within a location
+   - Properties: sku_id, current_inventory_level, lead_time, target_level, demand_pattern
+   - Methods: update_inventory(), check_stockout(), calculate_reorder()
+
+3. **Graph Manager Class**: Manages connections between SKU objects
+   - Properties: emergency_connections, regular_connections
+   - Methods: add_connection(), find_emergency_path(), allocate_inventory()
+
+#### **Simulation Engine**
+- **Daily Time Step**: Process each day sequentially
+- **Demand Processing**: Apply daily demand to each PAR location
+- **Inventory Updates**: Update current_inventory_level for each SKU
+- **Emergency Replenishment**: Use graph connections to transfer inventory
+- **Replenishment Orders**: Trigger new orders based on inventory gaps
+
+#### **Data Integration**
+- Load SKU data from Excel files into Location and SKU objects
+- Map SKU-to-location relationships from PAR mapping columns
+- Initialize current_inventory_level with target levels
+- Set up graph connections based on SKU presence in locations
+
 ## Next Steps for Model Development
 
-1. **Data Processing**: Load and validate Excel data sources
-2. **Parameter Extraction**: Extract lead times, demand patterns, and target inventories
-3. **Simulation Engine**: Implement core mathematical equations
-4. **Validation Framework**: Compare results with client's analytical solution
-5. **Sensitivity Analysis**: Test impact of missing data (lead time variability, storage policies)
+1. **Object Graph Creation**: Implement Location, SKU, and Graph Manager classes
+2. **Data Integration**: Load Excel data into object structure
+3. **Simulation Engine**: Implement daily time-step processing
+4. **Mathematical Model**: Implement core equations within object methods
+5. **Validation Framework**: Compare results with client's analytical solution
+6. **Testing**: Start with 75 validation SKUs before full-scale implementation
 
 ---
 *Last Updated: [Current Date]*

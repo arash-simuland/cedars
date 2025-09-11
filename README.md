@@ -4,9 +4,9 @@
 
 CedarSim is a discrete event simulation system for hospital inventory management, designed to optimize PAR (Periodic Automatic Replenishment) inventory levels and reduce stockouts through intelligent allocation algorithms.
 
-## 📊 Current Status: **PIPELINE COMPLETE** ✅
+## 📊 Current Status: **SIMULATION DEVELOPMENT** 🚀
 
-The CedarSim data processing pipeline has been successfully completed and tested. All data is ready for discrete event simulation implementation.
+The CedarSim data processing pipeline is complete and we're now building the discrete event simulation engine using an object-oriented approach.
 
 ### Key Achievements:
 - ✅ **Data Pipeline**: Successfully processed 6,372 → 5,941 clean SKUs
@@ -14,7 +14,8 @@ The CedarSim data processing pipeline has been successfully completed and tested
 - ✅ **PAR Mapping**: 100% coverage for all remaining SKUs
 - ✅ **Validation**: 75 validation SKUs preserved from original 229
 - ✅ **File Validation**: All input files validated, no corruption detected
-- ✅ **Testing**: Comprehensive pipeline testing completed successfully
+- ✅ **Object Graph Design**: Defined Location and SKU object structure for simulation
+- 🚧 **Simulation Engine**: Currently implementing object-oriented simulation framework
 
 ## 🚀 Quick Start
 
@@ -47,14 +48,24 @@ The CedarSim data processing pipeline has been successfully completed and tested
 └── logs/                   # Log files
 ```
 
-## 📋 Next Steps
+## 📋 Current Development Phase
 
-The data processing pipeline is **COMPLETE** and ready for **discrete event simulation implementation**. Key next steps:
+The data processing pipeline is **COMPLETE** and we're now building the **discrete event simulation engine**. Current focus:
 
-1. **Simulation Engine Development**: Implement mathematical model from `docs/technical_specs/model.md`
-2. **Inventory Flow Logic**: PAR → Safety Stock → Hospital Stockout calculations  
-3. **Allocation Function**: Implement ALLOCATE function for distribution
-4. **Validation Testing**: Test on 75 validation SKUs before full-scale implementation with 5,941 SKUs
+1. **Object Graph Creation**: Implement Location, SKU, and Graph Manager classes
+2. **Data Integration**: Load Excel data into object structure  
+3. **Simulation Engine**: Implement daily time-step processing
+4. **Mathematical Model**: Implement core equations within object methods
+5. **Validation Testing**: Test on 75 validation SKUs before full-scale implementation
+
+## 🏗️ Simulation Architecture
+
+The simulation uses an **object-oriented approach** with:
+
+- **18 Location Objects**: 1 Perpetual + 17 PAR locations
+- **SKU Objects**: Each SKU exists in multiple locations with current_inventory_level
+- **Graph Connections**: Emergency replenishment paths between same SKUs in different locations
+- **Daily Time Steps**: Process demand, update inventory, handle stockouts and replenishment
 
 ## 📊 Final Pipeline Results
 

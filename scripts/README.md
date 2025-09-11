@@ -6,9 +6,17 @@ This directory contains all executable code organized by purpose.
 
 ### `data_processing/`
 **Production data processing scripts:**
-- **`cedarsim_complete_pipeline.py`** - ✅ MAIN PIPELINE - Complete data processing pipeline
+- **`cedarsim_complete_pipeline.py`** - ✅ COMPLETE - Data processing pipeline
 - **`validate_excel.py`** - Excel validation utilities
 - **`cleanup_workspace.py`** - Workspace cleanup utilities
+
+### `simulation/` (Coming Soon)
+**Simulation engine development:**
+- **`location.py`** - Location class implementation
+- **`sku.py`** - SKU class implementation  
+- **`graph_manager.py`** - Graph connections management
+- **`simulation_engine.py`** - Main simulation engine
+- **`data_loader.py`** - Excel data integration
 
 ### `analysis/`
 **Analysis and exploration scripts:**
@@ -34,10 +42,11 @@ cd scripts/analysis
 python mapping_analysis_final.py
 ```
 
-## ✅ Pipeline Status
+## ✅ Project Status
 - **Data Processing**: ✅ COMPLETE - 5,941 clean SKUs ready for simulation
 - **File Validation**: ✅ COMPLETE - All files validated, no corruption
-- **Testing**: ✅ COMPLETE - Comprehensive testing passed
+- **Object Graph Design**: ✅ COMPLETE - Location and SKU object structure defined
+- **Simulation Engine**: 🚧 IN PROGRESS - Implementing object-oriented framework
 
 ## 📝 Notes
 

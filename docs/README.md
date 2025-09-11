@@ -6,7 +6,7 @@ This directory contains all project documentation organized by type and purpose.
 
 ### `technical_specs/`
 Technical documentation including:
-- **`model.md`** - Mathematical model specifications
+- **`model.md`** - ✅ UPDATED - Mathematical model with object graph structure
 - **`presentation.md`** - Project overview and requirements
 - **`compact_prep.md`** - Compact preparation guide
 - **`CONTINUATION_INSTRUCTIONS.md`** - Detailed continuation instructions
