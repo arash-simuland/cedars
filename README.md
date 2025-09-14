@@ -4,9 +4,9 @@
 
 CedarSim is a discrete event simulation system for hospital inventory management, designed to optimize PAR (Periodic Automatic Replenishment) inventory levels and reduce stockouts through intelligent allocation algorithms.
 
-## 📊 Current Status: **SIMULATION DEVELOPMENT READY** 🚀
+## 📊 Current Status: **MODEL BUILDING PHASE** 🏗️
 
-The CedarSim data processing pipeline is complete with integrated new data and we're ready to build the discrete event simulation engine using an object-oriented approach.
+The CedarSim data processing pipeline is complete and we are now actively building the discrete event simulation engine. We have a clear understanding of the replenishment flow and are implementing the object-oriented simulation framework.
 
 ### Key Achievements:
 - ✅ **Data Pipeline**: Successfully processed 6,372 → 5,941 clean SKUs
@@ -18,7 +18,8 @@ The CedarSim data processing pipeline is complete with integrated new data and w
 - ✅ **Object Graph Design**: Defined Location and SKU object structure for simulation
 - ✅ **3D Visualization**: Interactive 3D network visualizations of hospital inventory system
 - ✅ **Simulation Environment**: Professional development and production folder structures
-- 🚧 **Simulation Engine**: Ready to implement object-oriented simulation framework
+- ✅ **Replenishment Flow Understanding**: Clear understanding of normal vs emergency replenishment
+- 🚧 **Simulation Engine**: Currently implementing object-oriented simulation framework
 
 ## 🚀 Quick Start
 
@@ -35,7 +36,8 @@ The CedarSim data processing pipeline is complete with integrated new data and w
    - `Validation_Input_Subset_20250913_220808.csv` - 74 validation SKUs
    - `02_Demand_Data_Clean_Complete.csv` - Historical demand data
 4. **Technical Specs**: `docs/technical_specs/model.md`
-5. **Project Status**: `docs/reports/completion_summary.md`
+5. **Current Status**: `docs/reports/MODEL_BUILDING_STATUS.md`
+6. **Project Completion**: `docs/reports/completion_summary.md`
 
 ### For Data Analysis:
 1. **Analysis Reports**: `docs/reports/`

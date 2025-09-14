@@ -5,17 +5,28 @@ This document captures our understanding of the CedarSim inventory management si
 
 ## Data Sources
 
-### 1. 2025-07-14_MDRH_Inventory_Storage_Burn_Rates_V3.xlsx
+### 1. Complete Input Dataset (5,941 SKUs)
+**File**: `data/final/csv_complete/Complete_Input_Dataset_20250913_220808.csv`
 **Purpose**: Primary data source for inventory management simulation
 
-**Key Tabs**:
-- **01. Data (Department Rollup)**: 
-  - Provides lead times for SKUs
-  - Maps which SKUs are stored in which inventories
-- **Full Data**: 
-  - Provides historical demand data for simulation
+**Key Fields**:
+- **Oracle Item Number**: Unique SKU identifier
+- **Avg Daily Burn Rate**: Demand rate per SKU
+- **Avg Lead Time**: Lead time for replenishment from supplier
+- **PAR Mapping**: X marks indicating which PARs each SKU is stored in
+- **UOM**: Units of measure
 
-### 2. 2025-08-04_MDRH_Inventory_Safety_Stock_Sample_Items.xlsx
+### 2. Historical Demand Data (74,549 records)
+**File**: `data/final/csv_complete/02_Demand_Data_Clean_Complete.csv`
+**Purpose**: Historical demand patterns and delivery information
+
+**Key Understanding**:
+- **Delivery Locations (36)**: Physical delivery points (MDRCS, MDR6010JIT, etc.)
+- **PAR Locations (18)**: Inventory management units where items are consumed
+- **Flow**: Delivery locations receive supplies → distributed to PAR locations for consumption
+
+### 3. Validation Dataset (74 SKUs)
+**File**: `data/final/csv_complete/Validation_Input_Subset_20250913_220808.csv`
 **Purpose**: Reference solution for validation
 - Contains client's pre-calculated target inventories (analytical solution)
 - Used for comparison with our simulation results
@@ -61,11 +72,16 @@ PAR_Level1_ED {
 
 ### Inventory Flow Logic
 1. **Daily Demand**: PAR inventories face daily demand
-2. **Sufficient Stock**: If PAR has enough → supplies demand → triggers replenishment order
-3. **Lead Time**: Orders delivered after SKU-specific lead time
+2. **Normal Replenishment**: If PAR has enough → supplies demand → triggers replenishment order from external supplier
+3. **Lead Time**: Orders delivered after SKU-specific lead time from supplier
 4. **PAR Stockout**: If PAR insufficient → stockout occurs
-5. **Emergency Replenishment**: Follow graph edges from PAR SKU to Perpetual SKU
+5. **Emergency Replenishment**: Follow graph edges from PAR SKU to Perpetual SKU (same SKU type)
 6. **Hospital Stockout**: Remaining unsupplied demand becomes hospital-level stockout
+
+### Key Understanding - Replenishment Flow:
+- **Primary Replenishment**: External Supplier → PAR Location (based on lead time)
+- **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
+- **Perpetual Role**: Safety net for stockouts, not primary replenishment source
 
 ## Core Mathematical Model
 

@@ -1,6 +1,18 @@
-# Simulation Development
+# Simulation Development - MODEL BUILDING PHASE
 
-This directory is for developing the CedarSim simulation models.
+This directory is for developing the CedarSim simulation models. We are currently in the **model building phase** implementing the object-oriented simulation framework.
+
+## Current Understanding
+
+### Replenishment Flow:
+- **Primary Replenishment**: External Supplier → PAR Location (based on lead time)
+- **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
+- **Perpetual Role**: Safety net for stockouts, not primary replenishment source
+
+### Data Structure:
+- **Delivery Locations (36)**: Physical delivery points where supplies arrive
+- **PAR Locations (18)**: Inventory management units where items are consumed
+- **Flow**: Delivery → Distribution → Consumption at PARs
 
 ## Data Access
 
@@ -15,3 +27,9 @@ All simulation data is available in `../data/final/csv_complete/`:
 2. Access data from `../data/final/csv_complete/`
 3. Build simulation models in this directory
 4. Reference technical specs in `../docs/technical_specs/model.md`
+
+## Current Development Status
+
+- ✅ **Data Understanding**: Clear understanding of replenishment flow and data structure
+- 🚧 **Model Implementation**: Currently building object-oriented simulation framework
+- ⏳ **Next Steps**: Implement Location, SKU, and GraphManager classes
