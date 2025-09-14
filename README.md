@@ -24,10 +24,9 @@ The CedarSim data processing pipeline is complete with integrated new data and w
 
 ### For Simulation Implementation:
 1. **Development Environment**: `simulation_development/` (start here)
-   - Complete input dataset with updated data
-   - Validation subset for testing (74 SKUs)
-   - Professional development folder structure
-   - Requirements and documentation
+   - Install dependencies: `pip install -r requirements.txt`
+   - Access data from `../data/final/csv_complete/`
+   - Build simulation models in this directory
 2. **Production Environment**: `simulation_production/` (final models)
    - Ready for production simulation runs
    - Client deliverables and reports
@@ -48,37 +47,37 @@ The CedarSim data processing pipeline is complete with integrated new data and w
 2. **Generated HTML Files**: `scripts/simulation/cedarsim_combined_visualization.html`
 3. **Documentation**: `scripts/simulation/README_3D_VISUALIZATION.md`
 
-## 📁 Repository Structure
+## 📁 Repository Structure (SIMPLIFIED)
 
 ```
-├── simulation_development/ # Development environment (start here)
-│   ├── data/              # Development datasets
-│   ├── models/            # Simulation model classes
-│   ├── scripts/           # Development scripts
-│   ├── notebooks/         # Jupyter notebooks
-│   ├── reports/           # Development reports
-│   └── logs/              # Development logs
-├── simulation_production/  # Production environment
-│   ├── data/              # Production datasets
-│   ├── models/            # Production model classes
-│   ├── scripts/           # Production scripts
-│   ├── reports/           # Client deliverables
-│   └── config/            # Configuration files
-├── data/                  # All data files
-│   ├── final/             # Production-ready simulation data
-│   ├── converted/         # Data conversion outputs
-│   ├── audit_trails/      # Data cleaning audit records
-│   └── archive/           # Historical and backup data
-├── docs/                  # All documentation
-│   ├── technical_specs/   # Model and technical documentation
-│   ├── reports/           # Analysis and progress reports
-│   └── deliverables/      # Final deliverable structure
-├── scripts/               # Executable code
-│   ├── data_processing/   # Data cleaning and conversion scripts
-│   ├── analysis/          # Analysis scripts
-│   └── utilities/         # Utility scripts
-├── notebooks/             # Jupyter notebooks
-└── logs/                  # Log files
+├── simulation_development/    # Development environment (start here)
+│   ├── requirements.txt       # Dependencies
+│   └── README.md              # Development guide
+├── simulation_production/     # Production environment
+│   └── README.md              # Production guide
+├── data/                      # All data files
+│   ├── final/csv_complete/    # Production-ready simulation data
+│   ├── audit_trails/          # Data cleaning audit records
+│   └── archive/original/      # Source data files only
+├── docs/                      # Essential documentation
+│   ├── technical_specs/       # Model and technical documentation
+│   └── reports/               # Analysis and progress reports
+├── scripts/                   # Essential executable code
+│   ├── cedarsim_complete_pipeline.py    # Main data pipeline
+│   ├── new_excel_converter.py           # Data conversion utility
+│   ├── validate_excel.py                # Excel validation
+│   ├── mapping_analysis_final.py        # SKU mapping analysis
+│   └── cleanup_workspace.py             # Workspace cleanup
+├── notebooks/                 # Jupyter notebooks
+│   └── README.md              # Notebooks guide
+└── archive_master/            # Archived files
+    ├── old_scripts/           # Legacy scripts
+    ├── pipeline_scripts/      # Pipeline scripts
+    ├── simulation_scripts/    # Simulation scripts
+    ├── utility_scripts/       # Utility scripts
+    ├── notebooks_archive/     # WIP notebooks
+    ├── data_archive/          # Backup/temp data
+    └── logs_archive/          # Old log files
 ```
 
 ## 📋 Current Development Phase
@@ -87,8 +86,8 @@ The data processing pipeline is **COMPLETE** with integrated new data and we're 
 
 1. **Navigate to Development**: `cd simulation_development`
 2. **Install Dependencies**: `pip install -r requirements.txt`
-3. **Object Graph Creation**: Implement Location, SKU, and Graph Manager classes
-4. **Data Integration**: Load complete dataset into object structure  
+3. **Access Data**: Use files from `../data/final/csv_complete/`
+4. **Object Graph Creation**: Implement Location, SKU, and Graph Manager classes
 5. **Simulation Engine**: Implement daily time-step processing
 6. **Mathematical Model**: Implement core equations within object methods
 7. **Validation Testing**: Test on 74 validation SKUs before full-scale implementation

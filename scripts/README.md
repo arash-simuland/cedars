@@ -1,32 +1,27 @@
-# CedarSim Scripts Directory
+# CedarSim Scripts Directory (CLEANED)
 
-This directory contains all executable code organized by purpose.
+This directory contains essential executable code for the CedarSim project. All redundant and WIP files have been moved to `archive_master/scripts_archive/`.
 
-## 📁 Directory Structure
+## 📁 Essential Scripts
 
-### `data_processing/`
-**Production data processing scripts:**
-- **`cedarsim_complete_pipeline.py`** - ✅ COMPLETE - Data processing pipeline
-- **`validate_excel.py`** - Excel validation utilities
-- **`cleanup_workspace.py`** - Workspace cleanup utilities
+### **Core Data Pipeline:**
+- **`cedarsim_complete_pipeline.py`** - ✅ MAIN - Complete data processing pipeline
+- **`new_excel_converter.py`** - ✅ Data conversion utility for new Excel formats
+- **`validate_excel.py`** - ✅ Excel file validation utilities
 
-### `simulation/` (Coming Soon)
-**Simulation engine development:**
-- **`location.py`** - Location class implementation
-- **`sku.py`** - SKU class implementation  
-- **`graph_manager.py`** - Graph connections management
-- **`simulation_engine.py`** - Main simulation engine
-- **`data_loader.py`** - Excel data integration
+### **Analysis & Utilities:**
+- **`mapping_analysis_final.py`** - ✅ SKU-location mapping analysis
+- **`cleanup_workspace.py`** - ✅ Workspace cleanup utilities
+- **`README_Converter.md`** - ✅ Data conversion documentation
 
-### `analysis/`
-**Analysis and exploration scripts:**
-- **`mapping_analysis_final.py`** - SKU-location mapping analysis
-- **`cedarsim_complete_pipeline.py`** - Complete analysis pipeline
+## 🗂️ **Archived Scripts**
 
-### `archive/`
-**Archived development scripts:**
-- All temporary analysis, testing, and development scripts have been moved here
-- Includes: robust_data_cleaning.py, improved_excel_creation.py, fix_excel.py, and others
+All redundant, duplicate, and WIP scripts have been moved to:
+- **`archive_master/scripts_archive/`** - Complete archive of old scripts
+- **`archive_master/scripts_archive/archive/`** - 12 old analysis scripts
+- **`archive_master/scripts_archive/pipeline/`** - Duplicate pipeline implementation
+- **`archive_master/scripts_archive/simulation/`** - Duplicate simulation scripts
+- **`archive_master/scripts_archive/utilities/`** - Redundant utility scripts
 
 ## 🚀 Usage
 
