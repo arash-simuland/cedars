@@ -1,0 +1,22 @@
+{
+  "conversion_date": "2025-09-12 20:36:44",
+  "original_new_data_shape": [
+    5313,
+    7
+  ],
+  "converted_new_data_shape": [
+    3086,
+    7
+  ],
+  "existing_data_shape": [
+    5941,
+    28
+  ],
+  "final_merged_data_shape": [
+    5941,
+    28
+  ],
+  "overlapping_items": 2883,
+  "new_items_only": 203,
+  "existing_items_only": 26
+}
