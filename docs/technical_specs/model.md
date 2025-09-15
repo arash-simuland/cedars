@@ -1,7 +1,19 @@
 # CedarSim Inventory Management Model - Understanding Document
 
 ## Project Overview
-This document captures our understanding of the CedarSim inventory management simulation system for hospital inventory management. This serves as the main reference for model building and will be updated as we progress.
+This document captures our understanding of the CedarSim inventory management simulation system for **Cedars-Sinai Marina del Rey Hospital**. This is a production-ready healthcare operations optimization project that serves as the main reference for model building and will be updated as we progress.
+
+### **Project Context**
+- **Client**: Cedars-Sinai Health System
+- **Facility**: Marina del Rey Hospital (new facility)
+- **Objective**: Use digital twin simulation to optimize medical supply inventory management
+- **Partnership**: Confidential Core consulting and simulation engineering firm
+
+### **Core Focus Areas**
+- ✅ Ensuring optimal medical supplies availability across all PAR locations
+- ✅ Eliminating excess inventory waste
+- ✅ Minimizing stockouts and emergency replenishment needs
+- ✅ Maintaining patient safety through reliable supply chains
 
 ## Data Sources
 
@@ -78,6 +90,22 @@ PAR_Level1_ED {
 5. **Emergency Replenishment**: Follow graph edges from PAR SKU to Perpetual SKU (same SKU type)
 6. **Hospital Stockout**: Remaining unsupplied demand becomes hospital-level stockout
 
+### **Order-Up-To-Level Policy**
+We use an **Order-Up-To-Level** inventory replenishment policy, which is a special case of the min-max policy.
+
+**Policy Mechanism**: "If inventory goes below target, reorder up to target"
+
+**How It Works**:
+1. **Set Target Level** - Define optimal inventory level for each PAR location
+2. **Monitor Inventory** - Track current stock levels continuously  
+3. **Trigger Replenishment** - When inventory drops below target
+4. **Order Up to Target** - Replenish exactly to the target level
+
+**Key Characteristics**:
+- **Deterministic Replenishment** - Always order to the same target level
+- **No Order Quantity Optimization** - Focus on target level setting instead
+- **Simplified Decision Making** - Clear, consistent replenishment logic
+
 ### Key Understanding - Replenishment Flow:
 - **Primary Replenishment**: External Supplier → PAR Location (based on lead time)
 - **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
@@ -148,15 +176,37 @@ Supplying from Perpetual = ALLOCATE(
 
 ## Simulation Process
 
+### **Two-Phase Implementation Approach**
+
+#### **Phase 1: Pilot Phase - Model Verification**
+- **Purpose**: Verify model internal consistency using analytical methods
+- **Method**: Test with conventional safety stock formulas for both cycle and safety inventory
+- **Validation**: Compare simulation results with analytical solutions
+- **Outcome**: ✅ Simulation model internal consistency successfully verified
+
+#### **Phase 2: Expansion Phase - Optimization Engine**
+- **Purpose**: Use simulation as optimization engine for inventory target finding
+- **Capability**: Process daily demand patterns and produce daily inventory trajectories
+- **Focus**: Optimize inventory management while reducing holding costs
+
 ### Time Horizon
 - **Duration**: One year of historical data
 - **Focus**: Frequency of stockouts rather than accumulative volume
+
+### **Monte Carlo Capabilities**
+The simulation contains **two independent randomness sources**:
+
+| **Engine** | **Purpose** | **Impact** |
+|------------|-------------|------------|
+| **🎲 Demand Pattern Engine** | Generates different demand scenarios | Affects inventory depletion rates |
+| **⏱️ Lead Time Engine** | Simulates varying replenishment cycles | Determines safety stock requirements |
 
 ### Key Steps
 1. **Historical Analysis**: Use historical demand data to calculate stockouts
 2. **Target Implementation**: Implement client's target inventories
 3. **Stockout Calculation**: Compute stockouts using target inventories
 4. **Validation**: Compare results with client's analytical solution
+5. **Optimization**: Use simulation to find optimal inventory targets
 
 ## Data Limitations & Assumptions
 
@@ -212,6 +262,96 @@ The simulation will be implemented using an object-oriented approach:
 - Initialize current_inventory_level with target levels
 - Set up graph connections based on SKU presence in locations
 
+## **Advanced Simulation Capabilities**
+
+### **Patient-Focused Modeling**
+Revolutionary approach that shifts from demand forecasting to patient characteristics:
+
+#### **Agent-Based Modeling**
+- **Simulate patient admissions** with specific disease profiles
+- **Create consumption blueprints** for each patient type
+- **Automatically generate demand patterns** from patient scenarios
+
+#### **Patient-to-Demand Translation Process**
+```
+Patient Admission → Disease Profile → Consumption Blueprint → SKU Demand Pattern
+     ↓                    ↓                    ↓                    ↓
+[Patient arrives]  [COVID-19, ICU]  [Timeline template]  [Daily SKU usage]
+     ↓                    ↓                    ↓                    ↓
+[Admission data]   [Comorbidities]   [Department routing]  [Inventory depletion]
+```
+
+#### **Machine Learning Opportunities**
+- **Pattern Recognition**: Patient demographics → SKU usage timeline
+- **Template Creation**: Historical patient data → Disease-specific consumption blueprints
+- **Comorbidity Stacking**: Multiple conditions → Additive consumption patterns
+- **Timeline Prediction**: Patient admission data → Department-specific usage schedule
+
+### **Optimization Engine Capabilities**
+
+#### **Scenario Testing Framework**
+The simulation functions as a **dynamic calculator** for inventory experimentation:
+
+**Input**: Target levels + daily demand + lead times  
+**Output**: Inventory levels over time + stockout/emergency counts  
+**Purpose**: Test any scenario to understand inventory behavior
+
+#### **Generalized Optimization Algorithm**
+1. **Start with initial values** based on analytical methods
+2. **Set fixed scenario** (specific daily demand + lead times)
+3. **Run simulation** to test current targets
+4. **Adjust targets** based on results (minimize stockouts)
+5. **Repeat** until optimal solution found
+
+#### **Virtual Negative Inventory Technique**
+Advanced optimization method that accelerates target finding:
+1. **Release Stockout Constraint** - Allow inventory to go negative during iterations
+2. **Track Negative Values** - Monitor how much inventory would be needed
+3. **Estimate Gap** - Calculate how much perpetual inventory to increase
+4. **Adjust Targets** - Use negative values to guide next iteration
+
+## **Business Value & Unique Positioning**
+
+### **What Makes This Different**
+**Unique complexity**: Two independent inventory systems with emergency connections
+- **PAR locations**: Independent replenishment cycles
+- **Perpetual location**: Centralized safety stock
+- **Emergency connections**: Complex routing network between PARs and perpetual
+
+### **Smart Inventory Capabilities**
+
+#### **1. Precise Scenario Testing**
+- **Daily demand patterns** with realistic variability
+- **Patient admission-based** demand generation
+- **Disease-specific** emergency scenarios
+- **Targeted preparedness** for known incidents
+
+#### **2. Dual Optimization Approach**
+
+| **Optimization Path** | **Method** | **Outcome** |
+|----------------------|------------|-------------|
+| **Forecasting Improvement** | Better demand + external lead time forecasts | Reduced inventory levels |
+| **Operations Enhancement** | Internal process modeling + efficiency gains | Improved replenishment cycles |
+
+#### **3. Space Optimization Capability**
+- **Precise Space Planning** - Know exactly what goes in perpetual inventory
+- **Capacity Optimization** - Prioritize items based on space efficiency
+- **Dynamic Reallocation** - Adjust inventory mix to maximize space utilization
+- **Constraint Integration** - Space limitations become optimization constraints
+
+### **Why This Complexity Matters**
+> **"This complex network of PAR-perpetual connections with emergency routing cannot be modeled by generic inventory software"**
+
+- ❌ **Generic tools**: Assume single inventory system
+- ❌ **Our reality**: Two independent systems with emergency connections
+- ✅ **Our solution**: Custom simulation modeling this exact architecture
+
+### **Final Outcome**
+> **"Tool that carries the least amount of inventory with the least amount of risk - immune against targeted realistic scenarios"**
+
+### **Unique Value Proposition**
+> **"This level of operational complexity requires custom simulation development - delivering results that off-the-shelf solutions simply cannot match"**
+
 ## Next Steps for Model Development
 
 1. **Object Graph Creation**: Implement Location, SKU, and Graph Manager classes
@@ -219,8 +359,11 @@ The simulation will be implemented using an object-oriented approach:
 3. **Simulation Engine**: Implement daily time-step processing
 4. **Mathematical Model**: Implement core equations within object methods
 5. **Validation Framework**: Compare results with client's analytical solution
-6. **Testing**: Start with 75 validation SKUs before full-scale implementation
+6. **Monte Carlo Implementation**: Add demand pattern and lead time variability engines
+7. **Patient Modeling**: Implement agent-based patient admission simulation
+8. **Optimization Engine**: Build scenario testing and target optimization framework
+9. **Testing**: Start with 74 validation SKUs before full-scale implementation
 
 ---
-*Last Updated: [Current Date]*
-*Status: Initial understanding captured from CedarSim_pipeline.docx*
+*Last Updated: September 13, 2025*
+*Status: Comprehensive understanding captured from presentation and technical specifications*

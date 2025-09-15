@@ -1,35 +1,129 @@
-# Simulation Development - MODEL BUILDING PHASE
+# CedarSim Simulation Development
 
-This directory is for developing the CedarSim simulation models. We are currently in the **model building phase** implementing the object-oriented simulation framework.
+This directory contains the development of the CedarSim hospital inventory management simulation system.
 
-## Current Understanding
+## Current Status: Model Building Phase
 
-### Replenishment Flow:
-- **Primary Replenishment**: External Supplier → PAR Location (based on lead time)
-- **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
-- **Perpetual Role**: Safety net for stockouts, not primary replenishment source
+We are implementing an object-oriented simulation framework with the following key components:
 
-### Data Structure:
-- **Delivery Locations (36)**: Physical delivery points where supplies arrive
-- **PAR Locations (18)**: Inventory management units where items are consumed
-- **Flow**: Delivery → Distribution → Consumption at PARs
+### Core Architecture
 
-## Data Access
+#### Resource Hierarchy
+- **Resource** (Abstract Base Class): All simulation entities inherit from this
+- **Location** (Resource): Container for PARs and Perpetual warehouse
+- **SKU** (Resource): Individual medical supplies nested within locations
 
-All simulation data is available in `../data/final/csv_complete/`:
-- `Complete_Input_Dataset_20250913_220808.csv` - Full dataset (5,941 SKUs)
-- `Validation_Input_Subset_20250913_220808.csv` - Validation subset (74 SKUs)
-- `02_Demand_Data_Clean_Complete.csv` - Historical demand data
+#### Design Patterns Implemented
+- **Observer Pattern**: Inventory change notifications
+- **Strategy Pattern**: Replenishment policies (Order-Up-To-Level)
+- **Factory Pattern**: Resource creation
+- **Manager Pattern**: System coordination
 
-## Getting Started
+### Key Classes
 
-1. Install dependencies: `pip install -r requirements.txt`
-2. Access data from `../data/final/csv_complete/`
-3. Build simulation models in this directory
-4. Reference technical specs in `../docs/technical_specs/model.md`
+#### `Resource` (Abstract Base Class)
+```python
+class Resource(ABC):
+    def __init__(self, resource_id: str, resource_type: ResourceType)
+    def get_capacity(self) -> float
+    def get_current_level(self) -> float
+    def add_observer(self, observer: InventoryObserver)
+    def notify_observers(self, old_level: float, new_level: float)
+```
 
-## Current Development Status
+#### `Location` (Inherits from Resource)
+```python
+class Location(Resource):
+    def __init__(self, location_id: str, location_type: str, max_capacity: float)
+    def add_sku(self, sku: SKU)
+    def get_sku(self, sku_id: str) -> Optional[SKU]
+```
 
-- ✅ **Data Understanding**: Clear understanding of replenishment flow and data structure
-- 🚧 **Model Implementation**: Currently building object-oriented simulation framework
-- ⏳ **Next Steps**: Implement Location, SKU, and GraphManager classes
+#### `SKU` (Inherits from Resource)
+```python
+class SKU(Resource):
+    def __init__(self, sku_id: str, location_id: str, target_level: float, lead_time: float)
+    def set_inventory_level(self, new_level: float)
+    def add_emergency_connection(self, par_sku: SKU)
+    def allocate_emergency_supply(self, demand: float) -> float
+```
+
+#### `SimulationManager`
+```python
+class SimulationManager:
+    def add_location(self, location: Location)
+    def add_sku(self, sku: SKU)
+    def setup_emergency_connections(self)
+    def get_system_status(self) -> Dict[str, Any]
+```
+
+### Next Steps: SimPy Integration
+
+The current object-oriented design will be adapted to work with SimPy's process-based simulation approach. Key adaptations needed:
+
+1. **Process-Based Simulation**: Convert daily time-step logic to SimPy processes
+2. **Event-Driven Architecture**: Use SimPy events for demand, replenishment, and emergency transfers
+3. **Resource Management**: Integrate with SimPy's resource management capabilities
+4. **Time Management**: Use SimPy's time system for lead times and scheduling
+
+### Data Integration
+
+The simulation will integrate with the following data sources:
+- `../data/final/csv_complete/Complete_Input_Dataset_20250913_220808.csv` (5,941 SKUs)
+- `../data/final/csv_complete/Validation_Input_Subset_20250913_220808.csv` (74 SKUs)
+- `../data/final/csv_complete/02_Demand_Data_Clean_Complete.csv` (Historical demand)
+
+### Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+### Usage
+
+```python
+from core_models import SimulationManager, ResourceFactory
+
+# Create simulation manager
+manager = SimulationManager()
+
+# Create locations and SKUs
+perpetual = ResourceFactory.create_location("PERPETUAL", "Perpetual")
+ed_location = ResourceFactory.create_location("ED", "PAR")
+
+# Add to simulation
+manager.add_location(perpetual)
+manager.add_location(ed_location)
+
+# Set up emergency connections
+manager.setup_emergency_connections()
+```
+
+### Development Status
+
+- ✅ **Object-Oriented Design**: Core classes implemented
+- ✅ **Design Patterns**: Observer, Strategy, Factory, Manager patterns
+- ✅ **Resource Hierarchy**: Location and SKU inheritance from Resource
+- ✅ **Data Validation**: Confirmed 99.5% coverage of original demand data
+- 🚧 **SimPy Integration**: Ready to implement process-based approach
+- ⏳ **Data Integration**: Pending - CSV loading and validation
+- ⏳ **Simulation Engine**: Pending - Daily time-step processing
+- ⏳ **Mathematical Model**: Pending - Core equations implementation
+- ⏳ **Validation Framework**: Pending - Comparison with analytical solution
+
+### Key Features
+
+- **Two-Tier Safety System**: Normal replenishment + emergency backup
+- **Order-Up-To-Level Policy**: Deterministic replenishment strategy
+- **Emergency Connections**: SKU-level connections between perpetual and PARs
+- **Inventory Tracking**: Real-time inventory level monitoring
+- **Observer Pattern**: Loose coupling for inventory change notifications
+- **Extensible Design**: Easy to add new resource types and strategies
+
+### Business Value
+
+This simulation will help Cedars-Sinai Marina del Rey Hospital:
+- Optimize inventory levels across 18 PAR locations
+- Minimize stockouts while reducing holding costs
+- Test emergency scenarios and preparedness
+- Make data-driven inventory management decisions
