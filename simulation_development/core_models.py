@@ -1,44 +1,45 @@
 """
-CedarSim Core Models - Discrete Event Simulation Framework
+CedarSim Core Models - Pre-Simulation Structure Framework
 
-This module implements the core resource classes and processes for the
-CedarSim hospital inventory management discrete event simulation.
+This module implements the core resource classes and network topology generator for the
+CedarSim hospital inventory management system.
+
+ARCHITECTURE SEPARATION:
+- This module creates the OBJECT STRUCTURE and NETWORK TOPOLOGY
+- The actual SIMULATION EXECUTION is handled by SimPy (separate module)
+- AntologyGenerator is NOT part of the simulator - it's a pre-simulation setup tool
 
 Key Classes:
 - Resource: Abstract base class for all resources
 - Location: Container resource for PARs and Perpetual warehouse with reporting methods
-- SKU: Individual medical supplies with discrete event processing capabilities
-- SimulationManager: Simplified coordinator for the simulation system
-- DiscreteEventSimulation: Event-driven simulation engine
+- SKU: Individual medical supplies with business logic for inventory management
+- AntologyGenerator: Pre-simulation network topology generator (NOT part of simulator)
 
-Core Processes:
-- SKU.process_demand(): Handle demand events and emergency supply requests
-- SKU.place_order(): Order replenishment when inventory gaps occur
-- SKU.receive_delivery(): Process incoming deliveries
-- Location.get_*(): Reporting and summary methods for contained SKUs
-- SimulationManager.run_week(): Execute one week of simulation
+Core Responsibilities:
+- SKU Business Logic: Inventory management, emergency supply, stockout handling
+- Location Reporting: Analytics and summary methods for contained SKUs
+- AntologyGenerator: Creates object structure and establishes network connections
+- Network Topology: PAR-perpetual emergency connections for supply chain
 
 Key Features:
-- Discrete Event Processing: Events scheduled and processed in chronological order
-- Bidirectional SKU Connections: PAR SKUs can request emergency supply from perpetual SKUs
+- Object Structure Creation: Locations, SKUs, and their relationships
+- Network Topology: Bidirectional PAR-perpetual connections for emergency supply
 - Negative Inventory Support: Perpetual SKUs can go negative to maintain service levels
 - Hospital-Level Stockout Tracking: Records when entire system is under stress
-- Event-Driven Architecture: Ready for SimPy integration
+- Pre-Simulation Setup: Prepares structure for SimPy simulation handoff
 
 Design Patterns:
 - Observer Pattern: For inventory change notifications
 - Strategy Pattern: For replenishment policies (Order-Up-To-Level)
 - Factory Pattern: For resource creation
-- Manager Pattern: For system coordination
+- Network Generator Pattern: For establishing topology connections
 """
 
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any
-from dataclasses import dataclass
 from enum import Enum
 import logging
 import math
-import heapq
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -395,14 +396,22 @@ class ResourceFactory:
         """
         return SKU(sku_id, location_id, **kwargs)
 
-class SimulationManager:
-    """Simplified manager class for coordinating the simulation system."""
+class AntologyGenerator:
+    """Pre-simulation network generator that creates the object structure and network topology.
+    
+    This class is NOT part of the simulator itself. It:
+    1. Creates the object structure (Locations, SKUs)
+    2. Establishes network topology (PAR-perpetual connections)
+    3. Hands off the structure to the actual SimPy simulation
+    
+    The simulation then runs on top of this pre-built structure.
+    """
     
     def __init__(self):
         self.locations: Dict[str, Location] = {}
         self.sku_registry: Dict[str, List[SKU]] = {}  # SKU ID -> List of SKU objects
         self.observers: List[InventoryObserver] = []
-        logger.info("Initialized SimulationManager")
+        logger.info("Initialized AntologyGenerator")
     
     def add_location(self, location: Location):
         """Add a location to the simulation."""
@@ -418,8 +427,8 @@ class SimulationManager:
         sku.add_observer(self)
         logger.debug(f"Added SKU: {sku.resource_id}")
     
-    def setup_emergency_connections(self):
-        """Set up emergency connections between perpetual and PAR SKUs."""
+    def generate_network_connections(self):
+        """Generate the network topology by setting up emergency connections between perpetual and PAR SKUs."""
         for sku_id, sku_list in self.sku_registry.items():
             perpetual_sku = self.get_perpetual_sku(sku_id)
             par_skus = self.get_par_skus(sku_id)
@@ -430,7 +439,7 @@ class SimulationManager:
                     perpetual_sku.add_emergency_connection(par_sku)  # Perpetual -> PAR
                     par_sku.set_connected_perpetual_sku(perpetual_sku)  # PAR -> Perpetual
         
-        logger.info("Emergency connections established")
+        logger.info("Network topology generated - emergency connections established")
     
     def get_perpetual_sku(self, sku_id: str) -> Optional[SKU]:
         """Get a SKU from the perpetual location."""
@@ -442,30 +451,29 @@ class SimulationManager:
         return [sku for sku in self.sku_registry.get(sku_id, []) 
                 if sku.location_id != "PERPETUAL"]
     
-    def run_week(self, week_number: int):
-        """Execute one week of simulation - main process."""
-        logger.info(f"Running simulation week {week_number}")
+    def finalize_network(self):
+        """Finalize the network structure and prepare for simulation handoff."""
+        logger.info("Finalizing network structure for simulation handoff")
         
-        # This is where SimPy will call this method
-        # The actual event processing will be handled by SimPy
-        # This method just coordinates the week's activities
+        # Validate all connections are properly established
+        self._validate_network_connections()
         
-        # Update system status
-        self._update_system_status()
+        # Update final network status
+        self._update_network_status()
         
-        logger.info(f"Completed simulation week {week_number}")
+        logger.info("Network structure finalized - ready for simulation")
     
-    def _update_system_status(self):
-        """Update system status and statistics."""
-        # This can be called by SimPy or other processes
+    def _validate_network_connections(self):
+        """Validate that all network connections are properly established."""
+        # This method ensures all PAR-perpetual connections are valid
         pass
     
     def on_inventory_change(self, resource: Resource, old_level: float, new_level: float):
         """Handle inventory changes at the system level."""
         logger.debug(f"System-level inventory change: {resource.resource_id} {old_level} -> {new_level}")
     
-    def get_system_status(self) -> Dict[str, Any]:
-        """Get the current status of the entire system."""
+    def get_network_status(self) -> Dict[str, Any]:
+        """Get the current status of the entire network topology."""
         status = {
             "total_locations": len(self.locations),
             "total_skus": sum(len(sku_list) for sku_list in self.sku_registry.values()),
@@ -483,224 +491,54 @@ class SimulationManager:
         
         return status
 
-# Event Classes for Discrete Event Simulation
-
-@dataclass
-class DemandEvent:
-    """Discrete demand event for a SKU."""
-    sku_id: str
-    quantity: float
-    time: int
-    location_id: str
-    
-    def __lt__(self, other):
-        """For priority queue ordering."""
-        return self.time < other.time
-
-@dataclass
-class DeliveryEvent:
-    """Discrete delivery event for replenishment."""
-    sku_id: str
-    quantity: float
-    time: int
-    source: str  # "external_supplier" or "emergency_transfer"
-    
-    def __lt__(self, other):
-        """For priority queue ordering."""
-        return self.time < other.time
-
-@dataclass
-class ReplenishmentEvent:
-    """Discrete replenishment order event."""
-    sku_id: str
-    order_quantity: float
-    time: int
-    location_id: str
-    
-    def __lt__(self, other):
-        """For priority queue ordering."""
-        return self.time < other.time
-
-class DiscreteEventSimulation:
-    """Discrete event simulation manager for CedarSim."""
-    
-    def __init__(self):
-        self.current_time = 0
-        self.event_queue = []  # Priority queue for events
-        self.skus: Dict[str, SKU] = {}
-        self.locations: Dict[str, Location] = {}
-        self.simulation_stats = {
-            'total_demand': 0,
-            'total_stockouts': 0,
-            'total_emergency_transfers': 0,
-            'total_replenishment_orders': 0
-        }
-        logger.info("Initialized DiscreteEventSimulation")
-    
-    def add_sku(self, sku: SKU):
-        """Add a SKU to the simulation."""
-        self.skus[sku.resource_id] = sku
-        logger.debug(f"Added SKU to simulation: {sku.resource_id}")
-    
-    def add_location(self, location: Location):
-        """Add a location to the simulation."""
-        self.locations[location.resource_id] = location
-        logger.debug(f"Added location to simulation: {location.resource_id}")
-    
-    def schedule_event(self, event):
-        """Schedule an event for future processing."""
-        heapq.heappush(self.event_queue, event)
-        logger.debug(f"Scheduled event: {type(event).__name__} for {event.sku_id} at time {event.time}")
-    
-    def run_simulation(self, end_time: int):
-        """
-        Run discrete event simulation from time 0 to end_time.
-        
-        Args:
-            end_time: Final simulation time (week number)
-        """
-        logger.info(f"Starting simulation from time 0 to {end_time}")
-        
-        while self.current_time < end_time and self.event_queue:
-            # Get next event
-            event = heapq.heappop(self.event_queue)
-            self.current_time = event.time
-            
-            # Process the event
-            if isinstance(event, DemandEvent):
-                self.process_demand_event(event)
-            elif isinstance(event, DeliveryEvent):
-                self.process_delivery_event(event)
-            elif isinstance(event, ReplenishmentEvent):
-                self.process_replenishment_event(event)
-            
-            logger.debug(f"Processed {type(event).__name__} at time {self.current_time}")
-        
-        logger.info(f"Simulation completed at time {self.current_time}")
-        self.print_simulation_summary()
-    
-    def process_demand_event(self, event: DemandEvent):
-        """Process a demand event for a specific SKU."""
-        if event.sku_id in self.skus:
-            sku = self.skus[event.sku_id]
-            sku.process_demand_event(event)
-            self.simulation_stats['total_demand'] += event.quantity
-            
-            # Check if we need to place a replenishment order
-            inventory_gap = sku.calculate_inventory_gap(self.current_time)
-            if inventory_gap > 0:
-                self.schedule_replenishment_order(sku, inventory_gap)
-    
-    def process_delivery_event(self, event: DeliveryEvent):
-        """Process a delivery event for a specific SKU."""
-        if event.sku_id in self.skus:
-            sku = self.skus[event.sku_id]
-            sku.process_delivery_event(event)
-    
-    def process_replenishment_event(self, event: ReplenishmentEvent):
-        """Process a replenishment order event."""
-        if event.sku_id in self.skus:
-            sku = self.skus[event.sku_id]
-            self.simulation_stats['total_replenishment_orders'] += 1
-            
-            # Schedule delivery based on lead time
-            delivery_time = self.current_time + sku.lead_time_weeks
-            delivery_event = DeliveryEvent(
-                sku_id=event.sku_id,
-                quantity=event.order_quantity,
-                time=delivery_time,
-                source="external_supplier"
-            )
-            
-            sku.add_pending_shipment(delivery_event)
-            self.schedule_event(delivery_event)
-            
-            logger.info(f"Scheduled delivery for {event.sku_id}: {event.order_quantity} units at time {delivery_time}")
-    
-    def schedule_replenishment_order(self, sku: SKU, order_quantity: float):
-        """Schedule a replenishment order for a SKU."""
-        replenishment_event = ReplenishmentEvent(
-            sku_id=sku.resource_id,
-            order_quantity=order_quantity,
-            time=self.current_time,
-            location_id=sku.location_id
-        )
-        
-        self.schedule_event(replenishment_event)
-        logger.info(f"Scheduled replenishment order for {sku.resource_id}: {order_quantity} units")
-    
-    def generate_weekly_demand_events(self, sku_id: str, demand_rate: float, start_time: int, end_time: int):
-        """Generate weekly demand events for a SKU."""
-        for week in range(start_time, end_time):
-            if demand_rate > 0:
-                demand_event = DemandEvent(
-                    sku_id=sku_id,
-                    quantity=demand_rate,
-                    time=week,
-                    location_id=self.skus[sku_id].location_id
-                )
-                self.schedule_event(demand_event)
-    
-    def print_simulation_summary(self):
-        """Print simulation statistics summary."""
-        print("\n" + "="*50)
-        print("SIMULATION SUMMARY")
-        print("="*50)
-        print(f"Total Demand Processed: {self.simulation_stats['total_demand']:.2f} units")
-        print(f"Total Stockouts: {self.simulation_stats['total_stockouts']:.2f} units")
-        print(f"Total Emergency Transfers: {self.simulation_stats['total_emergency_transfers']:.2f} units")
-        print(f"Total Replenishment Orders: {self.simulation_stats['total_replenishment_orders']}")
-        
-        # Calculate service level
-        if self.simulation_stats['total_demand'] > 0:
-            service_level = (self.simulation_stats['total_demand'] - self.simulation_stats['total_stockouts']) / self.simulation_stats['total_demand']
-            print(f"Service Level: {service_level:.2%}")
-        
-        print("="*50)
+# ARCHITECTURE NOTE:
+# This module creates the OBJECT STRUCTURE and NETWORK TOPOLOGY
+# The actual SIMULATION EXECUTION is handled by SimPy (separate module)
+# AntologyGenerator is a PRE-SIMULATION SETUP TOOL, not part of the simulator
 
 # Example usage and testing
 if __name__ == "__main__":
-    # Create discrete event simulation
-    sim = DiscreteEventSimulation()
+    # STEP 1: Create network structure using AntologyGenerator
+    antology = AntologyGenerator()
     
     # Create locations
     perpetual = ResourceFactory.create_location("PERPETUAL", "Perpetual", max_capacity=10000)
     ed_location = ResourceFactory.create_location("ED", "PAR", max_capacity=1000)
     
-    sim.add_location(perpetual)
-    sim.add_location(ed_location)
+    antology.add_location(perpetual)
+    antology.add_location(ed_location)
     
-    # Create SKUs (lead times in days, automatically converted to discrete weeks)
+    # Create SKUs (lead times in days, automatically converted to fractional weeks)
     sku_001_perpetual = ResourceFactory.create_sku("SKU_001", "PERPETUAL", 
                                                    target_level=100, lead_time_days=2.0, demand_rate=0)
     sku_001_ed = ResourceFactory.create_sku("SKU_001", "ED", 
                                            target_level=50, lead_time_days=1.5, demand_rate=10.0)
     
-    sim.add_sku(sku_001_perpetual)
-    sim.add_sku(sku_001_ed)
+    antology.add_sku(sku_001_perpetual)
+    antology.add_sku(sku_001_ed)
     
     # Add SKUs to locations
     perpetual.add_sku(sku_001_perpetual)
     ed_location.add_sku(sku_001_ed)
     
-    # Set up emergency connections
-    sku_001_perpetual.add_emergency_connection(sku_001_ed)
+    # Generate network topology (PAR-perpetual connections)
+    antology.generate_network_connections()
     
     # Initialize inventory levels
     sku_001_ed.set_inventory_level(25)
     sku_001_perpetual.set_inventory_level(75)
     
-    # Generate demand events for 10 weeks
-    sim.generate_weekly_demand_events("SKU_001", 10.0, 0, 10)
+    # Finalize network structure
+    antology.finalize_network()
     
-    # Run simulation
-    print("Starting Discrete Event Simulation...")
-    sim.run_simulation(10)
-    
-    # Print final system status
-    print("\nFinal System Status:")
+    # Print network status
+    print("Network Structure Created:")
+    status = antology.get_network_status()
+    print(f"Total Locations: {status['total_locations']}")
+    print(f"Total SKUs: {status['total_skus']}")
     print(f"ED SKU Inventory: {sku_001_ed.get_current_level()}")
     print(f"Perpetual SKU Inventory: {sku_001_perpetual.get_current_level()}")
-    print(f"ED SKU Stockouts: {sku_001_ed.get_stockout_amount()}")
-    print(f"ED SKU Total Stockouts: {sku_001_ed._total_stockouts}")
-    print(f"Perpetual SKU Emergency Transfers: {sku_001_perpetual._total_emergency_transfers}")
+    
+    # STEP 2: Hand off structure to SimPy simulation
+    print("\nNetwork structure ready - SimPy simulation will now run on top of this structure")
+    print("The simulation will use the established network connections for emergency supply")

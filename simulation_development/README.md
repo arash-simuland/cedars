@@ -2,9 +2,14 @@
 
 This directory contains the development of the CedarSim hospital inventory management simulation system.
 
-## Current Status: Discrete Event Simulation Implementation
+## Current Status: Pre-Simulation Structure Framework Complete
 
-We have implemented a discrete event simulation framework with the following key components:
+We have implemented the pre-simulation structure framework with the following key components:
+
+**ARCHITECTURE SEPARATION:**
+- **This module**: Creates OBJECT STRUCTURE and NETWORK TOPOLOGY
+- **SimPy module**: Handles actual SIMULATION EXECUTION (separate)
+- **AntologyGenerator**: Pre-simulation setup tool (NOT part of simulator)
 
 ### Core Architecture
 
@@ -53,14 +58,14 @@ class SKU(Resource):
     def allocate_emergency_supply(self, demand: float) -> float  # Can go negative
 ```
 
-#### `SimulationManager`
+#### `AntologyGenerator` (Pre-Simulation Setup)
 ```python
-class SimulationManager:
+class AntologyGenerator:
     def add_location(self, location: Location)
     def add_sku(self, sku: SKU)
-    def setup_emergency_connections(self)  # Sets up bidirectional connections
-    def run_week(self, week_number: int)  # Core process
-    def get_system_status(self) -> Dict[str, Any]
+    def generate_network_connections(self)  # Generates network topology
+    def finalize_network(self)  # Prepares structure for simulation handoff
+    def get_network_status(self) -> Dict[str, Any]
 ```
 
 #### `Location` (Reporting Methods)
@@ -77,35 +82,41 @@ class Location(Resource):
     def get_demand_variance(self) -> float
 ```
 
-### Core Processes Implemented
+### Core Components Implemented
 
-The discrete event simulation framework is now complete with the following core processes:
+The pre-simulation structure framework is now complete with the following components:
 
-1. **SKU Core Processes (SimPy Generators)**:
-   - `fulfill_demand(env, delay=0)`: Handle demand and trigger emergency supply when needed
-   - `place_orders(env, lead_time)`: Order replenishment when inventory gaps occur
-   - `receive_deliveries(env, delay=0)`: Process incoming deliveries
+1. **SKU Business Logic**:
+   - Inventory management and stockout handling
+   - Emergency supply allocation (can go negative for perpetual SKUs)
+   - Lead time conversion (days to fractional weeks)
+   - Bidirectional connection management
 
 2. **Location Reporting Methods**:
    - `get_*()` methods for comprehensive reporting and analytics
    - Passive container approach with rich data access
+   - Network topology reporting
 
-3. **SimulationManager Core Process**:
-   - `run_week()`: Execute one week of simulation (ready for SimPy integration)
-   - `weekly_simulation_process(env, sku)`: SimPy generator for weekly simulation cycle
+3. **AntologyGenerator Pre-Simulation Setup**:
+   - `generate_network_connections()`: Creates PAR-perpetual network topology
+   - `finalize_network()`: Prepares structure for simulation handoff
+   - **Note**: This class is NOT part of the simulator - it creates the structure
 
 4. **Key Features**:
-   - **Bidirectional SKU Connections**: PAR SKUs can request emergency supply from perpetual SKUs
+   - **Object Structure Creation**: Locations, SKUs, and their relationships
+   - **Network Topology**: Bidirectional PAR-perpetual connections for emergency supply
    - **Negative Inventory Support**: Perpetual SKUs can go negative to maintain service levels
    - **Hospital-Level Stockout Tracking**: Records when entire system is under stress
-   - **Event-Driven Architecture**: Ready for SimPy integration
+   - **Pre-Simulation Setup**: Prepares structure for SimPy simulation handoff
 
-### Data Integration
+### Data Integration (Pre-Simulation Setup)
 
-The simulation will integrate with the following data sources:
+The AntologyGenerator will load data from the following sources to create the object structure:
 - `../data/final/csv_complete/Complete_Input_Dataset_20250913_220808.csv` (5,941 SKUs)
 - `../data/final/csv_complete/Validation_Input_Subset_20250913_220808.csv` (74 SKUs)
 - `../data/final/csv_complete/02_Demand_Data_Clean_Complete.csv` (Historical demand)
+
+**Note**: This data loading happens during PRE-SIMULATION setup, not during simulation execution.
 
 ### Installation
 
@@ -116,21 +127,27 @@ pip install -r requirements.txt
 ### Usage
 
 ```python
-from core_models import SimulationManager, ResourceFactory
+from core_models import AntologyGenerator, ResourceFactory
 
-# Create simulation manager
-manager = SimulationManager()
+# STEP 1: Create network structure (Pre-Simulation)
+antology = AntologyGenerator()
 
 # Create locations and SKUs
 perpetual = ResourceFactory.create_location("PERPETUAL", "Perpetual")
 ed_location = ResourceFactory.create_location("ED", "PAR")
 
-# Add to simulation
-manager.add_location(perpetual)
-manager.add_location(ed_location)
+# Add to network
+antology.add_location(perpetual)
+antology.add_location(ed_location)
 
-# Set up emergency connections
-manager.setup_emergency_connections()
+# Generate network topology
+antology.generate_network_connections()
+
+# Finalize structure for simulation handoff
+antology.finalize_network()
+
+# STEP 2: SimPy simulation runs on top of this structure
+# The simulation uses the established network connections
 ```
 
 ### Development Status
@@ -139,30 +156,30 @@ manager.setup_emergency_connections()
 - ✅ **Design Patterns**: Observer, Strategy, Factory, Manager patterns
 - ✅ **Resource Hierarchy**: Location and SKU inheritance from Resource
 - ✅ **Data Validation**: Confirmed 99.5% coverage of original demand data
-- ✅ **Discrete Event Simulation**: Event classes and simulation engine implemented
-- ✅ **Mathematical Model**: Discrete event formulas implemented
-- ✅ **Event Processing**: Demand, delivery, and replenishment event handling
-- ✅ **Core Processes**: SKU processes, Location reporting, SimulationManager coordination
+- ✅ **Pre-Simulation Structure**: Object structure and network topology complete
+- ✅ **Mathematical Model**: Business logic formulas implemented
+- ✅ **Network Topology**: PAR-perpetual connections established
+- ✅ **AntologyGenerator**: Pre-simulation setup tool complete
 - ✅ **Bidirectional Connections**: PAR-perpetual SKU communication implemented
 - ✅ **Negative Inventory Support**: Perpetual SKUs can go negative for emergency supply
-- ⏳ **Data Integration**: Pending - CSV loading and validation
-- ⏳ **SimPy Integration**: Ready to implement process-based approach (NO SimPy resources, just processes)
-- ⏳ **Function Renaming**: Pending - Rename to action-oriented names with SimPy generators
+- ⏳ **Data Integration**: Pending - CSV loading into AntologyGenerator
+- ⏳ **SimPy Integration**: Ready to implement process-based simulation (separate module)
+- ⏳ **SimPy Generators**: Pending - Create SKU process generators for simulation execution
 - ⏳ **Validation Framework**: Pending - Comparison with analytical solution
 
 ### Key Features
 
-- **Discrete Event Processing**: Events scheduled and processed in chronological order
-- **Weekly Time Step**: Simulation runs on weekly cycles matching historical data
+- **Object Structure Creation**: Locations, SKUs, and their relationships
+- **Network Topology**: Bidirectional PAR-perpetual connections for emergency supply
 - **Lead Time Conversion**: Automatic conversion from days to fractional weeks (days/7) for precise timing
 - **Two-Tier Safety System**: Normal replenishment + emergency backup
 - **Order-Up-To-Level Policy**: Deterministic replenishment strategy
 - **Emergency Connections**: SKU-level connections between perpetual and PARs
 - **Inventory Tracking**: Real-time inventory level monitoring
-- **Event-Driven Architecture**: Demand, delivery, and replenishment events
-- **Priority Queue**: Efficient event scheduling using heapq
+- **Pre-Simulation Setup**: Prepares structure for SimPy simulation handoff
 - **Observer Pattern**: Loose coupling for inventory change notifications
 - **Extensible Design**: Easy to add new resource types and strategies
+- **Architecture Separation**: Clear separation between structure creation and simulation execution
 
 ### Business Value
 

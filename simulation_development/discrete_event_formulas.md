@@ -1,17 +1,15 @@
-# CedarSim Discrete Event Simulation Formulas
+# CedarSim Business Logic Formulas
 
 ## Overview
-This document adapts the continuous time formulas from the original model to discrete event simulation format. Instead of using `DT` (delta time) variables, we'll use discrete time steps and event-driven updates.
+This document contains the business logic formulas for the CedarSim hospital inventory management system. These formulas are implemented in the core classes and used by both the pre-simulation structure setup and the SimPy simulation execution.
 
-## Key Differences: Continuous vs Discrete Event
+## Architecture Context
 
-| Aspect | Continuous Time | Discrete Event |
-|--------|----------------|----------------|
-| **Time Steps** | `DT` (infinitesimal) | Discrete events (weekly) |
-| **Updates** | Continuous derivatives | Event-triggered updates |
-| **Demand** | `depleting*DT` | Discrete demand events |
-| **Lead Time** | Fractional weeks | Integer time steps |
-| **Inventory** | Continuous levels | Discrete unit counts |
+**IMPORTANT**: These formulas are implemented in the core classes and used by:
+1. **AntologyGenerator**: During pre-simulation structure setup
+2. **SimPy Simulation**: During actual simulation execution
+
+The formulas represent the business logic that governs inventory management behavior.
 
 ## 1. Discrete Event Inventory Gap Calculation
 
@@ -236,9 +234,12 @@ def allocate_emergency_supply(perpetual_sku: SKU, par_skus: List[SKU],
     return allocations
 ```
 
-## 6. SimPy Process-Based Simulation Loop
+## 6. SimPy Integration (Separate Module)
+
+**NOTE**: The actual SimPy simulation will be implemented in a separate module that uses the structure created by AntologyGenerator.
 
 ```python
+# This will be in a separate simulation module
 import simpy
 
 def weekly_simulation_process(env, sku):
@@ -253,31 +254,35 @@ def weekly_simulation_process(env, sku):
         # Advance to next week
         yield env.timeout(1.0)
 
-def run_simulation(env, skus, end_time: int):
+def run_simulation(env, antology, end_time: int):
     """
-    Run SimPy simulation from time 0 to end_time.
+    Run SimPy simulation using pre-built structure from AntologyGenerator.
     
     Args:
         env: SimPy environment
-        skus: List of SKU objects
+        antology: AntologyGenerator with pre-built network structure
         end_time: Final simulation time (week number)
     """
-    # Start processes for each SKU
-    for sku in skus:
-        env.process(weekly_simulation_process(env, sku))
+    # Use the pre-built structure from AntologyGenerator
+    for sku_list in antology.sku_registry.values():
+        for sku in sku_list:
+            env.process(weekly_simulation_process(env, sku))
     
     # Run simulation
     env.run(until=end_time)
     
-## 7. SKU Action Methods (SimPy Generators)
+## 7. SKU Action Methods (SimPy Generators - Separate Module)
+
+**NOTE**: These SimPy generators will be implemented in a separate simulation module that uses the pre-built structure from AntologyGenerator.
 
 ```python
+# This will be in a separate simulation module
 class SKU(Resource):
     def fulfill_demand(self, env, delay=0):
         """Fulfill demand + emergency (if needed)."""
         yield env.timeout(delay)  # Wait for delay
         
-        # Process demand
+        # Process demand using business logic from core classes
         if self.get_current_level() >= demand_amount:
             # Normal fulfillment
             self.set_inventory_level(self.get_current_level() - demand_amount)
@@ -306,51 +311,42 @@ class SKU(Resource):
     
     def _check_reorder(self) -> bool:
         """PRIVATE: Check if reorder needed."""
-        # Inventory gap logic
+        # Uses business logic from core classes
         pass
     
     def _trigger_emergency_replenishment(self, stockout_amount):
         """PRIVATE: Trigger emergency replenishment."""
-        # Emergency logic (no SimPy, just immediate transfer)
+        # Uses network connections established by AntologyGenerator
         pass
 ```
 
-## 8. SimPy Integration Notes
+## 8. Architecture Summary
 
-### **Key SimPy Features Used:**
-- **`yield env.timeout(delay)`** - Wait for specified time
-- **`env.now`** - Current simulation time
-- **`env.process(generator)`** - Start a process
-- **`env.run(until=time)`** - Run simulation until specified time
-- **`yield from generator`** - Call another generator
+### **Pre-Simulation Phase (AntologyGenerator):**
+1. **Load Data**: CSV files → Object structure
+2. **Create Locations**: 18 PARs + 1 Perpetual
+3. **Create SKUs**: 5,941 SKUs across locations
+4. **Generate Network**: PAR-perpetual connections
+5. **Finalize Structure**: Validate and prepare for handoff
 
-### **Weekly Simulation Flow:**
-1. **Monday**: `fulfill_demand(env, 0)` - Process demand + emergency (if needed)
-2. **Monday**: `place_orders(env, lead_time)` - Check reorder + place orders
-3. **After lead_time**: `receive_deliveries(env, 0)` - Process deliveries
-4. **Next week**: Repeat cycle
+### **Simulation Phase (SimPy Module):**
+1. **Load Structure**: Use pre-built structure from AntologyGenerator
+2. **Create Generators**: SimPy generators for each SKU
+3. **Run Simulation**: Weekly cycles with demand, orders, deliveries
+4. **Use Connections**: Emergency supply using established network topology
 
-### **No More Event Classes:**
-- **DemandEvent** → `fulfill_demand(env, delay=0)` generator
-- **DeliveryEvent** → `receive_deliveries(env, delay=0)` generator  
-- **ReplenishmentEvent** → `place_orders(env, lead_time)` generator
+### **Key Benefits of This Architecture:**
+1. **Clear Separation**: Structure creation vs simulation execution
+2. **Reusability**: Same structure can run different scenarios
+3. **Maintainability**: Changes to topology don't affect simulation logic
+4. **Performance**: Structure created once, simulation runs multiple times
+5. **Testing**: Can test structure creation separately from simulation
 
-## Key Benefits of SimPy Process-Based Approach
-
-1. **Realistic Modeling**: Processes run concurrently and interact naturally
-2. **Efficient Processing**: SimPy handles process scheduling and suspension
-3. **Clear Logic**: Generator functions are easy to understand and debug
-4. **Flexible Timing**: `yield env.timeout()` provides precise timing control
-5. **Concurrent Processing**: Multiple SKUs can run simultaneously
-6. **Natural Flow**: Processes can call other processes with `yield from`
-
-## Implementation Notes
-
+### **Implementation Notes:**
 - **Time Units**: All times in fractional weeks for precise timing
-- **Lead Times**: Converted to fractional weeks using `days/7` (SimPy handles intra-week events)
+- **Lead Times**: Converted to fractional weeks using `days/7`
 - **Inventory**: Discrete unit counts (no fractional units)
-- **Processes**: SimPy generators that can be suspended and resumed
-- **State Updates**: Only when processes execute, not continuously
-- **No Event Classes**: Replaced with generator functions
+- **Network Topology**: Established during pre-simulation phase
+- **Business Logic**: Implemented in core classes, used by both phases
 
-This SimPy process-based approach will provide more realistic and efficient simulation behavior for the hospital inventory system.
+This architecture provides a clean separation between structure creation and simulation execution, making the system more maintainable and efficient.

@@ -4,33 +4,32 @@
 **Phase**: **MODEL BUILDING PHASE** 🏗️  
 **Status**: Active Development
 
-## 🎯 Current Phase: Discrete Event Simulation Framework Complete
+## 🎯 Current Phase: Pre-Simulation Structure Framework Complete
 
 ### ✅ **Completed Implementation**
 - **Data Structure Analysis**: Clear understanding of SKU and demand data format
 - **Replenishment Flow**: Confirmed normal vs emergency replenishment mechanisms
 - **Data Relationships**: Understood delivery locations vs PAR locations
-- **Mathematical Model**: Core equations converted to discrete event format
+- **Mathematical Model**: Core business logic formulas implemented
 - **Data Validation**: Confirmed simulation input data covers 99.5% of original demand data
-- **Object-Oriented Design**: Complete Location, SKU, and SimulationManager classes
-- **Core Processes**: SKU processes, Location reporting, SimulationManager coordination
+- **Object-Oriented Design**: Complete Location, SKU, and AntologyGenerator classes
+- **Core Business Logic**: SKU inventory management, Location reporting, network topology
 - **Bidirectional Connections**: PAR-perpetual SKU communication implemented
 - **Negative Inventory Support**: Perpetual SKUs can go negative for emergency supply
-- **Event Classes**: DemandEvent, DeliveryEvent, ReplenishmentEvent implemented
+- **Pre-Simulation Setup**: AntologyGenerator creates object structure and network topology
 
 ### 🚧 **Currently Working On**
-- **Data Integration**: Building CSV loading functions to populate object structure
-- **SimPy Integration**: Converting to SimPy process-based approach (NO SimPy resources, just processes)
-- **Function Renaming**: Renaming SKU methods to action-oriented names with SimPy generators
+- **Data Integration**: Building CSV loading functions to populate AntologyGenerator
+- **SimPy Module**: Creating separate simulation module that uses pre-built structure
+- **SimPy Generators**: Implementing SKU process generators for simulation execution
 
 ### ⏳ **Next Steps**
-1. **Function Renaming**: Rename SKU methods to action-oriented names with SimPy generators
-2. **SimPy Integration**: Convert discrete event framework to SimPy process-based approach (NO SimPy resources, just processes)
-3. **Data Integration**: Create CSV loading functions to populate object structure
-4. **Mathematical Model**: Implement core equations in SimPy processes
-5. **Validation Framework**: Create comparison with analytical solution
-6. **Testing**: Start with 74 validation SKUs before full-scale implementation
-7. **Full Implementation**: Run with all 5,941 SKUs
+1. **Data Integration**: Create CSV loading functions to populate AntologyGenerator
+2. **SimPy Module**: Create separate simulation module that uses pre-built structure
+3. **SimPy Generators**: Implement SKU process generators for simulation execution
+4. **Validation Framework**: Create comparison with analytical solution
+5. **Testing**: Start with 74 validation SKUs before full-scale implementation
+6. **Full Implementation**: Run with all 5,941 SKUs
 
 ## 🏗️ **Current Understanding**
 
@@ -60,26 +59,28 @@
 | Data Understanding | ✅ Complete | 100% |
 | Data Validation | ✅ Complete | 100% |
 | Object Design | ✅ Complete | 100% |
-| Core Processes | ✅ Complete | 100% |
-| Discrete Event Framework | ✅ Complete | 100% |
+| Core Business Logic | ✅ Complete | 100% |
+| Pre-Simulation Structure | ✅ Complete | 100% |
 | Bidirectional Connections | ✅ Complete | 100% |
 | Negative Inventory Support | ✅ Complete | 100% |
+| AntologyGenerator | ✅ Complete | 100% |
 | Data Integration | ⏳ Pending | 0% |
-| Function Renaming | ⏳ Pending | 0% (Action-oriented names with SimPy generators) |
-| SimPy Integration | ⏳ Pending | 0% (NO SimPy resources, just processes) |
+| SimPy Module | ⏳ Pending | 0% (Separate module) |
+| SimPy Generators | ⏳ Pending | 0% (SKU process generators) |
 | Validation Framework | ⏳ Pending | 0% |
 
 ## 🎯 **Success Criteria**
 
-- [x] Location, SKU, and SimulationManager classes implemented
+- [x] Location, SKU, and AntologyGenerator classes implemented
 - [x] Data validation confirms 99.5% coverage of original demand data
-- [x] Core processes implemented (SKU processes, Location reporting)
+- [x] Core business logic implemented (SKU inventory management, Location reporting)
 - [x] Bidirectional SKU connections implemented
 - [x] Negative inventory support for perpetual SKUs
-- [x] Discrete event framework complete
-- [ ] Function renaming complete (action-oriented names with SimPy generators)
+- [x] Pre-simulation structure framework complete
+- [x] AntologyGenerator creates object structure and network topology
 - [ ] Data loading functions working with CSV files
-- [ ] SimPy integration complete (NO SimPy resources, just processes)
+- [ ] SimPy module created (separate from structure creation)
+- [ ] SimPy generators implemented for simulation execution
 - [ ] Validation framework comparing with analytical solution
 - [ ] Testing with 74 validation SKUs successful
 - [ ] Full-scale implementation with 5,941 SKUs
@@ -93,4 +94,4 @@
 
 ---
 
-**Status**: Ready for active model building and implementation
+**Status**: Pre-simulation structure framework complete - ready for data integration and SimPy module development
