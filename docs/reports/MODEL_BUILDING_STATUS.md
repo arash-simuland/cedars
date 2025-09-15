@@ -20,15 +20,17 @@
 
 ### 🚧 **Currently Working On**
 - **Data Integration**: Building CSV loading functions to populate object structure
-- **SimPy Integration**: Converting to SimPy process-based approach
+- **SimPy Integration**: Converting to SimPy process-based approach (NO SimPy resources, just processes)
+- **Function Renaming**: Renaming SKU methods to action-oriented names with SimPy generators
 
 ### ⏳ **Next Steps**
-1. **Data Integration**: Create CSV loading functions to populate object structure
-2. **SimPy Integration**: Convert discrete event framework to SimPy process-based approach
-3. **Mathematical Model**: Implement core equations in SimPy processes
-4. **Validation Framework**: Create comparison with analytical solution
-5. **Testing**: Start with 74 validation SKUs before full-scale implementation
-6. **Full Implementation**: Run with all 5,941 SKUs
+1. **Function Renaming**: Rename SKU methods to action-oriented names with SimPy generators
+2. **SimPy Integration**: Convert discrete event framework to SimPy process-based approach (NO SimPy resources, just processes)
+3. **Data Integration**: Create CSV loading functions to populate object structure
+4. **Mathematical Model**: Implement core equations in SimPy processes
+5. **Validation Framework**: Create comparison with analytical solution
+6. **Testing**: Start with 74 validation SKUs before full-scale implementation
+7. **Full Implementation**: Run with all 5,941 SKUs
 
 ## 🏗️ **Current Understanding**
 
@@ -63,7 +65,8 @@
 | Bidirectional Connections | ✅ Complete | 100% |
 | Negative Inventory Support | ✅ Complete | 100% |
 | Data Integration | ⏳ Pending | 0% |
-| SimPy Integration | ⏳ Pending | 0% |
+| Function Renaming | ⏳ Pending | 0% (Action-oriented names with SimPy generators) |
+| SimPy Integration | ⏳ Pending | 0% (NO SimPy resources, just processes) |
 | Validation Framework | ⏳ Pending | 0% |
 
 ## 🎯 **Success Criteria**
@@ -74,8 +77,9 @@
 - [x] Bidirectional SKU connections implemented
 - [x] Negative inventory support for perpetual SKUs
 - [x] Discrete event framework complete
+- [ ] Function renaming complete (action-oriented names with SimPy generators)
 - [ ] Data loading functions working with CSV files
-- [ ] SimPy integration complete
+- [ ] SimPy integration complete (NO SimPy resources, just processes)
 - [ ] Validation framework comparing with analytical solution
 - [ ] Testing with 74 validation SKUs successful
 - [ ] Full-scale implementation with 5,941 SKUs

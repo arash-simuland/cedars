@@ -236,111 +236,121 @@ def allocate_emergency_supply(perpetual_sku: SKU, par_skus: List[SKU],
     return allocations
 ```
 
-## 6. Discrete Event Simulation Loop
+## 6. SimPy Process-Based Simulation Loop
 
 ```python
-class DiscreteEventSimulation:
-    def __init__(self):
-        self.current_time = 0
-        self.event_queue = []
-        self.skus = {}
-        self.locations = {}
-    
-    def run_simulation(self, end_time: int):
-        """
-        Run discrete event simulation from time 0 to end_time.
+import simpy
+
+def weekly_simulation_process(env, sku):
+    """SimPy generator for weekly simulation cycle."""
+    while True:
+        # Monday: Demand fulfillment
+        yield from sku.fulfill_demand(env, 0)
         
-        Args:
-            end_time: Final simulation time (week number)
-        """
-        while self.current_time < end_time:
-            # Process all events at current time
-            self.process_events_at_current_time()
-            
-            # Advance to next event time
-            if self.event_queue:
-                self.current_time = min(event.time for event in self.event_queue)
-            else:
-                self.current_time += 1  # Advance one week if no events
-    
-    def process_events_at_current_time(self):
-        """Process all events scheduled for current time."""
-        current_events = [e for e in self.event_queue if e.time == self.current_time]
+        # Monday: Place orders
+        yield from sku.place_orders(env, sku.lead_time_weeks)
         
-        for event in current_events:
-            if isinstance(event, DemandEvent):
-                self.process_demand_event(event)
-            elif isinstance(event, DeliveryEvent):
-                self.process_delivery_event(event)
-            elif isinstance(event, ReplenishmentEvent):
-                self.process_replenishment_event(event)
-            
-            # Remove processed event
-            self.event_queue.remove(event)
+        # Advance to next week
+        yield env.timeout(1.0)
+
+def run_simulation(env, skus, end_time: int):
+    """
+    Run SimPy simulation from time 0 to end_time.
     
-    def process_demand_event(self, event: DemandEvent):
-        """Process a demand event for a specific SKU."""
-        sku = self.skus[event.sku_id]
+    Args:
+        env: SimPy environment
+        skus: List of SKU objects
+        end_time: Final simulation time (week number)
+    """
+    # Start processes for each SKU
+    for sku in skus:
+        env.process(weekly_simulation_process(env, sku))
+    
+    # Run simulation
+    env.run(until=end_time)
+    
+## 7. SKU Action Methods (SimPy Generators)
+
+```python
+class SKU(Resource):
+    def fulfill_demand(self, env, delay=0):
+        """Fulfill demand + emergency (if needed)."""
+        yield env.timeout(delay)  # Wait for delay
         
-        # Check if SKU has enough inventory
-        if sku.get_current_level() >= event.quantity:
+        # Process demand
+        if self.get_current_level() >= demand_amount:
             # Normal fulfillment
-            sku.set_inventory_level(sku.get_current_level() - event.quantity)
+            self.set_inventory_level(self.get_current_level() - demand_amount)
         else:
-            # Stockout - trigger emergency replenishment
-            stockout_amount = event.quantity - sku.get_current_level()
-            sku.set_inventory_level(0)
-            sku.record_stockout(stockout_amount)
+            # Stockout - immediately trigger emergency
+            stockout_amount = demand_amount - self.get_current_level()
+            self.set_inventory_level(0)
+            self.record_stockout(stockout_amount)
+            self._trigger_emergency_replenishment(stockout_amount)
+    
+    def place_orders(self, env, lead_time):
+        """Place orders if needed."""
+        if self._check_reorder():  # Private method
+            # Place order
+            order_quantity = self._calculate_order_quantity()
             
-            # Schedule emergency replenishment
-            self.schedule_emergency_replenishment(sku, stockout_amount)
+            # SimPy timeout mechanism for receiving orders
+            yield env.timeout(lead_time)
+            yield from self.receive_deliveries(env, 0)  # Trigger delivery
+    
+    def receive_deliveries(self, env, delay=0):
+        """Process deliveries."""
+        yield env.timeout(delay)  # Wait for delay
+        # Update inventory from incoming delivery
+        self.set_inventory_level(self.get_current_level() + delivery_quantity)
+    
+    def _check_reorder(self) -> bool:
+        """PRIVATE: Check if reorder needed."""
+        # Inventory gap logic
+        pass
+    
+    def _trigger_emergency_replenishment(self, stockout_amount):
+        """PRIVATE: Trigger emergency replenishment."""
+        # Emergency logic (no SimPy, just immediate transfer)
+        pass
 ```
 
-## 7. Event Classes
+## 8. SimPy Integration Notes
 
-```python
-from dataclasses import dataclass
-from typing import Optional
+### **Key SimPy Features Used:**
+- **`yield env.timeout(delay)`** - Wait for specified time
+- **`env.now`** - Current simulation time
+- **`env.process(generator)`** - Start a process
+- **`env.run(until=time)`** - Run simulation until specified time
+- **`yield from generator`** - Call another generator
 
-@dataclass
-class DemandEvent:
-    """Discrete demand event for a SKU."""
-    sku_id: str
-    quantity: float
-    time: int
-    location_id: str
+### **Weekly Simulation Flow:**
+1. **Monday**: `fulfill_demand(env, 0)` - Process demand + emergency (if needed)
+2. **Monday**: `place_orders(env, lead_time)` - Check reorder + place orders
+3. **After lead_time**: `receive_deliveries(env, 0)` - Process deliveries
+4. **Next week**: Repeat cycle
 
-@dataclass
-class DeliveryEvent:
-    """Discrete delivery event for replenishment."""
-    sku_id: str
-    quantity: float
-    time: int
-    source: str  # "external_supplier" or "emergency_transfer"
+### **No More Event Classes:**
+- **DemandEvent** → `fulfill_demand(env, delay=0)` generator
+- **DeliveryEvent** → `receive_deliveries(env, delay=0)` generator  
+- **ReplenishmentEvent** → `place_orders(env, lead_time)` generator
 
-@dataclass
-class ReplenishmentEvent:
-    """Discrete replenishment order event."""
-    sku_id: str
-    order_quantity: float
-    time: int
-    location_id: str
-```
+## Key Benefits of SimPy Process-Based Approach
 
-## Key Benefits of Discrete Event Approach
-
-1. **Realistic Modeling**: Events happen at specific times, not continuously
-2. **Efficient Processing**: Only process events when they occur
-3. **Clear Logic**: Easy to understand and debug
-4. **Flexible Scheduling**: Can handle complex timing relationships
-5. **Event Tracking**: Easy to record and analyze specific events
+1. **Realistic Modeling**: Processes run concurrently and interact naturally
+2. **Efficient Processing**: SimPy handles process scheduling and suspension
+3. **Clear Logic**: Generator functions are easy to understand and debug
+4. **Flexible Timing**: `yield env.timeout()` provides precise timing control
+5. **Concurrent Processing**: Multiple SKUs can run simultaneously
+6. **Natural Flow**: Processes can call other processes with `yield from`
 
 ## Implementation Notes
 
 - **Time Units**: All times in fractional weeks for precise timing
 - **Lead Times**: Converted to fractional weeks using `days/7` (SimPy handles intra-week events)
 - **Inventory**: Discrete unit counts (no fractional units)
-- **Events**: Scheduled and processed in chronological order by SimPy
-- **State Updates**: Only when events occur, not continuously
+- **Processes**: SimPy generators that can be suspended and resumed
+- **State Updates**: Only when processes execute, not continuously
+- **No Event Classes**: Replaced with generator functions
 
-This discrete event approach will be much more suitable for SimPy integration and will provide more realistic simulation behavior for the hospital inventory system.
+This SimPy process-based approach will provide more realistic and efficient simulation behavior for the hospital inventory system.

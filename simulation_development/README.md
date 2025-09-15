@@ -43,9 +43,11 @@ class Location(Resource):
 ```python
 class SKU(Resource):
     def __init__(self, sku_id: str, location_id: str, target_level: float, lead_time_days: float)
-    def process_demand_event(self, demand_event: DemandEvent)  # Core process
-    def place_order(self)  # Core process  
-    def receive_delivery(self, quantity: float)  # Core process
+    def fulfill_demand(self, env, delay=0)  # Core process - SimPy generator
+    def place_orders(self, env, lead_time)  # Core process - SimPy generator
+    def receive_deliveries(self, env, delay=0)  # Core process - SimPy generator
+    def _check_reorder(self) -> bool  # Private method
+    def _trigger_emergency_replenishment(self, stockout_amount)  # Private method
     def set_connected_perpetual_sku(self, perpetual_sku: SKU)  # For PAR SKUs
     def add_emergency_connection(self, par_sku: SKU)  # For perpetual SKUs
     def allocate_emergency_supply(self, demand: float) -> float  # Can go negative
@@ -79,10 +81,10 @@ class Location(Resource):
 
 The discrete event simulation framework is now complete with the following core processes:
 
-1. **SKU Core Processes**:
-   - `process_demand_event()`: Handle demand and trigger emergency supply when needed
-   - `place_order()`: Order replenishment when inventory gaps occur
-   - `receive_delivery()`: Process incoming deliveries
+1. **SKU Core Processes (SimPy Generators)**:
+   - `fulfill_demand(env, delay=0)`: Handle demand and trigger emergency supply when needed
+   - `place_orders(env, lead_time)`: Order replenishment when inventory gaps occur
+   - `receive_deliveries(env, delay=0)`: Process incoming deliveries
 
 2. **Location Reporting Methods**:
    - `get_*()` methods for comprehensive reporting and analytics
@@ -90,6 +92,7 @@ The discrete event simulation framework is now complete with the following core 
 
 3. **SimulationManager Core Process**:
    - `run_week()`: Execute one week of simulation (ready for SimPy integration)
+   - `weekly_simulation_process(env, sku)`: SimPy generator for weekly simulation cycle
 
 4. **Key Features**:
    - **Bidirectional SKU Connections**: PAR SKUs can request emergency supply from perpetual SKUs
@@ -143,7 +146,8 @@ manager.setup_emergency_connections()
 - ✅ **Bidirectional Connections**: PAR-perpetual SKU communication implemented
 - ✅ **Negative Inventory Support**: Perpetual SKUs can go negative for emergency supply
 - ⏳ **Data Integration**: Pending - CSV loading and validation
-- ⏳ **SimPy Integration**: Ready to implement process-based approach
+- ⏳ **SimPy Integration**: Ready to implement process-based approach (NO SimPy resources, just processes)
+- ⏳ **Function Renaming**: Pending - Rename to action-oriented names with SimPy generators
 - ⏳ **Validation Framework**: Pending - Comparison with analytical solution
 
 ### Key Features
