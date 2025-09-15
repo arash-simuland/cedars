@@ -111,35 +111,54 @@ We use an **Order-Up-To-Level** inventory replenishment policy, which is a speci
 - **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
 - **Perpetual Role**: Safety net for stockouts, not primary replenishment source
 
-## Core Mathematical Model
+## Core Mathematical Model - Discrete Event Implementation
 
-### 1. Inventory Gap Calculation
+### 1. Discrete Event Inventory Gap Calculation
+```python
+def calculate_inventory_gap(sku: SKU, current_time: int) -> float:
+    target_inventory = sku.target_level
+    current_inventory = sku.get_current_level()
+    pending_shipments = sku.get_pending_shipments(current_time)
+    inventory_gap = max(0, target_inventory - (current_inventory + pending_shipments))
+    return inventory_gap
 ```
-Inventory Gap = MAX(0, ((depleting*DT + target_inventory) - (SKUs_in_Shipment + PAR)))
-```
-- **What we want**: depleting*DT + target_inventory
-- **What we have**: SKUs_in_Shipment + PAR
+- **What we want**: target_inventory
+- **What we have**: current_inventory + pending_shipments
 - **Gap**: Amount needed to order
 
-### 2. PAR Stockout Calculation
-```
-PAR Stockout = (demand_projection - depleting*DT/day)
+### 2. Discrete Event PAR Stockout Calculation
+```python
+def process_demand_event(sku: SKU, demand_event: DemandEvent):
+    available_inventory = sku.get_current_level()
+    demand_amount = demand_event.quantity
+    
+    if available_inventory >= demand_amount:
+        # Normal fulfillment
+        sku.set_inventory_level(available_inventory - demand_amount)
+    else:
+        # Stockout occurs - trigger emergency supply
+        sku.set_inventory_level(0)
+        stockout_amount = demand_amount - available_inventory
+        sku.record_stockout(stockout_amount)
+        # Call connected perpetual SKU for emergency supply
 ```
 - **Constraint**: PARs cannot go negative
-- **Depleting**: Automatically bound to available PAR stock
 - **Stockout**: Occurs when demand exceeds available stock
+- **Emergency**: PAR SKU calls connected perpetual SKU for supply
 
-### 3. Transit Time (Lead Time Conversion)
+### 3. Discrete Event Lead Time Conversion
 **Lead Time Conversion Formula:**
-```
-Lead Time (weeks) = Lead Time (days) / 7
+```python
+lead_time_weeks = lead_time_days / 7.0  # Fractional weeks for precise timing
 ```
 
 **Examples:**
-- 1.0 day → 0.14 weeks (1/7)
-- 3.5 days → 0.5 weeks (3.5/7)
-- 7.0 days → 1.0 week (7/7)
-- 14.0 days → 2.0 weeks (14/7)
+- 1.0 day → 0.143 weeks (1/7 = 0.143)
+- 3.5 days → 0.5 weeks (3.5/7 = 0.5)
+- 7.0 days → 1.0 week (7/7 = 1.0)
+- 14.0 days → 2.0 weeks (14/7 = 2.0)
+
+**Key Point**: SimPy handles precise timing within weeks, so fractional lead times are preserved for accurate event scheduling.
 
 **Current Lead Time Distribution:**
 - **Range**: 0.0 to 176.5 days
@@ -147,29 +166,45 @@ Lead Time (weeks) = Lead Time (days) / 7
 - **Median**: 1.0 day (0.14 weeks)
 - **Most Common**: 1.0 day (2,447 SKUs), 0.5 days (1,205 SKUs)
 
-### 4. Perpetual Inventory Supply
+### 4. Discrete Event Emergency Supply with Negative Inventory
+```python
+def allocate_emergency_supply(perpetual_sku: SKU, demand: float) -> float:
+    available = perpetual_sku.get_current_level()
+    
+    if available >= demand:
+        # Normal case - enough inventory
+        allocated = demand
+        perpetual_sku.set_inventory_level(available - allocated)
+    else:
+        # Emergency case - go negative but still send the item
+        allocated = demand
+        perpetual_sku.set_inventory_level(available - allocated)  # This will be negative
+        # Record hospital-level stockout
+        perpetual_sku._total_stockouts += (demand - available)
+    
+    return allocated
 ```
-Perpetual.supplying_PAR = SUM(PAR.PAR_stockouts[itemType,*]) * day/DT
-```
-- Supplies combined PAR level stockouts for each SKU at each time step
+- **Key Innovation**: Perpetual SKUs can go negative to maintain service levels
+- **Hospital Stockout Tracking**: Records when entire system is under stress
+- **Service Continuity**: Items still get sent even when perpetual is short
 
-### 5. Allocation Function
-```
-Supplying from Perpetual = ALLOCATE(
-    Perpetual.supplying_PAR[itemType]*DT/day,  # What to allocate
-    PARInventory,                              # Allocation category
-    PAR_stockouts[itemType,*],                 # Amount each PAR needs
-    PAR_priority[itemType,*],                  # Priority (1 for all PARs)
-    0                                          # Distribution spread
-)
+### 5. Bidirectional SKU Connections
+```python
+# PAR SKU finds connected perpetual SKU
+def process_demand_event(par_sku: SKU, demand_event: DemandEvent):
+    if par_sku.get_current_level() < demand_event.quantity:
+        # Stockout - call connected perpetual SKU
+        perpetual_sku = par_sku._find_connected_perpetual_sku()
+        if perpetual_sku:
+            perpetual_sku.process_demand_event(demand_event)
+            emergency_received = perpetual_sku.allocate_emergency_supply(stockout_amount)
+            par_sku.set_inventory_level(emergency_received)
 ```
 
-**ALLOCATE Function Parameters**:
-1. **What to allocate**: SKUs coming from perpetual
-2. **Allocation category**: PAR inventories
-3. **Needs**: Amount each PAR needs (PAR Stockouts)
-4. **Priority**: Given to each PAR (1 for all PARs)
-5. **Distribution spread**: 0 = higher priority indices supplied first
+**Connection Setup**:
+- **Perpetual SKU** → **PAR SKU**: `connected_par_skus[]` list
+- **PAR SKU** → **Perpetual SKU**: `_connected_perpetual_sku` reference
+- **Bidirectional**: Both SKUs can find each other for emergency supply
 
 ## King's Method Implementation
 

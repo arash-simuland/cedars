@@ -4,27 +4,31 @@
 **Phase**: **MODEL BUILDING PHASE** 🏗️  
 **Status**: Active Development
 
-## 🎯 Current Phase: Object-Oriented Simulation Framework Implementation
+## 🎯 Current Phase: Discrete Event Simulation Framework Complete
 
-### ✅ **Completed Understanding**
+### ✅ **Completed Implementation**
 - **Data Structure Analysis**: Clear understanding of SKU and demand data format
 - **Replenishment Flow**: Confirmed normal vs emergency replenishment mechanisms
 - **Data Relationships**: Understood delivery locations vs PAR locations
-- **Mathematical Model**: Core equations defined and understood
+- **Mathematical Model**: Core equations converted to discrete event format
 - **Data Validation**: Confirmed simulation input data covers 99.5% of original demand data
+- **Object-Oriented Design**: Complete Location, SKU, and SimulationManager classes
+- **Core Processes**: SKU processes, Location reporting, SimulationManager coordination
+- **Bidirectional Connections**: PAR-perpetual SKU communication implemented
+- **Negative Inventory Support**: Perpetual SKUs can go negative for emergency supply
+- **Event Classes**: DemandEvent, DeliveryEvent, ReplenishmentEvent implemented
 
 ### 🚧 **Currently Working On**
-- **Object-Oriented Design**: Implementing Location, SKU, and GraphManager classes
-- **Data Integration**: Building data loading functions to populate object structure
-- **Simulation Engine**: Developing daily time-step processing framework
+- **Data Integration**: Building CSV loading functions to populate object structure
+- **SimPy Integration**: Converting to SimPy process-based approach
 
 ### ⏳ **Next Steps**
-1. **Core Classes**: Implement Location, SKU, and GraphManager classes
-2. **Data Loader**: Create functions to load CSV data into object structure
-3. **Simulation Engine**: Build daily time-step processing logic
-4. **Mathematical Model**: Implement core equations (inventory gap, stockout, allocation)
-5. **Validation Framework**: Create comparison with analytical solution
-6. **Testing**: Start with 74 validation SKUs before full-scale implementation
+1. **Data Integration**: Create CSV loading functions to populate object structure
+2. **SimPy Integration**: Convert discrete event framework to SimPy process-based approach
+3. **Mathematical Model**: Implement core equations in SimPy processes
+4. **Validation Framework**: Create comparison with analytical solution
+5. **Testing**: Start with 74 validation SKUs before full-scale implementation
+6. **Full Implementation**: Run with all 5,941 SKUs
 
 ## 🏗️ **Current Understanding**
 
@@ -54,18 +58,24 @@
 | Data Understanding | ✅ Complete | 100% |
 | Data Validation | ✅ Complete | 100% |
 | Object Design | ✅ Complete | 100% |
-| Data Integration | 🚧 In Progress | 30% |
-| Simulation Engine | ⏳ Pending | 0% |
-| Mathematical Model | ⏳ Pending | 0% |
+| Core Processes | ✅ Complete | 100% |
+| Discrete Event Framework | ✅ Complete | 100% |
+| Bidirectional Connections | ✅ Complete | 100% |
+| Negative Inventory Support | ✅ Complete | 100% |
+| Data Integration | ⏳ Pending | 0% |
+| SimPy Integration | ⏳ Pending | 0% |
 | Validation Framework | ⏳ Pending | 0% |
 
 ## 🎯 **Success Criteria**
 
-- [x] Location, SKU, and GraphManager classes implemented
+- [x] Location, SKU, and SimulationManager classes implemented
 - [x] Data validation confirms 99.5% coverage of original demand data
+- [x] Core processes implemented (SKU processes, Location reporting)
+- [x] Bidirectional SKU connections implemented
+- [x] Negative inventory support for perpetual SKUs
+- [x] Discrete event framework complete
 - [ ] Data loading functions working with CSV files
-- [ ] Daily time-step simulation engine functional
-- [ ] Core mathematical equations implemented
+- [ ] SimPy integration complete
 - [ ] Validation framework comparing with analytical solution
 - [ ] Testing with 74 validation SKUs successful
 - [ ] Full-scale implementation with 5,941 SKUs
