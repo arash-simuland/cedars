@@ -140,15 +140,16 @@ class SKU(Resource):
     """SKU resource representing individual medical supplies."""
     
     def __init__(self, sku_id: str, location_id: str, target_level: float = 0, 
-                 lead_time: float = 0, demand_rate: float = 0):
+                 lead_time_days: float = 0, demand_rate: float = 0):
         super().__init__(sku_id, ResourceType.SKU)
         self.location_id = location_id
         self.target_level = target_level
-        self.lead_time = lead_time
-        self.demand_rate = demand_rate
+        self.lead_time_days = lead_time_days  # Original lead time in days
+        self.lead_time_weeks = lead_time_days / 7.0  # Converted to weeks for simulation
+        self.demand_rate = demand_rate  # Weekly demand rate
         self.connected_par_skus: List['SKU'] = []  # For perpetual SKUs only
         self._current_inventory_level = 0
-        logger.debug(f"Created SKU {sku_id} in location {location_id}")
+        logger.debug(f"Created SKU {sku_id} in location {location_id} (lead time: {lead_time_days} days = {self.lead_time_weeks:.2f} weeks)")
     
     def get_capacity(self) -> float:
         """Get the target level (capacity) of this SKU."""
@@ -200,7 +201,16 @@ class ResourceFactory:
     
     @staticmethod
     def create_sku(sku_id: str, location_id: str, **kwargs) -> SKU:
-        """Create a new SKU resource."""
+        """Create a new SKU resource.
+        
+        Args:
+            sku_id: Unique SKU identifier
+            location_id: Location where SKU is stored
+            **kwargs: Additional parameters including:
+                - target_level: Target inventory level
+                - lead_time_days: Lead time in days (converted to weeks automatically)
+                - demand_rate: Weekly demand rate
+        """
         return SKU(sku_id, location_id, **kwargs)
 
 class SimulationManager:
@@ -257,6 +267,8 @@ class SimulationManager:
         status = {
             "total_locations": len(self.locations),
             "total_skus": sum(len(sku_list) for sku_list in self.sku_registry.values()),
+            "simulation_time_step": "weekly",
+            "lead_time_conversion": "days_to_weeks = days / 7",
             "locations": {}
         }
         
@@ -281,11 +293,11 @@ if __name__ == "__main__":
     manager.add_location(perpetual)
     manager.add_location(ed_location)
     
-    # Create SKUs
+    # Create SKUs (lead times in days, automatically converted to weeks)
     sku_001_perpetual = ResourceFactory.create_sku("SKU_001", "PERPETUAL", 
-                                                   target_level=100, lead_time=2.0)
+                                                   target_level=100, lead_time_days=2.0)
     sku_001_ed = ResourceFactory.create_sku("SKU_001", "ED", 
-                                           target_level=50, lead_time=1.5)
+                                           target_level=50, lead_time_days=1.5)
     
     manager.add_sku(sku_001_perpetual)
     manager.add_sku(sku_001_ed)

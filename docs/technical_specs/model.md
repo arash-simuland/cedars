@@ -83,9 +83,9 @@ PAR_Level1_ED {
 ```
 
 ### Inventory Flow Logic
-1. **Daily Demand**: PAR inventories face daily demand
+1. **Weekly Demand**: PAR inventories face weekly demand (based on historical weekly consumption data)
 2. **Normal Replenishment**: If PAR has enough → supplies demand → triggers replenishment order from external supplier
-3. **Lead Time**: Orders delivered after SKU-specific lead time from supplier
+3. **Lead Time**: Orders delivered after SKU-specific lead time from supplier (converted to weeks)
 4. **PAR Stockout**: If PAR insufficient → stockout occurs
 5. **Emergency Replenishment**: Follow graph edges from PAR SKU to Perpetual SKU (same SKU type)
 6. **Hospital Stockout**: Remaining unsupplied demand becomes hospital-level stockout
@@ -129,10 +129,23 @@ PAR Stockout = (demand_projection - depleting*DT/day)
 - **Depleting**: Automatically bound to available PAR stock
 - **Stockout**: Occurs when demand exceeds available stock
 
-### 3. Transit Time
+### 3. Transit Time (Lead Time Conversion)
+**Lead Time Conversion Formula:**
 ```
-Transit time for SKU in Shipment = Lead Time
+Lead Time (weeks) = Lead Time (days) / 7
 ```
+
+**Examples:**
+- 1.0 day → 0.14 weeks (1/7)
+- 3.5 days → 0.5 weeks (3.5/7)
+- 7.0 days → 1.0 week (7/7)
+- 14.0 days → 2.0 weeks (14/7)
+
+**Current Lead Time Distribution:**
+- **Range**: 0.0 to 176.5 days
+- **Mean**: 3.54 days (0.51 weeks)
+- **Median**: 1.0 day (0.14 weeks)
+- **Most Common**: 1.0 day (2,447 SKUs), 0.5 days (1,205 SKUs)
 
 ### 4. Perpetual Inventory Supply
 ```
@@ -190,7 +203,8 @@ Supplying from Perpetual = ALLOCATE(
 - **Focus**: Optimize inventory management while reducing holding costs
 
 ### Time Horizon
-- **Duration**: One year of historical data
+- **Duration**: 188 weeks of historical data (2019-2025)
+- **Time Step**: Weekly (1 week per simulation step)
 - **Focus**: Frequency of stockouts rather than accumulative volume
 
 ### **Monte Carlo Capabilities**

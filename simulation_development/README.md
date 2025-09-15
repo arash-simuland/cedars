@@ -107,12 +107,14 @@ manager.setup_emergency_connections()
 - ✅ **Data Validation**: Confirmed 99.5% coverage of original demand data
 - 🚧 **SimPy Integration**: Ready to implement process-based approach
 - ⏳ **Data Integration**: Pending - CSV loading and validation
-- ⏳ **Simulation Engine**: Pending - Daily time-step processing
+- ⏳ **Simulation Engine**: Pending - Weekly time-step processing
 - ⏳ **Mathematical Model**: Pending - Core equations implementation
 - ⏳ **Validation Framework**: Pending - Comparison with analytical solution
 
 ### Key Features
 
+- **Weekly Time Step**: Simulation runs on weekly cycles matching historical data
+- **Lead Time Conversion**: Automatic conversion from days to weeks (days/7)
 - **Two-Tier Safety System**: Normal replenishment + emergency backup
 - **Order-Up-To-Level Policy**: Deterministic replenishment strategy
 - **Emergency Connections**: SKU-level connections between perpetual and PARs

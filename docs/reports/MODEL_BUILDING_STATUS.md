@@ -29,9 +29,10 @@
 ## 🏗️ **Current Understanding**
 
 ### **Replenishment Flow**
-- **Primary Replenishment**: External Supplier → PAR Location (based on lead time)
+- **Primary Replenishment**: External Supplier → PAR Location (based on lead time in weeks)
 - **Emergency Replenishment**: PAR Location → Perpetual Location (same SKU, immediate)
 - **Perpetual Role**: Safety net for stockouts, not primary replenishment source
+- **Time Step**: Weekly simulation cycles matching historical demand data
 
 ### **Data Structure**
 - **Delivery Locations (36)**: Physical delivery points where supplies arrive
