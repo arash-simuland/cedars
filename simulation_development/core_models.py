@@ -38,6 +38,7 @@ Design Patterns:
 from abc import ABC, abstractmethod
 from typing import Dict, List, Optional, Any
 from enum import Enum
+from dataclasses import dataclass
 import logging
 import math
 
@@ -56,6 +57,22 @@ class ResourceState:
     current_level: float
     capacity: float
     last_updated: float
+
+@dataclass
+class DeliveryData:
+    """Data structure representing a delivery arrival."""
+    sku_id: str
+    quantity: float
+    time: int
+    source: str = "external_supplier"
+
+@dataclass
+class DemandData:
+    """Data structure representing demand for a SKU."""
+    sku_id: str
+    quantity: float
+    time: int
+    location_id: str
 
 class InventoryObserver(ABC):
     """Abstract observer for inventory changes."""
@@ -227,7 +244,7 @@ class SKU(Resource):
         self.connected_par_skus: List['SKU'] = []  # For perpetual SKUs only
         self._connected_perpetual_sku: Optional['SKU'] = None  # For PAR SKUs only
         self._current_inventory_level = 0
-        self._pending_shipments: List['DeliveryEvent'] = []  # Discrete event shipments
+        self._pending_shipments: List['DeliveryData'] = []  # Discrete event shipments
         self._stockout_amount = 0  # Current stockout amount
         self._total_stockouts = 0  # Cumulative stockouts
         self._total_emergency_transfers = 0  # Cumulative emergency transfers
@@ -241,10 +258,16 @@ class SKU(Resource):
         """Get the current inventory level of this SKU."""
         return self._current_inventory_level
     
-    def set_inventory_level(self, new_level: float):
+    def set_inventory_level(self, new_level: float, allow_negative: bool = False):
         """Set the inventory level and notify observers."""
         old_level = self._current_inventory_level
-        self._current_inventory_level = max(0, new_level)  # Prevent negative
+        if allow_negative or self.location_id == "PERPETUAL":
+            # Perpetual SKUs can go negative for emergency supply
+            self._current_inventory_level = new_level
+        else:
+            # PAR SKUs cannot go negative
+            self._current_inventory_level = max(0, new_level)
+        
         self.state.current_level = self._current_inventory_level
         self.state.last_updated = 0  # Will be updated by simulation time
         self.notify_observers(old_level, self._current_inventory_level)
@@ -269,11 +292,11 @@ class SKU(Resource):
         if available >= demand:
             # Normal case - enough inventory
             allocated = demand
-            self.set_inventory_level(available - allocated)
+            self.set_inventory_level(available - allocated, allow_negative=True)
         else:
             # Emergency case - go negative but still send the item
             allocated = demand
-            self.set_inventory_level(available - allocated)  # This will be negative
+            self.set_inventory_level(available - allocated, allow_negative=True)  # This will be negative
             # Record hospital-level stockout
             self._total_stockouts += (demand - available)
             logger.warning(f"Hospital-level stockout for {self.resource_id}: went negative by {demand - available} units")
@@ -283,10 +306,10 @@ class SKU(Resource):
         
         return allocated
     
-    def add_pending_shipment(self, delivery_event: 'DeliveryEvent'):
+    def add_pending_shipment(self, delivery_data: 'DeliveryData'):
         """Add a pending shipment to the SKU."""
-        self._pending_shipments.append(delivery_event)
-        logger.debug(f"Added pending shipment for {self.resource_id}: {delivery_event.quantity} units at time {delivery_event.time}")
+        self._pending_shipments.append(delivery_data)
+        logger.debug(f"Added pending shipment for {self.resource_id}: {delivery_data.quantity} units at time {delivery_data.time}")
     
     def get_pending_shipments(self, current_time: int) -> float:
         """Get total quantity of pending shipments arriving by current time."""
@@ -294,17 +317,17 @@ class SKU(Resource):
                            if shipment.time <= current_time)
         return total_pending
     
-    def process_delivery_event(self, delivery_event: 'DeliveryEvent'):
+    def process_delivery_data(self, delivery_data: 'DeliveryData'):
         """Process a delivery event and update inventory."""
-        if delivery_event in self._pending_shipments:
-            self._pending_shipments.remove(delivery_event)
-            self.set_inventory_level(self.get_current_level() + delivery_event.quantity)
-            logger.info(f"Processed delivery for {self.resource_id}: +{delivery_event.quantity} units")
+        if delivery_data in self._pending_shipments:
+            self._pending_shipments.remove(delivery_data)
+            self.set_inventory_level(self.get_current_level() + delivery_data.quantity)
+            logger.info(f"Processed delivery for {self.resource_id}: +{delivery_data.quantity} units")
     
-    def process_demand_event(self, demand_event: 'DemandEvent'):
+    def process_demand_data(self, demand_data: 'DemandData'):
         """Process a discrete demand event."""
         available_inventory = self.get_current_level()
-        demand_amount = demand_event.quantity
+        demand_amount = demand_data.quantity
         
         if available_inventory >= demand_amount:
             # Normal fulfillment
@@ -321,7 +344,7 @@ class SKU(Resource):
             perpetual_sku = self._find_connected_perpetual_sku()
             if perpetual_sku:
                 # Perpetual SKU will handle emergency supply (may go negative)
-                perpetual_sku.process_demand_event(demand_event)
+                perpetual_sku.process_demand_data(demand_data)
                 # Receive emergency supply from perpetual
                 emergency_received = perpetual_sku.allocate_emergency_supply(self._stockout_amount)
                 if emergency_received > 0:
@@ -373,6 +396,14 @@ class SKU(Resource):
         
         inventory_gap = max(0, target_inventory - (current_inventory + pending_shipments))
         return inventory_gap
+    
+    def _check_reorder(self) -> bool:
+        """Private method to check if reorder is needed."""
+        return self.get_current_level() < self.target_level
+    
+    def _calculate_order_quantity(self) -> float:
+        """Private method to calculate order quantity."""
+        return max(0, self.target_level - self.get_current_level())
 
 class ResourceFactory:
     """Factory for creating resources."""
@@ -461,12 +492,26 @@ class AntologyGenerator:
         # Update final network status
         self._update_network_status()
         
-        logger.info("Network structure finalized - ready for simulation")
+        # Generate frontend visualization data
+        self._generate_frontend_data()
+        
+        logger.info("Network structure finalized - ready for simulation and frontend")
     
     def _validate_network_connections(self):
         """Validate that all network connections are properly established."""
         # This method ensures all PAR-perpetual connections are valid
         pass
+    
+    def _generate_frontend_data(self):
+        """Generate frontend visualization data when network is finalized."""
+        try:
+            from frontend_generator import create_frontend_integration
+            self.frontend_generator = create_frontend_integration(self)
+            logger.info("Frontend data generated successfully")
+        except ImportError:
+            logger.warning("Frontend generator not available - skipping frontend data generation")
+        except Exception as e:
+            logger.error(f"Error generating frontend data: {e}")
     
     def on_inventory_change(self, resource: Resource, old_level: float, new_level: float):
         """Handle inventory changes at the system level."""

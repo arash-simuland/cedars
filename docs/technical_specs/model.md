@@ -113,6 +113,27 @@ We use an **Order-Up-To-Level** inventory replenishment policy, which is a speci
 
 ## Core Mathematical Model - Discrete Event Implementation
 
+### Discrete Event Data Structures
+The simulation uses dataclasses to represent discrete events in inventory transactions:
+
+```python
+@dataclass
+class DeliveryData:
+    """Data structure representing a delivery arrival."""
+    sku_id: str
+    quantity: float
+    time: int
+    source: str = "external_supplier"
+
+@dataclass
+class DemandData:
+    """Data structure representing demand for a SKU."""
+    sku_id: str
+    quantity: float
+    time: int
+    location_id: str
+```
+
 ### 1. Discrete Event Inventory Gap Calculation
 ```python
 def calculate_inventory_gap(sku: SKU, current_time: int) -> float:
@@ -128,9 +149,9 @@ def calculate_inventory_gap(sku: SKU, current_time: int) -> float:
 
 ### 2. Discrete Event PAR Stockout Calculation
 ```python
-def process_demand_event(sku: SKU, demand_event: DemandEvent):
+def process_demand_data(sku: SKU, demand_data: DemandData):
     available_inventory = sku.get_current_level()
-    demand_amount = demand_event.quantity
+    demand_amount = demand_data.quantity
     
     if available_inventory >= demand_amount:
         # Normal fulfillment
@@ -142,9 +163,10 @@ def process_demand_event(sku: SKU, demand_event: DemandEvent):
         sku.record_stockout(stockout_amount)
         # Call connected perpetual SKU for emergency supply
 ```
-- **Constraint**: PARs cannot go negative
+- **Constraint**: PARs cannot go negative (unless allow_negative=True)
 - **Stockout**: Occurs when demand exceeds available stock
 - **Emergency**: PAR SKU calls connected perpetual SKU for supply
+- **Interface**: `set_inventory_level(new_level, allow_negative=False)`
 
 ### 3. Discrete Event Lead Time Conversion
 **Lead Time Conversion Formula:**
@@ -174,11 +196,11 @@ def allocate_emergency_supply(perpetual_sku: SKU, demand: float) -> float:
     if available >= demand:
         # Normal case - enough inventory
         allocated = demand
-        perpetual_sku.set_inventory_level(available - allocated)
+        perpetual_sku.set_inventory_level(available - allocated, allow_negative=True)
     else:
         # Emergency case - go negative but still send the item
         allocated = demand
-        perpetual_sku.set_inventory_level(available - allocated)  # This will be negative
+        perpetual_sku.set_inventory_level(available - allocated, allow_negative=True)  # This will be negative
         # Record hospital-level stockout
         perpetual_sku._total_stockouts += (demand - available)
     
@@ -191,12 +213,12 @@ def allocate_emergency_supply(perpetual_sku: SKU, demand: float) -> float:
 ### 5. Bidirectional SKU Connections
 ```python
 # PAR SKU finds connected perpetual SKU
-def process_demand_event(par_sku: SKU, demand_event: DemandEvent):
-    if par_sku.get_current_level() < demand_event.quantity:
+def process_demand_data(par_sku: SKU, demand_data: DemandData):
+    if par_sku.get_current_level() < demand_data.quantity:
         # Stockout - call connected perpetual SKU
         perpetual_sku = par_sku._find_connected_perpetual_sku()
         if perpetual_sku:
-            perpetual_sku.process_demand_event(demand_event)
+            perpetual_sku.process_demand_data(demand_data)
             emergency_received = perpetual_sku.allocate_emergency_supply(stockout_amount)
             par_sku.set_inventory_level(emergency_received)
 ```
@@ -293,6 +315,7 @@ The simulation will be implemented using an object-oriented approach:
 2. **SKU Class**: Represents each SKU within a location
    - Properties: sku_id, current_inventory_level, lead_time, target_level, demand_pattern
    - Methods: update_inventory(), check_stockout(), calculate_reorder()
+   - Private Methods: _check_reorder(), _calculate_order_quantity()
 
 3. **Graph Manager Class**: Manages connections between SKU objects
    - Properties: emergency_connections, regular_connections

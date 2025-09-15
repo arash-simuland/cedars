@@ -18,7 +18,7 @@ The CedarSim data processing pipeline is complete and we are now actively buildi
 - ✅ **Data Coverage Validation**: 99.5% of original demand data preserved (188/189 weeks)
 - ✅ **Object Graph Design**: Defined Location and SKU object structure for simulation
 - ✅ **Design Patterns**: Observer, Strategy, Factory, and Manager patterns implemented
-- ✅ **3D Visualization**: Interactive 3D network visualizations of hospital inventory system
+- ✅ **Frontend Specification**: Complete dashboard design and architecture
 - ✅ **Simulation Environment**: Professional development and production folder structures
 - ✅ **Replenishment Flow Understanding**: Clear understanding of normal vs emergency replenishment
 - 🚧 **SimPy Integration**: Ready to implement process-based simulation approach
@@ -46,10 +46,10 @@ The CedarSim data processing pipeline is complete and we are now actively buildi
 2. **Jupyter Notebooks**: `notebooks/`
 3. **Processing Scripts**: `scripts/`
 
-### For 3D Visualization:
-1. **Visualization Script**: `scripts/simulation/cedarsim_3d_viz.py`
-2. **Generated HTML Files**: `scripts/simulation/cedarsim_combined_visualization.html`
-3. **Documentation**: `scripts/simulation/README_3D_VISUALIZATION.md`
+### For Dashboard Frontend:
+1. **Frontend Specification**: `simulation_development/FRONTEND_SPECIFICATION.md`
+2. **Dashboard Implementation**: `simulation_development/frontend/` (coming soon)
+3. **API Integration**: Flask backend with AntologyGenerator
 
 ## 📁 Repository Structure (SIMPLIFIED)
 

@@ -36,6 +36,23 @@ class Resource(ABC):
     def notify_observers(self, old_level: float, new_level: float)
 ```
 
+#### Discrete Event Data Structures
+```python
+@dataclass
+class DeliveryData:
+    sku_id: str
+    quantity: float
+    time: int
+    source: str = "external_supplier"
+
+@dataclass
+class DemandData:
+    sku_id: str
+    quantity: float
+    time: int
+    location_id: str
+```
+
 #### `Location` (Inherits from Resource)
 ```python
 class Location(Resource):
@@ -52,6 +69,7 @@ class SKU(Resource):
     def place_orders(self, env, lead_time)  # Core process - SimPy generator
     def receive_deliveries(self, env, delay=0)  # Core process - SimPy generator
     def _check_reorder(self) -> bool  # Private method
+    def _calculate_order_quantity(self) -> float  # Private method
     def _trigger_emergency_replenishment(self, stockout_amount)  # Private method
     def set_connected_perpetual_sku(self, perpetual_sku: SKU)  # For PAR SKUs
     def add_emergency_connection(self, par_sku: SKU)  # For perpetual SKUs
