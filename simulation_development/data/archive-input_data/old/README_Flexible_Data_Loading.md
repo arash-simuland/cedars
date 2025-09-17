@@ -5,7 +5,7 @@ This directory provides flexible data loading options for different simulation s
 ## 🎯 Data Loading Modes
 
 ### 1. **Validation Subset Mode** (`validation_subset`)
-- **SKUs**: Only 24 validation SKUs
+- **SKUs**: Only 24 validation SKUs (legacy - now use production data)
 - **Time Range**: 2022-01-02 to 2025-07-06
 - **Purpose**: Compare simulation results against analytical solution
 - **Use Case**: Testing and validation
@@ -16,7 +16,7 @@ data = load_simulation_data('validation_subset')
 ```
 
 ### 2. **Full Time Range Mode** (`full_time_range`)
-- **SKUs**: All 5,941 SKUs
+- **SKUs**: All 2,813 SKUs (production-ready data)
 - **Time Range**: 2022-01-02 to 2025-07-06 (same as validation)
 - **Purpose**: Full simulation with consistent time range
 - **Use Case**: Production simulation with validation-compatible time range
@@ -27,7 +27,7 @@ data = load_simulation_data('full_time_range')
 ```
 
 ### 3. **Complete Mode** (`complete`)
-- **SKUs**: All 5,941 SKUs
+- **SKUs**: All 2,813 SKUs (production-ready data)
 - **Time Range**: 2019-12-15 to 2025-07-06 (full historical)
 - **Purpose**: Full-scale simulation with complete historical data
 - **Use Case**: Maximum historical coverage

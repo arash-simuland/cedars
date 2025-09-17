@@ -9,8 +9,11 @@ This folder contains the **source of truth** input data for the CedarSim simulat
 
 ### 1. `SIMULATION_READY_SKU_INVENTORY_DATA.xlsx` ⭐ **PRIMARY SKU DATA**
 - **Purpose**: Master SKU inventory data with burn rates, lead times, and analytical safety stock
-- **Records**: 4,776 records
+- **Total Records**: 4,776 records (includes duplicates)
+- **Unique SKU-Location Combinations**: 4,202 records
 - **Unique SKUs**: 2,813 SKUs
+- **Unique Locations**: 14 locations (13 PAR + 1 Perpetual)
+- **Duplicate Records**: 574 records (data processing artifact)
 - **Source**: Filtered from `2025-09-12-final-list-with-results.xlsx`
 - **Coverage**: 91.2% of original final list (273 SKUs removed due to no demand history)
 - **Key Columns**:
@@ -62,6 +65,8 @@ This folder contains the **source of truth** input data for the CedarSim simulat
 - ✅ All demand records correspond to SKUs in inventory data
 - ✅ No orphaned data or unused records
 - ✅ Proper SKU normalization applied
+- ✅ SKU format consistency: All SKUs standardized to 6-character zero-padded format
+- ✅ Perfect SKU match: 100% overlap between inventory and demand data
 
 ## 🎯 Simulation Usage
 
@@ -88,7 +93,9 @@ validation_data = sku_data[['Oracle Item Number', 'Stock Units Analytical']].dro
 | Metric | Value |
 |--------|-------|
 | **Total SKUs** | 2,813 |
-| **Inventory Records** | 4,776 |
+| **Unique SKU-Location Combinations** | 4,202 |
+| **Total Inventory Records** | 4,776 (includes 574 duplicates) |
+| **Unique Locations** | 14 (13 PAR + 1 Perpetual) |
 | **Demand Records** | 74,511 |
 | **Time Range** | 2019-12-15 to 2025-07-06 |
 | **Coverage** | 91.2% |
@@ -98,13 +105,16 @@ validation_data = sku_data[['Oracle Item Number', 'Stock Units Analytical']].dro
 
 1. **Source of Truth**: These files represent the definitive input data for simulation
 2. **No Missing Data**: Every SKU has both inventory and demand data
-3. **Normalized SKUs**: Leading zeros removed for proper matching
-4. **Audit Trail**: Complete record of what was removed and why
-5. **Ready for Production**: Data is clean and simulation-ready
+3. **Normalized SKUs**: All SKUs standardized to 6-character zero-padded format (e.g., '000005')
+4. **Perfect SKU Match**: 100% overlap between inventory and demand data (2,813 SKUs)
+5. **Audit Trail**: Complete record of what was removed and why
+6. **Data Duplicates**: 574 duplicate records exist (data processing artifact)
+7. **Ready for Production**: Data is clean and simulation-ready (duplicates should be handled in simulation logic)
 
 ## 🔧 Maintenance
 
 - **Last Updated**: 2025-09-17
+- **SKU Format Fix**: Applied zero-padding standardization to ensure perfect SKU consistency
 - **Filtering Script**: `scripts/filter_final_list_to_demand_coverage.py`
 - **Original Sources**: Archived in `data/archive/` and `simulation_development/data/archive-input_data/`
 

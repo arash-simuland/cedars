@@ -7,7 +7,7 @@ This directory contains the CedarSim simulation development environment with a *
 The data integration and frontend interface are fully implemented, tested, and working. Users can now select any SKU from the dropdown and view its real-time data across all PARs and Perpetual locations in the hospital system. All components have been thoroughly validated with comprehensive testing.
 
 ### ✅ **What's Working Now:**
-- **Real Data Integration**: 5,941 SKUs loaded from CSV files (100% validated)
+- **Real Data Integration**: 2,813 SKUs loaded from production-ready files (100% validated)
 - **SKU Selection**: Dropdown populated with actual SKU data (9 unique SKUs available)
 - **Data Visualization**: Real-time display of inventory levels, demand rates, and stockout status
 - **API Endpoints**: REST API serving SKU data to the frontend (9 endpoints active)
@@ -31,7 +31,7 @@ Dashboard and user interface components
 ### `data/`
 Input data, configuration, and requirements
 - `prod-input-data/` - **PRIMARY INPUT DATA** (Source of Truth)
-  - `SIMULATION_READY_SKU_INVENTORY_DATA.xlsx` - Master SKU inventory (2,813 SKUs)
+  - `SIMULATION_READY_SKU_INVENTORY_DATA.xlsx` - Master SKU inventory (2,813 SKUs, 4,202 unique SKU-location combinations)
   - `SIMULATION_READY_DEMAND_DATA.csv` - Historical demand patterns (74,511 records)
   - `REMOVED_SKUS_NO_DEMAND_HISTORY.csv` - Audit trail of removed SKUs
   - `DATA_FILTERING_SUMMARY.txt` - Data processing summary
@@ -64,7 +64,7 @@ All system components have been thoroughly tested and validated:
 
 ### **Test Categories**
 1. **Data Loading Tests** (5/5 passed)
-   - SKU inventory data: 2,813 SKUs loaded (filtered from 3,086)
+   - SKU inventory data: 2,813 SKUs loaded (filtered from 3,086, perfect match with demand data)
    - Historical demand data: 74,511 records processed (filtered)
    - Validation subset: 2,813 SKUs with analytical safety stock
    - Data quality: 100% lead time and burn rate coverage
