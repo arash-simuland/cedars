@@ -394,6 +394,9 @@
                         parBox.classList.add('perpetual');
                     }
                     
+                    // Store original SKU count for reset functionality
+                    parBox.dataset.originalSkuCount = par.sku_count;
+                    
                     parBox.innerHTML = `
                         <div class="sku-indicator no-sku">○</div>
                         <div class="par-name">${par.name}</div>
@@ -435,12 +438,49 @@
 
         // Select SKU
         async function selectSKU(skuId) {
-            if (!skuId) return;
+            if (!skuId) {
+                // Reset display when no SKU is selected
+                resetSKUDisplay();
+                return;
+            }
             
             selectedSku = skuId;
             await loadSKUDetails(skuId);
             await loadInventoryTimeline(skuId);
             updateSKUIndicators(skuId);
+        }
+
+        // Reset SKU display
+        function resetSKUDisplay() {
+            selectedSku = null;
+            
+            // Hide SKU info panel
+            document.getElementById('skuInfo').style.display = 'none';
+            
+            // Reset all PAR boxes to show total SKU counts
+            document.querySelectorAll('.par-box').forEach(box => {
+                const indicator = box.querySelector('.sku-indicator');
+                const stats = box.querySelector('.par-stats');
+                
+                // Reset indicator
+                indicator.className = 'sku-indicator no-sku';
+                indicator.textContent = '○';
+                
+                // Reset stats to show total SKU count
+                const originalSkuCount = box.dataset.originalSkuCount || '0';
+                stats.textContent = `${originalSkuCount} SKUs`;
+            });
+            
+            // Remove all highlights
+            document.querySelectorAll('.par-box').forEach(box => {
+                box.classList.remove('connected', 'selected');
+            });
+            
+            // Clear chart
+            if (inventoryChart) {
+                inventoryChart.destroy();
+                inventoryChart = null;
+            }
         }
 
         // Load SKU details
@@ -468,13 +508,22 @@
 
         // Update SKU indicators on PAR boxes
         function updateSKUIndicators(skuId) {
-            // Reset all indicators
-            document.querySelectorAll('.sku-indicator').forEach(indicator => {
+            // Reset all indicators and stats
+            document.querySelectorAll('.par-box').forEach(box => {
+                const indicator = box.querySelector('.sku-indicator');
+                const stats = box.querySelector('.par-stats');
+                
+                // Reset indicator
                 indicator.className = 'sku-indicator no-sku';
                 indicator.textContent = '○';
+                
+                // Reset stats to show total SKU count
+                const parName = box.querySelector('.par-name').textContent;
+                const originalSkuCount = box.dataset.originalSkuCount || '0';
+                stats.textContent = `${originalSkuCount} SKUs`;
             });
             
-            // Update indicators for connected PARs
+            // Update indicators and stats for connected PARs
             if (skuConnections[skuId]) {
                 const skuData = skuConnections[skuId];
                 
@@ -484,8 +533,16 @@
                 );
                 if (perpetualBox) {
                     const indicator = perpetualBox.querySelector('.sku-indicator');
+                    const stats = perpetualBox.querySelector('.par-stats');
+                    
                     indicator.className = 'sku-indicator has-sku';
                     indicator.textContent = '●';
+                    
+                    // Update stats to show specific SKU level
+                    const perpetualSku = skuData.perpetual_sku;
+                    if (perpetualSku) {
+                        stats.textContent = `Level: ${perpetualSku.current_level.toFixed(1)}`;
+                    }
                 }
                 
                 // Mark PARs
@@ -495,8 +552,13 @@
                     );
                     if (parBox) {
                         const indicator = parBox.querySelector('.sku-indicator');
+                        const stats = parBox.querySelector('.par-stats');
+                        
                         indicator.className = 'sku-indicator has-sku';
                         indicator.textContent = '●';
+                        
+                        // Update stats to show specific SKU level
+                        stats.textContent = `Level: ${parSku.current_level.toFixed(1)}`;
                     }
                 });
             }

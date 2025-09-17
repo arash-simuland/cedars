@@ -30,13 +30,13 @@ Dashboard and user interface components
 
 ### `data/`
 Input data, configuration, and requirements
-- `input_data/` - Simulation input datasets
-  - `historical_demand_data.csv` - Historical demand patterns
-  - `sku_inventory_data.csv` - SKU inventory information
-  - `validation_subset_data.csv` - Validation test data
-  - `load_input_data.py` - Data loading utilities
-  - `simulation_config.py` - Simulation configuration
-  - `README.md` - Data documentation
+- `prod-input-data/` - **PRIMARY INPUT DATA** (Source of Truth)
+  - `SIMULATION_READY_SKU_INVENTORY_DATA.xlsx` - Master SKU inventory (2,813 SKUs)
+  - `SIMULATION_READY_DEMAND_DATA.csv` - Historical demand patterns (74,511 records)
+  - `REMOVED_SKUS_NO_DEMAND_HISTORY.csv` - Audit trail of removed SKUs
+  - `DATA_FILTERING_SUMMARY.txt` - Data processing summary
+  - `README_INPUT_DATA.md` - **COMPREHENSIVE DATA DOCUMENTATION**
+- `archive-input_data/` - Legacy data (archived)
 - `requirements.txt` - Python dependencies
 - `requirements_dashboard.txt` - Dashboard-specific dependencies
 
@@ -64,9 +64,9 @@ All system components have been thoroughly tested and validated:
 
 ### **Test Categories**
 1. **Data Loading Tests** (5/5 passed)
-   - SKU inventory data: 5,941 SKUs loaded
-   - Historical demand data: 74,549 records processed
-   - Validation subset: 74 SKUs with safety stock
+   - SKU inventory data: 2,813 SKUs loaded (filtered from 3,086)
+   - Historical demand data: 74,511 records processed (filtered)
+   - Validation subset: 2,813 SKUs with analytical safety stock
    - Data quality: 100% lead time and burn rate coverage
    - Configuration: All parameters loaded correctly
 

@@ -1,0 +1,230 @@
+Department Name,Department Number,Oracle Item Number,Item Description,UOM,Avg Daily Burn Rate,Medline item? Y/N,Level 1 Perpetual_1400,Level 1 Facilities/Biomed_1232,Level 1 EVS_1321,Level 1 ED_1229,Level 1 Imaging_1329,Level 2 Pharm_2500,Level 2 Surgery/Procedures/PACU_2209_2321_2323_2450_2200B_2450A,Level 3 Sterile Processing_3307_3309,Level 3 Food Service,Level 3 Admin,Level 3 Central Lab_3411,Respiratory Therapy,"Level 5 Observation, Medical Tele & Non-Tele_5206","Level 6 Telemetry, Cardiac & Stroke",Level 7 PCU,Level 7 ICU,"Level 8 M/S Overflow, VIP & Int'l Med","Level 9 Surgical, Non-Infectious",Z-score,Safety stock_units
+Balance Sheet CC,0,136,Cover Shoe XL LF,EA,33.62,,77.0,,,,,,,,,,,,,,,,,,2.05,77
+Surgery Supplies,7470009,136,Cover Shoe XL LF,EA,29.68,,,,,,,,229.0,,,,,,,,,,,,2.05,229
+General Med - Surg Unit 1,6172010,136,Cover Shoe XL LF,EA,1.98,,,,,,,,,,,,,,84.0,,,,,,2.05,84
+IMG Interventional Rad,7631000,136,Cover Shoe XL LF,EA,0.66,,,,,,39.0,,,,,,,,,,,,,,2.05,39
+General Med - Surg Unit 3,6172030,136,Cover Shoe XL LF,EA,0.66,,,,,,,,,,,,,,,54.0,,,,,2.05,54
+General Med - Surg Unit 3,6172030,235,Pad Alcohol Med Iso 70% Strl,EA,319.78,,,,,,,,,,,,,,,1412.0,,,,,2.05,1412
+Clinical Laboratory,7500000,235,Pad Alcohol Med Iso 70% Strl,EA,296.7,,,,,,,,,,,,9515.0,,,,,,,,2.05,9515
+Clinical Laboratory,7500000,235,Pad Alcohol Med Iso 70% Strl,EA,296.7,,,,,,,,,,,,9515.0,,,,,,,,2.05,9515
+General Med - Surg Unit 1,6172010,235,Pad Alcohol Med Iso 70% Strl,EA,217.04,,,,,,,,,,,,,,1126.0,,,,,,2.05,1126
+Balance Sheet CC,0,235,Pad Alcohol Med Iso 70% Strl,EA,186.82,,1518.0,,,,,,,,,,,,,,,,,,2.05,1518
+Emergency Dept,7010000,235,Pad Alcohol Med Iso 70% Strl,EA,173.62,,,,,1170.0,,,,,,,,,,,,,,,2.05,1170
+Intensive Care Unit,6010000,235,Pad Alcohol Med Iso 70% Strl,EA,165.94,,,,,,,,,,,,,,,,,839.0,,,2.05,839
+General Med - Surg Unit 2,6172020,235,Pad Alcohol Med Iso 70% Strl,EA,130.22,,,,,,,,,,,,,,833.0,,,,,,2.05,833
+Surgery Supplies,7470009,235,Pad Alcohol Med Iso 70% Strl,EA,48.36,,,,,,,,461.0,,,,,,,,,,,,2.05,461
+Pharmacy,7710000,235,Pad Alcohol Med Iso 70% Strl,EA,16.48,,,,,,,214.0,,,,,,,,,,,,,2.05,214
+Preop Short Stay,7430000,235,Pad Alcohol Med Iso 70% Strl,EA,15.94,,,,,,,,185.0,,,,,,,,,,,,2.05,185
+Preop Short Stay,7430000,262,Swabstick Prep Skin Povidone Iodine 10%,EA,13.6,Y,,,,,,,47.0,,,,,,,,,,,,2.05,47
+Spine Center,7078010,262,Swabstick Prep Skin Povidone Iodine 10%,EA,13.6,Y,,,,,,,,,,,,,,,,,,,2.05,232
+Spine Center,7078010,262,Swabstick Prep Skin Povidone Iodine 10%,EA,13.6,Y,,,,,,,,,,,,,,,,,,,2.05,232
+Intensive Care Unit,6010000,262,Swabstick Prep Skin Povidone Iodine 10%,EA,6.18,Y,,,,,,,,,,,,,,,,1165.0,,,2.05,1165
+Balance Sheet CC,0,262,Swabstick Prep Skin Povidone Iodine 10%,EA,2.68,Y,296.0,,,,,,,,,,,,,,,,,,2.05,296
+General Med - Surg Unit 3,6172030,262,Swabstick Prep Skin Povidone Iodine 10%,EA,1.44,Y,,,,,,,,,,,,,,145.0,,,,,2.05,145
+Emergency Dept,7010000,262,Swabstick Prep Skin Povidone Iodine 10%,EA,1.04,Y,,,,129.0,,,,,,,,,,,,,,,2.05,129
+General Med - Surg Unit 2,6172020,262,Swabstick Prep Skin Povidone Iodine 10%,EA,0.82,Y,,,,,,,,,,,,,126.0,,,,,,2.05,126
+General Med - Surg Unit 1,6172010,262,Swabstick Prep Skin Povidone Iodine 10%,EA,0.42,Y,,,,,,,,,,,,,111.0,,,,,,2.05,111
+IMG Interventional Rad,7631000,262,Swabstick Prep Skin Povidone Iodine 10%,EA,0.42,Y,,,,,66.0,,,,,,,,,,,,,,2.05,66
+Surgery Supplies,7470009,262,Swabstick Prep Skin Povidone Iodine 10%,EA,0.2,Y,,,,,,,66.0,,,,,,,,,,,,2.05,66
+Spine Center,7078010,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,29.4,Y,,,,,,,,,,,,,,,,,,,2.05,17
+General Med - Surg Unit 2,6172020,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,8.44,Y,,,,,,,,,,,,,67.0,,,,,,2.05,67
+Surgery Supplies,7470009,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,5.28,Y,,,,,,,31.0,,,,,,,,,,,,2.05,31
+Emergency Dept,7010000,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,4.18,Y,,,,51.0,,,,,,,,,,,,,,,2.05,51
+Intensive Care Unit,6010000,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,3.5,Y,,,,,,,,,,,,,,,,39.0,,,2.05,39
+General Med - Surg Unit 3,6172030,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,2.88,Y,,,,,,,,,,,,,,35.0,,,,,2.05,35
+General Med - Surg Unit 1,6172010,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,2.6,Y,,,,,,,,,,,,,29.0,,,,,,2.05,29
+Balance Sheet CC,0,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,1.64,Y,51.0,,,,,,,,,,,,,,,,,,2.05,51
+IMG Interventional Rad,7631000,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,0.54,Y,,,,,16.0,,,,,,,,,,,,,,2.05,16
+IMG Interventional Rad,7631000,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,0.54,Y,,,,,16.0,,,,,,,,,,,,,,2.05,16
+IMG Diagnostic Rad,7630000,386,Drsg Tegaderm Sterile 4x4.75in Transpar,EA,0.06,Y,,,,,5.0,,,,,,,,,,,,,,2.05,5
+Surgery Supplies,7470009,508,Sol IV NaCl 0.9 500ml,EA,5.14,Y,,,,,,,38.0,,,,,,,,,,,,2.05,38
+Surgery Supplies,7470009,508,Sol IV NaCl 0.9 500ml,EA,5.14,Y,,,,,,,38.0,,,,,,,,,,,,2.05,38
+Emergency Dept,7010000,508,Sol IV NaCl 0.9 500ml,EA,2.14,Y,,,,11.0,,,,,,,,,,,,,,,2.05,11
+Emergency Dept,7010000,508,Sol IV NaCl 0.9 500ml,EA,2.14,Y,,,,11.0,,,,,,,,,,,,,,,2.05,11
+Pharmacy,7710000,508,Sol IV NaCl 0.9 500ml,EA,2.04,Y,,,,,,67.0,,,,,,,,,,,,,2.05,67
+Pharmacy,7710000,508,Sol IV NaCl 0.9 500ml,EA,2.04,Y,,,,,,67.0,,,,,,,,,,,,,2.05,67
+Balance Sheet CC,0,508,Sol IV NaCl 0.9 500ml,EA,1.7,Y,40.0,,,,,,,,,,,,,,,,,,2.05,40
+Balance Sheet CC,0,508,Sol IV NaCl 0.9 500ml,EA,1.7,Y,40.0,,,,,,,,,,,,,,,,,,2.05,40
+General Med - Surg Unit 1,6172010,508,Sol IV NaCl 0.9 500ml,EA,1.6,Y,,,,,,,,,,,,,11.0,,,,,,2.05,11
+General Med - Surg Unit 1,6172010,508,Sol IV NaCl 0.9 500ml,EA,1.6,Y,,,,,,,,,,,,,11.0,,,,,,2.05,11
+General Med - Surg Unit 3,6172030,508,Sol IV NaCl 0.9 500ml,EA,1.5,Y,,,,,,,,,,,,,,11.0,,,,,2.05,11
+General Med - Surg Unit 3,6172030,508,Sol IV NaCl 0.9 500ml,EA,1.5,Y,,,,,,,,,,,,,,11.0,,,,,2.05,11
+Intensive Care Unit,6010000,508,Sol IV NaCl 0.9 500ml,EA,1.2,Y,,,,,,,,,,,,,,,,11.0,,,2.05,11
+Intensive Care Unit,6010000,508,Sol IV NaCl 0.9 500ml,EA,1.2,Y,,,,,,,,,,,,,,,,11.0,,,2.05,11
+Preop Short Stay,7430000,508,Sol IV NaCl 0.9 500ml,EA,0.82,Y,,,,,,,13.0,,,,,,,,,,,,2.05,13
+Preop Short Stay,7430000,508,Sol IV NaCl 0.9 500ml,EA,0.82,Y,,,,,,,13.0,,,,,,,,,,,,2.05,13
+General Med - Surg Unit 2,6172020,508,Sol IV NaCl 0.9 500ml,EA,0.6,Y,,,,,,,,,,,,,6.0,,,,,,2.05,6
+General Med - Surg Unit 2,6172020,508,Sol IV NaCl 0.9 500ml,EA,0.6,Y,,,,,,,,,,,,,6.0,,,,,,2.05,6
+Surgery Supplies,7470009,523,Sol IV LR 1000ml,EA,11.0,Y,,,,,,,79.0,,,,,,,,,,,,2.05,79
+Preop Short Stay,7430000,523,Sol IV LR 1000ml,EA,5.5,Y,,,,,,,38.0,,,,,,,,,,,,2.05,38
+Balance Sheet CC,0,523,Sol IV LR 1000ml,EA,1.74,Y,30.0,,,,,,,,,,,,,,,,,,2.05,30
+General Med - Surg Unit 2,6172020,523,Sol IV LR 1000ml,EA,1.74,Y,,,,,,,,,,,,,14.0,,,,,,2.05,14
+Intensive Care Unit,6010000,523,Sol IV LR 1000ml,EA,1.06,Y,,,,,,,,,,,,,,,,6.0,,,2.05,6
+General Med - Surg Unit 1,6172010,523,Sol IV LR 1000ml,EA,0.88,Y,,,,,,,,,,,,,7.0,,,,,,2.05,7
+General Med - Surg Unit 3,6172030,523,Sol IV LR 1000ml,EA,0.76,Y,,,,,,,,,,,,,,7.0,,,,,2.05,7
+Emergency Dept,7010000,523,Sol IV LR 1000ml,EA,0.6,Y,,,,4.0,,,,,,,,,,,,,,,2.05,4
+Pharmacy,7710000,523,Sol IV LR 1000ml,EA,0.24,Y,,,,,,4.0,,,,,,,,,,,,,2.05,4
+Pharmacy,7710000,529,Sol IV NaCl 0.9 50ml,EA,6.1,Y,,,,,,67.0,,,,,,,,,,,,,2.05,67
+Balance Sheet CC,0,529,Sol IV NaCl 0.9 50ml,EA,1.3,Y,23.0,,,,,,,,,,,,,,,,,,2.05,23
+Emergency Dept,7010000,529,Sol IV NaCl 0.9 50ml,EA,1.06,Y,,,,8.0,,,,,,,,,,,,,,,2.05,8
+General Med - Surg Unit 1,6172010,529,Sol IV NaCl 0.9 50ml,EA,0.38,Y,,,,,,,,,,,,,7.0,,,,,,2.05,7
+Intensive Care Unit,6010000,529,Sol IV NaCl 0.9 50ml,EA,0.24,Y,,,,,,,,,,,,,,,,4.0,,,2.05,4
+Surgery Supplies,7470009,529,Sol IV NaCl 0.9 50ml,EA,0.2,Y,,,,,,,4.0,,,,,,,,,,,,2.05,4
+General Med - Surg Unit 3,6172030,529,Sol IV NaCl 0.9 50ml,EA,0.18,Y,,,,,,,,,,,,,,3.0,,,,,2.05,3
+General Med - Surg Unit 2,6172020,529,Sol IV NaCl 0.9 50ml,EA,0.14,Y,,,,,,,,,,,,,2.0,,,,,,2.05,2
+Preop Short Stay,7430000,529,Sol IV NaCl 0.9 50ml,EA,0.04,Y,,,,,,,2.0,,,,,,,,,,,,2.05,2
+Balance Sheet CC,0,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,3186.82,,7844.0,,,,,,,,,,,,,,,,,,2.05,7844
+Emergency Dept,7010000,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,493.4,,,,,1083.0,,,,,,,,,,,,,,,2.05,1083
+Intensive Care Unit,6010000,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,206.6,,,,,,,,,,,,,,,,,1012.0,,,2.05,1012
+General Med - Surg Unit 1,6172010,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,87.92,,,,,,,,,,,,,,1396.0,,,,,,2.05,1396
+Preop Short Stay,7430000,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,86.26,,,,,,,,628.0,,,,,,,,,,,,2.05,628
+Surgery Supplies,7470009,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,66.48,,,,,,,,684.0,,,,,,,,,,,,2.05,684
+General Med - Surg Unit 3,6172030,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,57.14,,,,,,,,,,,,,,,1581.0,,,,,2.05,1581
+General Med - Surg Unit 2,6172020,535,Glove Exam Non-Sterile Sm Nitrile PF LF,EA,41.2,,,,,,,,,,,,,,923.0,,,,,,2.05,923
+Central Supply,7470000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,6235.16,Y,148.0,,,,,,,,,,,,,,,,,,2.05,148
+Balance Sheet CC,0,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,4741.76,Y,15045.0,,,,,,,,,,,,,,,,,,2.05,15045
+Emergency Dept,7010000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,643.96,Y,,,,2633.0,,,,,,,,,,,,,,,2.05,2633
+Intensive Care Unit,6010000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,290.1,Y,,,,,,,,,,,,,,,,1509.0,,,2.05,1509
+Surgery Supplies,7470009,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,129.12,Y,,,,,,,1277.0,,,,,,,,,,,,2.05,1277
+General Med - Surg Unit 1,6172010,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,118.14,Y,,,,,,,,,,,,,2874.0,,,,,,2.05,2874
+Preop Short Stay,7430000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,100.54,Y,,,,,,,960.0,,,,,,,,,,,,2.05,960
+General Med - Surg Unit 2,6172020,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,79.68,Y,,,,,,,,,,,,,2575.0,,,,,,2.05,2575
+General Med - Surg Unit 3,6172030,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,65.94,Y,,,,,,,,,,,,,,3133.0,,,,,2.05,3133
+Spine Center,7078010,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,4.4,Y,,,,,,,,,,,,,,,,,,,2.05,295
+Employee Health Services,8660000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,2.74,Y,,,,,,,,,,,,,,,,,,,2.05,286
+Hospital Administration,8610000,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,2.2,Y,,,,,,,,,,,,,,,,,,,2.05,148
+Bariatric Clinic,7070020,536,Glove Exam Non-Sterile Med Nitrile PF LF,EA,1.1,Y,,,,,,,,,,,,,,,,,,,2.05,245
+Surgery Supplies,7470009,549,Syringe  LL LF STR 20ml,EA,21.0,Y,,,,,,,82.0,,,,,,,,,,,,2.05,82
+Emergency Dept,7010000,549,Syringe  LL LF STR 20ml,EA,3.28,Y,,,,26.0,,,,,,,,,,,,,,,2.05,26
+Pharmacy,7710000,549,Syringe  LL LF STR 20ml,EA,3.18,Y,,,,,,38.0,,,,,,,,,,,,,2.05,38
+Intensive Care Unit,6010000,549,Syringe  LL LF STR 20ml,EA,2.64,Y,,,,,,,,,,,,,,,,21.0,,,2.05,21
+IMG Interventional Rad,7631000,549,Syringe  LL LF STR 20ml,EA,1.52,Y,,,,,40.0,,,,,,,,,,,,,,2.05,40
+IMG Interventional Rad,7631000,549,Syringe  LL LF STR 20ml,EA,1.52,Y,,,,,40.0,,,,,,,,,,,,,,2.05,40
+General Med - Surg Unit 3,6172030,549,Syringe  LL LF STR 20ml,EA,1.28,Y,,,,,,,,,,,,,,25.0,,,,,2.05,25
+Balance Sheet CC,0,549,Syringe  LL LF STR 20ml,EA,0.4,Y,26.0,,,,,,,,,,,,,,,,,,2.05,26
+IMG Diagnostic Rad,7630000,549,Syringe  LL LF STR 20ml,EA,0.14,Y,,,,,9.0,,,,,,,,,,,,,,2.05,9
+General Med - Surg Unit 2,6172020,552,Syr 5ML Luer Lock LF STR,EA,30.44,,,,,,,,,,,,,,17.0,,,,,,2.05,17
+General Med - Surg Unit 3,6172030,552,Syr 5ML Luer Lock LF STR,EA,9.6,,,,,,,,,,,,,,,183.0,,,,,2.05,183
+Intensive Care Unit,6010000,552,Syr 5ML Luer Lock LF STR,EA,5.98,,,,,,,,,,,,,,,,,76.0,,,2.05,76
+General Med - Surg Unit 1,6172010,552,Syr 5ML Luer Lock LF STR,EA,4.72,,,,,,,,,,,,,,65.0,,,,,,2.05,65
+Emergency Dept,7010000,552,Syr 5ML Luer Lock LF STR,EA,4.48,,,,,54.0,,,,,,,,,,,,,,,2.05,54
+Surgery Supplies,7470009,552,Syr 5ML Luer Lock LF STR,EA,2.42,,,,,,,,28.0,,,,,,,,,,,,2.05,28
+Pharmacy,7710000,552,Syr 5ML Luer Lock LF STR,EA,1.72,,,,,,,46.0,,,,,,,,,,,,,2.05,46
+Balance Sheet CC,0,552,Syr 5ML Luer Lock LF STR,EA,0.82,,39.0,,,,,,,,,,,,,,,,,,2.05,39
+IMG Interventional Rad,7631000,552,Syr 5ML Luer Lock LF STR,EA,0.28,,,,,,23.0,,,,,,,,,,,,,,2.05,23
+IMG Interventional Rad,7631000,552,Syr 5ML Luer Lock LF STR,EA,0.28,,,,,,23.0,,,,,,,,,,,,,,2.05,23
+Surgery Supplies,7470009,555,Syringe  LL LF STR 10ml,EA,42.86,,,,,,,,145.0,,,,,,,,,,,,2.05,145
+Balance Sheet CC,0,555,Syringe  LL LF STR 10ml,EA,21.78,,155.0,,,,,,,,,,,,,,,,,,2.05,155
+Intensive Care Unit,6010000,555,Syringe  LL LF STR 10ml,EA,11.22,,,,,,,,,,,,,,,,,76.0,,,2.05,76
+Emergency Dept,7010000,555,Syringe  LL LF STR 10ml,EA,10.66,,,,,61.0,,,,,,,,,,,,,,,2.05,61
+General Med - Surg Unit 1,6172010,555,Syringe  LL LF STR 10ml,EA,9.54,,,,,,,,,,,,,,55.0,,,,,,2.05,55
+General Med - Surg Unit 3,6172030,555,Syringe  LL LF STR 10ml,EA,7.56,,,,,,,,,,,,,,,50.0,,,,,2.05,50
+Pharmacy,7710000,555,Syringe  LL LF STR 10ml,EA,5.84,,,,,,,77.0,,,,,,,,,,,,,2.05,77
+IMG Interventional Rad,7631000,555,Syringe  LL LF STR 10ml,EA,2.74,,,,,,57.0,,,,,,,,,,,,,,2.05,57
+IMG Interventional Rad,7631000,555,Syringe  LL LF STR 10ml,EA,2.74,,,,,,57.0,,,,,,,,,,,,,,2.05,57
+General Med - Surg Unit 2,6172020,555,Syringe  LL LF STR 10ml,EA,1.32,,,,,,,,,,,,,,22.0,,,,,,2.05,22
+IMG Body Ultrasound,7670000,555,Syringe  LL LF STR 10ml,EA,0.28,,,,,,17.0,,,,,,,,,,,,,,2.05,17
+Preop Short Stay,7430000,555,Syringe  LL LF STR 10ml,EA,0.22,,,,,,,,5.0,,,,,,,,,,,,2.05,5
+Emergency Dept,7010000,565,Ndl Hypo 18gx1.5in Safety Glide,EA,12.36,,,,,113.0,,,,,,,,,,,,,,,2.05,113
+Intensive Care Unit,6010000,565,Ndl Hypo 18gx1.5in Safety Glide,EA,10.32,,,,,,,,,,,,,,,,,84.0,,,2.05,84
+General Med - Surg Unit 1,6172010,565,Ndl Hypo 18gx1.5in Safety Glide,EA,6.56,,,,,,,,,,,,,,67.0,,,,,,2.05,67
+General Med - Surg Unit 3,6172030,565,Ndl Hypo 18gx1.5in Safety Glide,EA,5.68,,,,,,,,,,,,,,,61.0,,,,,2.05,61
+Balance Sheet CC,0,565,Ndl Hypo 18gx1.5in Safety Glide,EA,5.4,,102.0,,,,,,,,,,,,,,,,,,2.05,102
+General Med - Surg Unit 2,6172020,565,Ndl Hypo 18gx1.5in Safety Glide,EA,1.38,,,,,,,,,,,,,,24.0,,,,,,2.05,24
+Surgery Supplies,7470009,565,Ndl Hypo 18gx1.5in Safety Glide,EA,0.34,,,,,,,,8.0,,,,,,,,,,,,2.05,8
+IMG Interventional Rad,7631000,565,Ndl Hypo 18gx1.5in Safety Glide,EA,0.28,,,,,,26.0,,,,,,,,,,,,,,2.05,26
+IMG Interventional Rad,7631000,838,Drsg Abd STR 5x9in Curity,EA,9.84,Y,,,,,3.0,,,,,,,,,,,,,,2.05,3
+Balance Sheet CC,0,838,Drsg Abd STR 5x9in Curity,EA,3.76,Y,45.0,,,,,,,,,,,,,,,,,,2.05,45
+Surgery Supplies,7470009,838,Drsg Abd STR 5x9in Curity,EA,1.46,Y,,,,,,,13.0,,,,,,,,,,,,2.05,13
+Emergency Dept,7010000,838,Drsg Abd STR 5x9in Curity,EA,1.38,Y,,,,12.0,,,,,,,,,,,,,,,2.05,12
+General Med - Surg Unit 1,6172010,838,Drsg Abd STR 5x9in Curity,EA,1.04,Y,,,,,,,,,,,,,15.0,,,,,,2.05,15
+Intensive Care Unit,6010000,838,Drsg Abd STR 5x9in Curity,EA,0.9,Y,,,,,,,,,,,,,,,,15.0,,,2.05,15
+General Med - Surg Unit 3,6172030,838,Drsg Abd STR 5x9in Curity,EA,0.9,Y,,,,,,,,,,,,,,15.0,,,,,2.05,15
+General Med - Surg Unit 2,6172020,838,Drsg Abd STR 5x9in Curity,EA,0.38,Y,,,,,,,,,,,,,10.0,,,,,,2.05,10
+Preop Short Stay,7430000,838,Drsg Abd STR 5x9in Curity,EA,0.08,Y,,,,,,,3.0,,,,,,,,,,,,2.05,3
+Balance Sheet CC,0,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,429.28,Y,3897.0,,,,,,,,,,,,,,,,,,2.05,3897
+Emergency Dept,7010000,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,72.54,Y,,,,1277.0,,,,,,,,,,,,,,,2.05,1277
+General Med - Surg Unit 1,6172010,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,37.78,Y,,,,,,,,,,,,,596.0,,,,,,2.05,596
+General Med - Surg Unit 1,6172010,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,37.78,Y,,,,,,,,,,,,,596.0,,,,,,2.05,596
+General Med - Surg Unit 3,6172030,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,12.12,Y,,,,,,,,,,,,,,484.0,,,,,2.05,484
+Intensive Care Unit,6010000,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,8.12,Y,,,,,,,,,,,,,,,,402.0,,,2.05,402
+Preop Short Stay,7430000,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,6.96,Y,,,,,,,132.0,,,,,,,,,,,,2.05,132
+General Med - Surg Unit 2,6172020,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,6.2,Y,,,,,,,,,,,,,316.0,,,,,,2.05,316
+Spine Center,7078010,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,0.28,Y,,,,,,,,,,,,,,,,,,,2.05,40
+Bariatric Clinic,7070020,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,0.06,Y,,,,,,,,,,,,,,,,,,,2.05,10
+Employee Health Services,8660000,1077,Syringe Saline Flush STR 0.9% 10ml Prefilled,EA,0.02,Y,,,,,,,,,,,,,,,,,,,2.05,4
+Balance Sheet CC,0,30847,Wipe Sani Cloth,EA,2131.86,Y,6821.0,,,,,,,,,,,,,,,,,,2.05,6821
+Emergency Dept,7010000,30847,Wipe Sani Cloth,EA,637.36,Y,,,,1778.0,,,,,,,,,,,,,,,2.05,1778
+Surgery Supplies,7470009,30847,Wipe Sani Cloth,EA,261.54,Y,,,,,,,1183.0,,,,,,,,,,,,2.05,1183
+Intensive Care Unit,6010000,30847,Wipe Sani Cloth,EA,253.18,Y,,,,,,,,,,,,,,,,1105.0,,,2.05,1105
+General Med - Surg Unit 1,6172010,30847,Wipe Sani Cloth,EA,160.44,Y,,,,,,,,,,,,,879.0,,,,,,2.05,879
+General Med - Surg Unit 3,6172030,30847,Wipe Sani Cloth,EA,129.24,Y,,,,,,,,,,,,,,1271.0,,,,,2.05,1271
+Preop Short Stay,7430000,30847,Wipe Sani Cloth,EA,122.2,Y,,,,,,,849.0,,,,,,,,,,,,2.05,849
+General Med - Surg Unit 2,6172020,30847,Wipe Sani Cloth,EA,104.62,Y,,,,,,,,,,,,,839.0,,,,,,2.05,839
+Spine Center,7078010,30847,Wipe Sani Cloth,EA,20.22,Y,,,,,,,,,,,,,,,,,,,2.05,675
+Spine Center,7078010,30847,Wipe Sani Cloth,EA,20.22,Y,,,,,,,,,,,,,,,,,,,2.05,675
+General Med - Surg Unit 3,6172030,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,5.04,,,,,,,,,,,,,,,1.0,,,,,2.05,1
+Balance Sheet CC,0,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,5.04,,58.0,,,,,,,,,,,,,,,,,,2.05,58
+General Med - Surg Unit 2,6172020,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,5.04,,,,,,,,,,,,,,2.0,,,,,,2.05,2
+Emergency Dept,7010000,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,3.42,,,,,28.0,,,,,,,,,,,,,,,2.05,28
+Preop Short Stay,7430000,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,1.38,,,,,,,,50.0,,,,,,,,,,,,2.05,50
+Intensive Care Unit,6010000,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,0.16,,,,,,,,,,,,,,,,,6.0,,,2.05,6
+General Med - Surg Unit 1,6172010,698758,Cath IV Closed Sys Nexiva W 1 Port Green LF 18G x 1.25in,EA,0.1,,,,,,,,,,,,,,4.0,,,,,,2.05,4
+Emergency Dept,7010000,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,6.68,Y,,,,7.0,,,,,,,,,,,,,,,2.05,7
+Balance Sheet CC,0,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,1.96,Y,36.0,,,,,,,,,,,,,,,,,,2.05,36
+Intensive Care Unit,6010000,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,1.74,Y,,,,,,,,,,,,,,,,19.0,,,2.05,19
+General Med - Surg Unit 1,6172010,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,1.3,Y,,,,,,,,,,,,,16.0,,,,,,2.05,16
+General Med - Surg Unit 3,6172030,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,1.18,Y,,,,,,,,,,,,,,21.0,,,,,2.05,21
+General Med - Surg Unit 2,6172020,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,0.56,Y,,,,,,,,,,,,,15.0,,,,,,2.05,15
+Surgery Supplies,7470009,698770,Dressing Mepilex Border Heel Self Adherent LF 8.7in x 9.1in,EA,0.02,Y,,,,,,,2.0,,,,,,,,,,,,2.05,2
+Balance Sheet CC,0,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,24.46,Y,417.0,,,,,,,,,,,,,,,,,,2.05,417
+General Med - Surg Unit 1,6172010,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,14.84,Y,,,,,,,,,,,,,285.0,,,,,,2.05,285
+General Med - Surg Unit 3,6172030,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,8.24,Y,,,,,,,,,,,,,,262.0,,,,,2.05,262
+Intensive Care Unit,6010000,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,5.5,Y,,,,,,,,,,,,,,,,128.0,,,2.05,128
+General Med - Surg Unit 2,6172020,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,4.94,Y,,,,,,,,,,,,,133.0,,,,,,2.05,133
+Emergency Dept,7010000,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,2.74,Y,,,,90.0,,,,,,,,,,,,,,,2.05,90
+Preop Short Stay,7430000,803949,Syringe 1Cc Insulin With 29G X 0.50In Safety Nd,EA,0.28,Y,,,,,,,39.0,,,,,,,,,,,,2.05,39
+General Med - Surg Unit 1,6172010,803975,Connector 5 In 1 Strl 501,EA,2.8,Y,,,,,,,,,,,,,3.0,,,,,,2.05,3
+Surgery Supplies,7470009,803975,Connector 5 In 1 Strl 501,EA,1.88,Y,,,,,,,22.0,,,,,,,,,,,,2.05,22
+Intensive Care Unit,6010000,803975,Connector 5 In 1 Strl 501,EA,0.46,Y,,,,,,,,,,,,,,,,7.0,,,2.05,7
+IMG Body Ultrasound,7670000,803975,Connector 5 In 1 Strl 501,EA,0.1,Y,,,,,7.0,,,,,,,,,,,,,,2.05,7
+General Med - Surg Unit 2,6172020,803975,Connector 5 In 1 Strl 501,EA,0.1,Y,,,,,,,,,,,,,4.0,,,,,,2.05,4
+Balance Sheet CC,0,803975,Connector 5 In 1 Strl 501,EA,0.08,Y,4.0,,,,,,,,,,,,,,,,,,2.05,4
+General Med - Surg Unit 3,6172030,803975,Connector 5 In 1 Strl 501,EA,0.08,Y,,,,,,,,,,,,,,3.0,,,,,2.05,3
+Emergency Dept,7010000,803975,Connector 5 In 1 Strl 501,EA,0.04,Y,,,,2.0,,,,,,,,,,,,,,,2.05,2
+IMG Interventional Rad,7631000,803975,Connector 5 In 1 Strl 501,EA,0.02,Y,,,,,3.0,,,,,,,,,,,,,,2.05,3
+Surgery Supplies,7470009,803992,Tube Connecting 10Ft Strl,EA,10.64,Y,,,,,,,43.0,,,,,,,,,,,,2.05,43
+Balance Sheet CC,0,803992,Tube Connecting 10Ft Strl,EA,3.38,Y,25.0,,,,,,,,,,,,,,,,,,2.05,25
+Emergency Dept,7010000,803992,Tube Connecting 10Ft Strl,EA,3.04,Y,,,,15.0,,,,,,,,,,,,,,,2.05,15
+Intensive Care Unit,6010000,803992,Tube Connecting 10Ft Strl,EA,2.96,Y,,,,,,,,,,,,,,,,17.0,,,2.05,17
+General Med - Surg Unit 1,6172010,803992,Tube Connecting 10Ft Strl,EA,2.54,Y,,,,,,,,,,,,,15.0,,,,,,2.05,15
+General Med - Surg Unit 3,6172030,803992,Tube Connecting 10Ft Strl,EA,2.1,Y,,,,,,,,,,,,,,17.0,,,,,2.05,17
+General Med - Surg Unit 2,6172020,803992,Tube Connecting 10Ft Strl,EA,1.5,Y,,,,,,,,,,,,,14.0,,,,,,2.05,14
+IMG Body Ultrasound,7670000,803992,Tube Connecting 10Ft Strl,EA,0.06,Y,,,,,4.0,,,,,,,,,,,,,,2.05,4
+IMG Body Ultrasound,7670000,803992,Tube Connecting 10Ft Strl,EA,0.06,Y,,,,,4.0,,,,,,,,,,,,,,2.05,4
+Preop Short Stay,7430000,803992,Tube Connecting 10Ft Strl,EA,0.02,Y,,,,,,,1.0,,,,,,,,,,,,2.05,1
+Emergency Dept,7010000,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,55.52,Y,,,,236.0,,,,,,,,,,,,,,,2.05,236
+Preop Short Stay,7430000,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,12.62,Y,,,,,,,89.0,,,,,,,,,,,,2.05,89
+Intensive Care Unit,6010000,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,5.72,Y,,,,,,,,,,,,,,,,48.0,,,2.05,48
+General Med - Surg Unit 1,6172010,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,5.38,Y,,,,,,,,,,,,,40.0,,,,,,2.05,40
+Balance Sheet CC,0,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,2.46,Y,72.0,,,,,,,,,,,,,,,,,,2.05,72
+General Med - Surg Unit 2,6172020,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,1.82,Y,,,,,,,,,,,,,27.0,,,,,,2.05,27
+Surgery Supplies,7470009,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,1.76,Y,,,,,,,20.0,,,,,,,,,,,,2.05,20
+General Med - Surg Unit 3,6172030,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,1.6,Y,,,,,,,,,,,,,,27.0,,,,,2.05,27
+PACU,7427000,804039,Sensor Adult Lncs-Adtx Spo2 Masimo,EA,0.28,Y,,,,,,,23.0,,,,,,,,,,,,2.05,23
+Emergency Dept,7010000,804046,Kit IV Start With Tegderm And Chlorscrub,EA,65.9,Y,,,,270.0,,,,,,,,,,,,,,,2.05,270
+Balance Sheet CC,0,804046,Kit IV Start With Tegderm And Chlorscrub,EA,13.36,Y,270.0,,,,,,,,,,,,,,,,,,2.05,270
+Preop Short Stay,7430000,804046,Kit IV Start With Tegderm And Chlorscrub,EA,11.04,Y,,,,,,,95.0,,,,,,,,,,,,2.05,95
+General Med - Surg Unit 3,6172030,804046,Kit IV Start With Tegderm And Chlorscrub,EA,6.18,Y,,,,,,,,,,,,,,63.0,,,,,2.05,63
+General Med - Surg Unit 1,6172010,804046,Kit IV Start With Tegderm And Chlorscrub,EA,4.86,Y,,,,,,,,,,,,,56.0,,,,,,2.05,56
+Intensive Care Unit,6010000,804046,Kit IV Start With Tegderm And Chlorscrub,EA,2.92,Y,,,,,,,,,,,,,,,,45.0,,,2.05,45
+General Med - Surg Unit 2,6172020,804046,Kit IV Start With Tegderm And Chlorscrub,EA,2.86,Y,,,,,,,,,,,,,32.0,,,,,,2.05,32
+Surgery Supplies,7470009,804046,Kit IV Start With Tegderm And Chlorscrub,EA,0.56,Y,,,,,,,13.0,,,,,,,,,,,,2.05,13
+PACU,7427000,804046,Kit IV Start With Tegderm And Chlorscrub,EA,0.28,Y,,,,,,,28.0,,,,,,,,,,,,2.05,28
+Intensive Care Unit,6010000,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,3.86,Y,,,,,,,,,,,,,,,,1.0,,,2.05,1
+Surgery Supplies,7470009,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,1.52,Y,,,,,,,11.0,,,,,,,,,,,,2.05,11
+Balance Sheet CC,0,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,1.12,Y,18.0,,,,,,,,,,,,,,,,,,2.05,18
+Emergency Dept,7010000,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,0.58,Y,,,,6.0,,,,,,,,,,,,,,,2.05,6
+General Med - Surg Unit 3,6172030,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,0.3,Y,,,,,,,,,,,,,,5.0,,,,,2.05,5
+General Med - Surg Unit 2,6172020,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,0.28,Y,,,,,,,,,,,,,6.0,,,,,,2.05,6
+General Med - Surg Unit 1,6172010,804052,Tray Foley Cath Urimeter Ic 16Fr,EA,0.08,Y,,,,,,,,,,,,,3.0,,,,,,2.05,3

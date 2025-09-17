@@ -1,0 +1,5 @@
+formula,MAE,MAE_std,MAPE,MAPE_std,count
+basic_kings_2024_only,47.94,,71.56,,1
+basic_kings_2023_2025,52.74,,78.72,,1
+basic_kings_2024_2025,52.74,,78.72,,1
+basic_kings_all_data,52.74,,78.72,,1
