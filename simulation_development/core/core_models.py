@@ -497,6 +497,25 @@ class AntologyGenerator:
         
         logger.info("Network structure finalized - ready for simulation and frontend")
     
+    def _update_network_status(self):
+        """Update the internal network status for monitoring."""
+        # Count network connections by checking SKU connections
+        total_connections = 0
+        for sku_id, sku_list in self.sku_registry.items():
+            perpetual_sku = self.get_perpetual_sku(sku_id)
+            par_skus = self.get_par_skus(sku_id)
+            if perpetual_sku and par_skus:
+                total_connections += len(par_skus)
+        
+        self.network_status = {
+            "total_locations": len(self.locations),
+            "total_skus": len(self.sku_registry),
+            "perpetual_location": "PERPETUAL" in self.locations,
+            "par_locations": len([loc for loc in self.locations.values() if loc.location_type == "PAR"]),
+            "network_connections": total_connections,
+            "finalized": True
+        }
+    
     def _validate_network_connections(self):
         """Validate that all network connections are properly established."""
         # This method ensures all PAR-perpetual connections are valid

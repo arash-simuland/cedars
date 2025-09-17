@@ -126,6 +126,7 @@
             transition: all 0.3s;
             min-width: 80px;
             text-align: center;
+            position: relative;
         }
 
         .par-box:hover {
@@ -142,6 +143,30 @@
         .par-box.connected {
             background: #e8f5e8;
             border-color: #4caf50;
+        }
+
+        .sku-indicator {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .sku-indicator.has-sku {
+            background: #4caf50;
+            color: white;
+        }
+
+        .sku-indicator.no-sku {
+            background: #e0e0e0;
+            color: #999;
         }
 
         .par-name {
@@ -239,12 +264,6 @@
 
     <div class="controls">
         <div class="control-group">
-            <label for="parSelect">Select PAR:</label>
-            <select id="parSelect">
-                <option value="">All PARs</option>
-            </select>
-        </div>
-        <div class="control-group">
             <label for="skuSelect">Select SKU:</label>
             <select id="skuSelect">
                 <option value="">Select a SKU</option>
@@ -279,7 +298,7 @@
                         <span class="info-value" id="selectedSku">-</span>
                     </div>
                     <div class="info-row">
-                        <span class="info-label">Connected PARs:</span>
+                        <span class="info-label">Available in:</span>
                         <span class="info-value" id="connectedPars">-</span>
                     </div>
                     <div class="info-row">
@@ -306,6 +325,12 @@
                 await loadHospitalLayout();
                 await loadSKUs();
                 setupEventListeners();
+                // Set default SKU if available
+                const skuSelect = document.getElementById('skuSelect');
+                if (skuSelect.options.length > 1) {
+                    skuSelect.value = skuSelect.options[1].value;
+                    selectSKU(skuSelect.value);
+                }
             } catch (error) {
                 console.error('Error initializing dashboard:', error);
                 showError('Failed to initialize dashboard');
@@ -328,6 +353,21 @@
             
             const skus = await response.json();
             populateSKUSelect(skus);
+            
+            // Load SKU connections for indicators
+            await loadSKUConnections();
+        }
+
+        // Load SKU connections
+        async function loadSKUConnections() {
+            try {
+                const response = await fetch('/api/sku-connections');
+                if (response.ok) {
+                    skuConnections = await response.json();
+                }
+            } catch (error) {
+                console.error('Error loading SKU connections:', error);
+            }
         }
 
         // Render hospital layout
@@ -355,6 +395,7 @@
                     }
                     
                     parBox.innerHTML = `
+                        <div class="sku-indicator no-sku">○</div>
                         <div class="par-name">${par.name}</div>
                         <div class="par-stats">${par.sku_count} SKUs</div>
                     `;
@@ -376,12 +417,12 @@
             skus.forEach(sku => {
                 const option = document.createElement('option');
                 option.value = sku.sku_id;
-                option.textContent = `${sku.sku_id} (${sku.par_count} PARs)`;
+                option.textContent = `${sku.sku_id} - ${sku.name || 'Unknown'} (${sku.par_count} PARs)`;
                 select.appendChild(option);
             });
         }
 
-        // Select PAR
+        // Select PAR (for highlighting only in SKU-centric approach)
         function selectPAR(parName) {
             // Remove previous selections
             document.querySelectorAll('.par-box').forEach(box => {
@@ -390,30 +431,6 @@
             
             // Add selection to clicked PAR
             event.target.closest('.par-box').classList.add('selected');
-            
-            // Filter SKUs for this PAR
-            filterSKUsByPAR(parName);
-        }
-
-        // Filter SKUs by PAR
-        async function filterSKUsByPAR(parName) {
-            try {
-                const response = await fetch(`/api/par/${parName}/skus`);
-                if (!response.ok) return;
-                
-                const skus = await response.json();
-                const select = document.getElementById('skuSelect');
-                select.innerHTML = '<option value="">Select a SKU</option>';
-                
-                skus.forEach(sku => {
-                    const option = document.createElement('option');
-                    option.value = sku.sku_id;
-                    option.textContent = `${sku.sku_id} (Level: ${sku.current_level})`;
-                    select.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error filtering SKUs:', error);
-            }
         }
 
         // Select SKU
@@ -423,6 +440,7 @@
             selectedSku = skuId;
             await loadSKUDetails(skuId);
             await loadInventoryTimeline(skuId);
+            updateSKUIndicators(skuId);
         }
 
         // Load SKU details
@@ -434,7 +452,7 @@
                 const skuData = await response.json();
                 
                 document.getElementById('selectedSku').textContent = skuId;
-                document.getElementById('connectedPars').textContent = skuData.connection_count;
+                document.getElementById('connectedPars').textContent = `${skuData.connection_count} PARs + Perpetual`;
                 document.getElementById('totalDemand').textContent = 
                     skuData.par_skus.reduce((sum, par) => sum + par.demand_rate, 0).toFixed(1);
                 
@@ -445,6 +463,42 @@
                 
             } catch (error) {
                 console.error('Error loading SKU details:', error);
+            }
+        }
+
+        // Update SKU indicators on PAR boxes
+        function updateSKUIndicators(skuId) {
+            // Reset all indicators
+            document.querySelectorAll('.sku-indicator').forEach(indicator => {
+                indicator.className = 'sku-indicator no-sku';
+                indicator.textContent = '○';
+            });
+            
+            // Update indicators for connected PARs
+            if (skuConnections[skuId]) {
+                const skuData = skuConnections[skuId];
+                
+                // Mark perpetual
+                const perpetualBox = Array.from(document.querySelectorAll('.par-box')).find(box => 
+                    box.querySelector('.par-name').textContent === 'PERPETUAL'
+                );
+                if (perpetualBox) {
+                    const indicator = perpetualBox.querySelector('.sku-indicator');
+                    indicator.className = 'sku-indicator has-sku';
+                    indicator.textContent = '●';
+                }
+                
+                // Mark PARs
+                skuData.par_skus.forEach(parSku => {
+                    const parBox = Array.from(document.querySelectorAll('.par-box')).find(box => 
+                        box.querySelector('.par-name').textContent === parSku.location_id
+                    );
+                    if (parBox) {
+                        const indicator = parBox.querySelector('.sku-indicator');
+                        indicator.className = 'sku-indicator has-sku';
+                        indicator.textContent = '●';
+                    }
+                });
             }
         }
 

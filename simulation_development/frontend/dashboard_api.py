@@ -11,7 +11,11 @@ import json
 import os
 from pathlib import Path
 import logging
-from core_models import AntologyGenerator, ResourceFactory
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from core.core_models import AntologyGenerator, ResourceFactory
 from frontend_generator import FrontendDataGenerator
 
 # Configure logging
@@ -96,6 +100,7 @@ def initialize_antology():
                     lead_time_days=lead_time_days, 
                     demand_rate=0
                 )
+                sku.name = name  # Add name attribute
             else:  # PARs
                 sku = ResourceFactory.create_sku(
                     sku_id, location_id, 
@@ -103,6 +108,7 @@ def initialize_antology():
                     lead_time_days=lead_time_days, 
                     demand_rate=demand_rate
                 )
+                sku.name = name  # Add name attribute
             
             antology.add_sku(sku)
             
@@ -142,6 +148,15 @@ def get_skus():
     
     frontend_data = frontend_generator.generate_frontend_data()
     return jsonify(frontend_data["sku_list"])
+
+@app.route('/api/sku-connections')
+def get_sku_connections():
+    """Get SKU connections for visual indicators."""
+    if not frontend_generator:
+        return jsonify({"error": "AntologyGenerator not initialized"}), 500
+    
+    frontend_data = frontend_generator.generate_frontend_data()
+    return jsonify(frontend_data["sku_connections"])
 
 @app.route('/api/sku/<sku_id>')
 def get_sku_details(sku_id):
@@ -187,27 +202,22 @@ def get_pars():
     
     return jsonify(pars)
 
-@app.route('/api/par/<par_id>/skus')
-def get_par_skus(par_id):
-    """Get SKUs for a specific PAR."""
-    if not antology:
+@app.route('/api/sku/<sku_id>/pars')
+def get_sku_pars(sku_id):
+    """Get all PARs where this SKU exists."""
+    if not frontend_generator:
         return jsonify({"error": "AntologyGenerator not initialized"}), 500
     
-    location = antology.locations.get(par_id)
-    if not location:
-        return jsonify({"error": f"PAR {par_id} not found"}), 404
+    frontend_data = frontend_generator.generate_frontend_data()
+    sku_connections = frontend_data["sku_connections"]
     
-    skus = []
-    for sku_id, sku in location.skus.items():
-        skus.append({
-            "sku_id": sku_id,
-            "target_level": sku.target_level,
-            "current_level": sku.get_current_level(),
-            "lead_time_days": sku.lead_time_days,
-            "demand_rate": sku.demand_rate
-        })
+    if sku_id not in sku_connections:
+        return jsonify({"error": f"SKU {sku_id} not found"}), 404
     
-    return jsonify(skus)
+    sku_data = sku_connections[sku_id]
+    pars = [sku_data["perpetual_sku"]] + sku_data["par_skus"]
+    
+    return jsonify(pars)
 
 @app.route('/api/simulation/run', methods=['POST'])
 def run_simulation():
@@ -236,8 +246,16 @@ def get_status():
     return jsonify(status)
 
 if __name__ == '__main__':
-    # Initialize the system
-    initialize_antology()
-    
-    # Run the Flask app
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    try:
+        # Initialize the system
+        print("Initializing AntologyGenerator...")
+        initialize_antology()
+        print("AntologyGenerator initialized successfully!")
+        
+        # Run the Flask app
+        print("Starting Flask server on http://localhost:5000")
+        app.run(debug=True, host='0.0.0.0', port=5000)
+    except Exception as e:
+        print(f"Error starting server: {e}")
+        import traceback
+        traceback.print_exc()

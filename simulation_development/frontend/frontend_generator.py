@@ -16,7 +16,11 @@ import pandas as pd
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 import logging
-from core_models import AntologyGenerator, Location, SKU
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from core.core_models import AntologyGenerator, Location, SKU
 
 logger = logging.getLogger(__name__)
 
@@ -140,6 +144,7 @@ class FrontendDataGenerator:
                 connections[sku_id] = {
                     "perpetual_sku": {
                         "sku_id": perpetual_sku.resource_id,
+                        "name": getattr(perpetual_sku, 'name', 'Unknown'),
                         "location_id": perpetual_sku.location_id,
                         "target_level": perpetual_sku.target_level,
                         "current_level": perpetual_sku.get_current_level(),
@@ -149,6 +154,7 @@ class FrontendDataGenerator:
                     "par_skus": [
                         {
                             "sku_id": sku.resource_id,
+                            "name": getattr(sku, 'name', 'Unknown'),
                             "location_id": sku.location_id,
                             "target_level": sku.target_level,
                             "current_level": sku.get_current_level(),
@@ -215,8 +221,14 @@ class FrontendDataGenerator:
         # Create SKU list for dropdown
         sku_list = []
         for sku_id, sku_data in sku_connections.items():
+            # Get SKU name from the perpetual SKU data
+            sku_name = "Unknown"
+            if sku_data["perpetual_sku"] and "name" in sku_data["perpetual_sku"]:
+                sku_name = sku_data["perpetual_sku"]["name"]
+            
             sku_list.append({
                 "sku_id": sku_id,
+                "name": sku_name,
                 "perpetual_level": sku_data["perpetual_sku"]["current_level"],
                 "par_count": sku_data["connection_count"],
                 "total_demand": sum(par["demand_rate"] for par in sku_data["par_skus"])
