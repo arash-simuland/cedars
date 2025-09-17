@@ -16,7 +16,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from core.core_models import AntologyGenerator, ResourceFactory
-from .frontend_generator import FrontendDataGenerator
+from frontend_generator import FrontendDataGenerator
 from data.input_data.data_integration import DataIntegrator, create_integrated_antology
 
 # Configure logging

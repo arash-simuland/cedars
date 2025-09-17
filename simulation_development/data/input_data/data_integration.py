@@ -52,28 +52,28 @@ class DataIntegrator:
         print("LOADING CEDARSIM PRODUCTION INPUT DATA")
         print("=" * 60)
         
-        # Load SKU inventory data from Excel
+        # Load SKU inventory data from CSV
         print("\n1. Loading SKU inventory data...")
-        sku_file = self.data_dir / "SIMULATION_READY_SKU_INVENTORY_DATA.xlsx"
+        sku_file = self.data_dir / "SIMULATION_READY_SKU_INVENTORY_DATA.csv"
         if not sku_file.exists():
             raise FileNotFoundError(f"SKU inventory data not found: {sku_file}")
         
-        self.sku_data = pd.read_excel(sku_file)
+        self.sku_data = pd.read_csv(sku_file)
         print(f"   ✅ Loaded {len(self.sku_data):,} SKU records")
         print(f"   Columns: {list(self.sku_data.columns)}")
-        print(f"   Unique SKUs: {self.sku_data['Oracle Item Number'].nunique():,}")
-        print(f"   Unique Locations: {self.sku_data['Deliver To'].nunique()}")
+        print(f"   Unique SKUs: {self.sku_data['oid'].nunique():,}")
+        print(f"   Unique Locations: {self.sku_data['lo'].nunique()}")
         
-        # Load demand data from CSV
+        # Load demand data from CSV (with uniform locations)
         print("\n2. Loading demand data...")
-        demand_file = self.data_dir / "SIMULATION_READY_DEMAND_DATA.csv"
+        demand_file = self.data_dir / "SIMULATION_READY_DEMAND_DATA_WITH_UNIFORM_LOCATIONS.csv"
         if not demand_file.exists():
             raise FileNotFoundError(f"Demand data not found: {demand_file}")
         
         self.demand_data = pd.read_csv(demand_file)
         print(f"   ✅ Loaded {len(self.demand_data):,} demand records")
         print(f"   Time range: {self.demand_data['PO Week Ending Date'].min()} to {self.demand_data['PO Week Ending Date'].max()}")
-        print(f"   Unique SKUs in demand: {self.demand_data['Oracle Item Number'].nunique():,}")
+        print(f"   Unique SKUs in demand: {self.demand_data['oid'].nunique():,}")
         
         # Create validation subset from SKU data
         print("\n3. Creating validation subset...")
@@ -112,8 +112,8 @@ class DataIntegrator:
             return
         
         # Get unique locations from both datasets
-        sku_locations = set(self.sku_data['Deliver To'].dropna().astype(str).unique())
-        demand_locations = set(self.demand_data['Deliver to Location'].dropna().astype(str).unique())
+        sku_locations = set(self.sku_data['lo'].dropna().astype(str).unique())
+        demand_locations = set(self.demand_data['uniform_location'].dropna().astype(str).unique())
         
         # Validate mappings
         validation_results = self.location_mapper.validate_mappings(sku_locations, demand_locations)
@@ -182,7 +182,7 @@ class DataIntegrator:
         unique_locations = set()
         if self.sku_data is not None:
             # Filter out any NaN values and ensure we have strings
-            valid_locations = self.sku_data['Deliver To'].dropna().astype(str).unique()
+            valid_locations = self.sku_data['lo'].dropna().astype(str).unique()
             unique_locations = set(valid_locations)
         
         # Add standard locations
@@ -233,8 +233,8 @@ class DataIntegrator:
         print(f"   Processing {len(self.sku_data):,} SKU records...")
         
         for _, row in self.sku_data.iterrows():
-            sku_id = str(row['Oracle Item Number']).zfill(6)  # Ensure 6-digit format
-            location_id = row['Deliver To']
+            sku_id = str(row['oid']).zfill(6)  # Ensure 6-digit format
+            location_id = row['lo']
             item_description = row['Item Description']
             unit_of_measure = row['unit_of_measure']
             lead_time_days = float(row['lead_time'])
@@ -276,8 +276,8 @@ class DataIntegrator:
         print(f"   Processing {len(self.validation_data):,} validation SKU records...")
         
         for _, row in self.validation_data.iterrows():
-            sku_id = str(row['Oracle Item Number']).zfill(6)
-            location_id = row['Deliver To']
+            sku_id = str(row['oid']).zfill(6)
+            location_id = row['lo']
             item_description = row['Item Description']
             unit_of_measure = row['unit_of_measure']
             lead_time_days = float(row['lead_time'])
